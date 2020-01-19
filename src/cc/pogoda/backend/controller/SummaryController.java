@@ -35,8 +35,8 @@ public class SummaryController {
 		HumidityQualityFactor humidity_qf = HumidityQualityFactor.fromBits((byte) t.digital, 1);
 		
 		s.qnh_qf = pressure_qf.toString();
-		s.wind_qf = temperature_qf.toString();
-		s.temperature_qf = wind_qf.toString();
+		s.wind_qf = wind_qf.toString();
+		s.temperature_qf = temperature_qf.toString();
 		s.humidity_qf = humidity_qf.toString();
 		
 		return s;
