@@ -14,8 +14,10 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.WebApplicationContext;
 
 import cc.pogoda.backend.dao.repository.SkrzyczneSummaryRepo;
+import cc.pogoda.backend.dao.repository.TelemetryRepo;
 import cc.pogoda.backend.types.GenericMeteoData;
 import cc.pogoda.backend.types.model.SkrzyczneMeteoData;
+import cc.pogoda.backend.types.model.Telemetry;
 import cc.pogoda.backend.types.view.Summary;
 
 @Repository
@@ -31,6 +33,8 @@ public class SummaryDao {
 	@Autowired
 	SkrzyczneSummaryRepo skrzyczneSummaryRepo;
 	
+	
+	
 	@Transactional
 	public Summary getSummaryPerStationName(String call) {
 		
@@ -44,7 +48,7 @@ public class SummaryDao {
 		float maximum_gusts = (float) 0.0;
 		
 		List<GenericMeteoData> genericData = new ArrayList<GenericMeteoData>();
-		
+			
 		switch (call) {
 		case "skrzyczne":
 			List<SkrzyczneMeteoData> l = skrzyczneSummaryRepo.findFirst50ByOrderByTimestampEpochDesc();

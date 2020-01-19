@@ -54,7 +54,7 @@ public class Config {
 		LocalContainerEntityManagerFactoryBean out = new LocalContainerEntityManagerFactoryBean();
 		
 		HashMap<String, String> jpaProperties = new HashMap<String, String>();
-		jpaProperties.put("hibernate.physical_naming_strategy", "cc.pogoda.backend.dao.aux.MyNamingStrategy");
+		//jpaProperties.put("hibernate.physical_naming_strategy", "cc.pogoda.backend.dao.aux.MyNamingStrategy");
 		jpaProperties.put("hibernate.jdbc.time_zone", "UTC");
 		
 		HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
@@ -62,7 +62,7 @@ public class Config {
 		vendorAdapter.setDatabasePlatform("org.hibernate.dialect.MySQL5Dialect");
 		
 		out.setJpaVendorAdapter(vendorAdapter);
-		//out.setJpaPropertyMap(jpaProperties);
+		out.setJpaPropertyMap(jpaProperties);
 
 		
 		out.setPackagesToScan("cc.pogoda.backend.types.model");

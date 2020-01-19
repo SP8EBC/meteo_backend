@@ -8,9 +8,15 @@ public class Summary {
 	
 	public float avg_temperature;
 	
+	public String temperature_qf;
+	
 	public short qnh;
 	
+	public String qnh_qf;
+	
 	public byte humidity;
+	
+	public String humidity_qf;
 	
 	public short direction;
 	
@@ -23,5 +29,7 @@ public class Summary {
 	public float hour_max_average_speed;
 	
 	public float hour_min_average_speed;
+	
+	public String wind_qf;
 	
 }
