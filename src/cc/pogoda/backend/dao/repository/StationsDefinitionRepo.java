@@ -5,10 +5,10 @@ import java.util.List;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.Repository;
 
-import cc.pogoda.backend.types.model.StationsDefinition;
+import cc.pogoda.backend.types.model.StationDefinition;
 
-public interface StationsDefinitionRepo extends Repository<StationsDefinition, Integer> {
+public interface StationsDefinitionRepo extends Repository<StationDefinition, Integer> {
 
 	@Query("Select d from StationsDefinition d")
-	public List<StationsDefinition> findAll();
+	public List<StationDefinition> findAll();
 }

@@ -7,7 +7,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "data_station_def")
-public class StationsDefinition {
+public class StationDefinition {
 	
 	@Id
 	@Basic
@@ -15,6 +15,9 @@ public class StationsDefinition {
 	
 	@Basic
 	public String name;
+	
+	@Basic
+	public boolean enabled;
 	
 	@Basic
 	public String callsign;
@@ -30,6 +33,12 @@ public class StationsDefinition {
 	
 	@Basic
 	public String sponsorUrl;
+
+	@Basic
+	public String backgroundjpg;
+
+	@Basic
+	public String moreinfo;
 	
 	@Basic
 	public float lat;
