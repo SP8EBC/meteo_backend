@@ -42,10 +42,10 @@ public class Config {
 		}
 		
 		DriverManagerDataSource out = new DriverManagerDataSource();
-		out.setUrl("jdbc:mysql://localhost:3306/aprs2rrd");
+		out.setUrl("jdbc:mysql://localhost:3306/aprs2rrd?useSSL=false");
 		out.setDriverClassName("com.mysql.cj.jdbc.Driver");
-		out.setUsername("root");
-		out.setPassword("dupajasia123");
+		out.setUsername("aprs2rrd");
+		out.setPassword("qwertyuiop");
 		return out;
 	}
 	
