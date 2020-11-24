@@ -9,6 +9,6 @@ import cc.pogoda.backend.types.model.StationDefinition;
 
 public interface StationsDefinitionRepo extends Repository<StationDefinition, Integer> {
 
-	@Query("Select d from StationsDefinition d")
+	@Query("Select d from StationDefinition d")
 	public List<StationDefinition> findAll();
 }
