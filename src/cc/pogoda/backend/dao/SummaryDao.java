@@ -13,9 +13,11 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.WebApplicationContext;
 
+import cc.pogoda.backend.dao.repository.BezmiechSummaryRepo;
 import cc.pogoda.backend.dao.repository.SkrzyczneSummaryRepo;
 import cc.pogoda.backend.dao.repository.TelemetryRepo;
 import cc.pogoda.backend.types.GenericMeteoData;
+import cc.pogoda.backend.types.model.BezmiechMeteoData;
 import cc.pogoda.backend.types.model.SkrzyczneMeteoData;
 import cc.pogoda.backend.types.model.Telemetry;
 import cc.pogoda.backend.types.view.Summary;
@@ -32,7 +34,9 @@ public class SummaryDao {
 	
 	@Autowired
 	SkrzyczneSummaryRepo skrzyczneSummaryRepo;
-	
+
+	@Autowired
+	BezmiechSummaryRepo bezmiechSummaryRepo;
 	
 	
 	@Transactional
@@ -53,6 +57,12 @@ public class SummaryDao {
 		case "skrzyczne":
 			List<SkrzyczneMeteoData> l = skrzyczneSummaryRepo.findFirst50ByOrderByTimestampEpochDesc();
 			for (SkrzyczneMeteoData m : l)
+				genericData.add(m.convertToGeneric());
+			break;
+		case "bezmiechowa":
+		case "bezmiech":
+			List<BezmiechMeteoData> lb = bezmiechSummaryRepo.findFirst50ByOrderByTimestampEpochDesc();
+			for (BezmiechMeteoData m : lb)
 				genericData.add(m.convertToGeneric());
 			break;
 		}
