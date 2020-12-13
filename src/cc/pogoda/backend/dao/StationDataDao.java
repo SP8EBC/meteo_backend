@@ -33,4 +33,21 @@ public class StationDataDao {
 		
 		return out;
 	}
+	
+	public List<StationData> getStationDataPerName(String name, boolean ascendingOrder, boolean isLong) {
+		
+		List<StationData> out = null;
+		
+		if (ascendingOrder == false && isLong == false)
+			out = repo.findFirst50ByStationOrderByEpochDesc(name);
+		else if (ascendingOrder == true && isLong == false)
+			out = repo.findFirst50ByStationOrderByEpochAsc(name);
+		else if (ascendingOrder == false && isLong == true)
+			out = repo.findFirst500ByStationOrderByEpochDesc(name);
+		else if (ascendingOrder == true && isLong == true)
+			out = repo.findFirst500ByStationOrderByEpochAsc(name);
+
+
+		return out;
+	}
 }

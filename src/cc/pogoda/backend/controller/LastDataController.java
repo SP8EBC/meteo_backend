@@ -18,23 +18,39 @@ public class LastDataController {
 	StationDataDao dataDao;
 	
 	@RequestMapping(value = "/lastStationData", produces = "application/json;charset=UTF-8")
-	public ListOfStationData getLastStationDataPerName(@RequestParam(value="station")String name) {
+	public ListOfStationData getLastStationDataPerName(	@RequestParam(value="station")String name, 
+														@RequestParam(value="ascendingOrder", defaultValue = "false")boolean ascendingOrder, 
+														@RequestParam(value="isLong", defaultValue = "false")boolean isLong) {
 		int i = 0;
 		
 		ListOfStationData out = new ListOfStationData();
 		
 		List<StationData> data;
 		
-		data = dataDao.getStationDataPerName(name);
+		data = dataDao.getStationDataPerName(name, false, isLong);
 		
 		if (data != null) {
 			
 			out.listOfStationData = new StationData[data.size()];
 			
-			for (StationData d : data) {
-				out.listOfStationData[i] = d;
+			if (ascendingOrder) {
+				i = data.size() - 1;
 				
-				i++;
+				for (StationData d : data) {
+					out.listOfStationData[i] = d;
+					
+					i--;
+					
+					if (i < 0)
+						break;
+				}
+			}
+			else {
+				for (StationData d : data) {
+					out.listOfStationData[i] = d;
+					
+					i++;
+				}
 			}
 		}
 		
