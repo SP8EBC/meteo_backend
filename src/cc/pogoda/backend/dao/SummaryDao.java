@@ -1,6 +1,7 @@
 package cc.pogoda.backend.dao;
 
 import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.List;
@@ -70,7 +71,7 @@ public class SummaryDao {
 		GenericMeteoData newest = genericData.get(0);
 		LocalDateTime minush = newest.timestampEpoch.minusHours(1);
 		
-		out.last_timestamp = newest.timestampEpoch.toEpochSecond(ZoneOffset.ofTotalSeconds(0));
+		out.last_timestamp = newest.timestampEpoch.toEpochSecond(OffsetDateTime.now().getOffset());
 		
 		for (GenericMeteoData data : genericData) {
 			
