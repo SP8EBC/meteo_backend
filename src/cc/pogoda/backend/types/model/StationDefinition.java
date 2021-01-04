@@ -35,10 +35,16 @@ public class StationDefinition {
 	public String sponsorUrl;
 
 	@Basic
-	public String backgroundjpg;
+	public String backgroundJpg;
+	
+	@Basic
+	public int backgroundJpgAlign;
+	
+	@Basic
+	public int stationNameTextColour;
 
 	@Basic
-	public String moreinfo;
+	public String moreInfo;
 	
 	@Basic
 	public float lat;
