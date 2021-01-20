@@ -11,7 +11,7 @@ public interface StationDataRepo extends Repository<StationData, Integer> {
 	List<StationData> findFirst50ByStationOrderByEpochDesc(String station);
 	List<StationData> findFirst50ByStationOrderByEpochAsc(String station);
 	
-	List<StationData> findFirst500ByStationOrderByEpochDesc(String station);
-	List<StationData> findFirst500ByStationOrderByEpochAsc(String station);
+	List<StationData> findFirst1500ByStationOrderByEpochDesc(String station);
+	List<StationData> findFirst1500ByStationOrderByEpochAsc(String station);
 
 }

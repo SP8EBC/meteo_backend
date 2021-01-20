@@ -43,9 +43,9 @@ public class StationDataDao {
 		else if (ascendingOrder == true && isLong == false)
 			out = repo.findFirst50ByStationOrderByEpochAsc(name);
 		else if (ascendingOrder == false && isLong == true)
-			out = repo.findFirst500ByStationOrderByEpochDesc(name);
+			out = repo.findFirst1500ByStationOrderByEpochDesc(name);
 		else if (ascendingOrder == true && isLong == true)
-			out = repo.findFirst500ByStationOrderByEpochAsc(name);
+			out = repo.findFirst1500ByStationOrderByEpochAsc(name);
 
 
 		return out;

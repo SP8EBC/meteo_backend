@@ -7,9 +7,12 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import cc.pogoda.backend.types.GenericMeteoData;
+import cc.pogoda.backend.types.MeteoData;
+
 @Entity
 @Table(name = "data_station")
-public class StationData {
+public class StationData extends MeteoData {
 
 	@Id
 	@Basic
@@ -56,4 +59,20 @@ public class StationData {
 	
 	@Basic
 	public String rsource;
+
+	@Override
+	public GenericMeteoData convertToGeneric() {
+		GenericMeteoData out = new GenericMeteoData();
+		
+		out.id = this.id;
+		out.timestampEpoch = this.datetime;
+		out.Temp = this.temperature;
+		out.WindSpeed = this.windspeed;
+		out.WindGusts = this.windgusts;
+		out.WindDir = this.winddir;
+		out.QNH = (int)this.pressure;
+		out.humidity = this.humidity;
+		
+		return out;
+	}
 }
