@@ -50,4 +50,12 @@ public class StationDataDao {
 
 		return out;
 	}
+	
+	public List<StationData> getStationData(String name, long timestampFrom, long timestampTo) {
+		List<StationData> out = null;
+		
+		out = repo.findDataBetweenEpoch(name, timestampFrom, timestampTo);
+		
+		return out;
+	}
 }

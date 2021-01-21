@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import cc.pogoda.backend.dao.StationDataDao;
+import cc.pogoda.backend.types.NotFoundException;
 import cc.pogoda.backend.types.model.StationData;
 import cc.pogoda.backend.types.view.ListOfStationData;
 
@@ -20,7 +21,7 @@ public class LastDataController {
 	@RequestMapping(value = "/lastStationData", produces = "application/json;charset=UTF-8")
 	public ListOfStationData getLastStationDataPerName(	@RequestParam(value="station")String name, 
 														@RequestParam(value="ascendingOrder", defaultValue = "false")boolean ascendingOrder, 
-														@RequestParam(value="isLong", defaultValue = "false")boolean isLong) {
+														@RequestParam(value="isLong", defaultValue = "false")boolean isLong) throws NotFoundException {
 		int i = 0;
 		
 		ListOfStationData out = new ListOfStationData();
@@ -52,6 +53,9 @@ public class LastDataController {
 					i++;
 				}
 			}
+		}
+		else {
+			throw new NotFoundException();
 		}
 		
 		return out;
