@@ -25,6 +25,10 @@ public class StationDataDao {
 	@PersistenceContext
 	EntityManager em;
 	
+	public StationData getCurrentStationData(String name) {
+		return repo.findFirstByStationOrderByEpochDesc(name);
+	}
+	
 	public List<StationData> getStationDataPerName(String name) {
 		
 		List<StationData> out;
