@@ -11,4 +11,6 @@ public interface StationsDefinitionRepo extends Repository<StationDefinition, In
 
 	@Query("Select d from StationDefinition d")
 	public List<StationDefinition> findAll();
+	
+	public StationDefinition findByName(String name);
 }

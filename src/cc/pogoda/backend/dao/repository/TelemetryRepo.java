@@ -6,5 +6,5 @@ import cc.pogoda.backend.types.model.Telemetry;
 
 public interface TelemetryRepo extends Repository<Telemetry, Integer> {
 
-	Telemetry findTopByAliasOrderByIdDesc(String alias);
+	Telemetry findTopByStationOrderByIdDesc(String station);
 }

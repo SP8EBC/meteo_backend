@@ -8,15 +8,22 @@ public enum PressureQualityFactor {
 	
 	public static PressureQualityFactor fromBits(byte value, int version) {
 		
-		//byte t = (byte) ((byte) (value & 0x10) >> 4);
-		short t = (short) (value & 0xFF);
+		if (version == 0) {
+			return PressureQualityFactor.FULL;
+		}
+		else {
 		
-		t = (short) ((t & 0x10) >> 4);
-		
-		switch (t) {
-			case 1: return PressureQualityFactor.NOT_AVALIABLE;
+			//byte t = (byte) ((byte) (value & 0x10) >> 4);
+			short t = (short) (value & 0xFF);
+			
+			t = (short) ((t & 0x10) >> 4);
+			
+			switch (t) {
+				case 1: return PressureQualityFactor.NOT_AVALIABLE;
+			}
+			
+			return PressureQualityFactor.FULL;
 		}
 		
-		return PressureQualityFactor.FULL;
 	}
 }

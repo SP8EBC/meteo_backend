@@ -9,7 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "telemetry")
+@Table(name = "data_telemetry")
 public class Telemetry {
 
 	@Id
@@ -17,28 +17,49 @@ public class Telemetry {
 	public int id;
 	
 	@Basic
+	public long epoch;
+	
+	@Basic
+	public LocalDateTime datetime;
+	
+	@Basic
+	public String station;
+	
+	@Basic
 	public String callsign;
 	
 	@Basic
-	public String alias;
-	
-	@Column(name="TimestampEpoch")
-	public LocalDateTime timestampEpoch;
+	public short number;
 	
 	@Basic
-	public short first;
+	public float first;
 	
 	@Basic
-	public short second;
+	public float second;
 	
 	@Basic
-	public short third;
+	public float third;
 	
 	@Basic
-	public short fourth;
+	public float fourth;
 	
 	@Basic
-	public short fifth;
+	public float fifth;
+	
+	@Basic
+	public short rawfirst;
+	
+	@Basic
+	public short rawsecond;
+	
+	@Basic
+	public short rawthird;
+	
+	@Basic
+	public short rawfourth;
+	
+	@Basic
+	public short rawfifth;
 	
 	@Basic
 	public short digital;

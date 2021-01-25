@@ -32,4 +32,9 @@ public class StationsDefinitionDao {
 		
 		return out;
 	}
-}
+	
+	public StationDefinition getStationByName(String name) {
+		
+		return repo.findByName(name);
+	}
+} 

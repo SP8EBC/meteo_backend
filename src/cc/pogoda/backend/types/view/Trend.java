@@ -5,6 +5,14 @@ import cc.pogoda.backend.types.TrendData;
 public class Trend {
 
 	public long currentTimestampUtc;
+
+	public String currentTemperatureQf;
+	
+	public String currentQnhQf;
+	
+	public String currentHumidityQf;
+	
+	public String currentWindQf;
 	
 	public TrendData temperatureTrend;
 	

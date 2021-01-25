@@ -25,7 +25,7 @@ public class TelemetryDao {
 	public Telemetry getTelemetryFromStationName(String name) {
 		Telemetry telemetry = null;
 
-		telemetry = telemetryRepo.findTopByAliasOrderByIdDesc("Skrzyczne");
+		telemetry = telemetryRepo.findTopByStationOrderByIdDesc(name);
 		
 		return telemetry;
 	}

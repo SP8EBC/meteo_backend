@@ -53,6 +53,9 @@ public class StationDefinition {
 	public float lon;
 	
 	@Basic
+	public String timezone;
+	
+	@Basic
 	public boolean hasWind;
 	
 	@Basic
@@ -63,4 +66,7 @@ public class StationDefinition {
 	
 	@Basic
 	public boolean hasRain;
+	
+	@Basic
+	public byte telemetryVersion;
 }
