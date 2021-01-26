@@ -84,6 +84,11 @@ public class StationData extends MeteoData {
 			
 			int dataPoints = 0;
 			
+			// used for calculating angle mean value
+	        double x = 0.0;
+	        double y = 0.0;
+	        double angleRadians = 0.0;
+			
 			// the returned value of wind gusts is the maximum found in the input set
 			float gusts = 0.0f;
 			
@@ -92,6 +97,10 @@ public class StationData extends MeteoData {
 				out.pressure += d.pressure;
 				out.humidity += d.humidity;
 				out.windspeed += d.windspeed;
+				
+	            angleRadians = Math.toRadians(d.winddir);
+	            x += Math.cos(angleRadians);
+	            y += Math.sin(angleRadians);
 				
 				dataPoints++;
 				
@@ -106,6 +115,11 @@ public class StationData extends MeteoData {
 			out.windspeed /= dataPoints;
 			
 			out.windgusts = gusts;
+			
+			out.winddir = (short)Math.toDegrees(Math.atan2(y / dataPoints, x / dataPoints));
+			
+			if (out.winddir < 0) 
+				out.winddir += 360;
 		}
 		
 		return out;

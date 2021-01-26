@@ -121,6 +121,12 @@ public class TrendController {
 			out.maximumWindpseedTrend.fourHoursValue = fourAverage.windgusts;
 			out.maximumWindpseedTrend.sixHoursValue = sixAverage.windgusts;
 			out.maximumWindpseedTrend.eightHoursValue = eightAverage.windgusts;
+			
+			out.windDirectionTrend.currentValue = current.winddir;
+			out.windDirectionTrend.twoHoursValue = twoAverage.winddir;
+			out.windDirectionTrend.fourHoursValue = fourAverage.winddir;
+			out.windDirectionTrend.sixHoursValue = sixAverage.winddir;
+			out.windDirectionTrend.eightHoursValue = eightAverage.winddir;
 		}
 		else {
 			throw new NotFoundException();

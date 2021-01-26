@@ -24,11 +24,14 @@ public class Trend {
 	
 	public TrendData maximumWindpseedTrend;
 	
+	public TrendData windDirectionTrend;
+	
 	public Trend() {
 		temperatureTrend = new TrendData();
 		humidityTrend = new TrendData();
 		pressureTrend = new TrendData();
 		averageWindspeedTrend = new TrendData();
 		maximumWindpseedTrend = new TrendData();
+		windDirectionTrend = new TrendData();
 	}
 }
