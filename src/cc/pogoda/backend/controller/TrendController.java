@@ -1,5 +1,8 @@
 package cc.pogoda.backend.controller;
 
+import java.math.BigDecimal;
+import java.math.MathContext;
+import java.math.RoundingMode;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.List;
@@ -45,9 +48,15 @@ public class TrendController {
 	private final static int averageWindowLn = 900;
 	
 	@RequestMapping(value = "/trend", produces = "application/json;charset=UTF-8")
-	public Trend getTrendPerStationName(@RequestParam(value="station")String station) throws NotFoundException {
+	public Trend getTrendPerStationName(@RequestParam(name="station")String station, @RequestParam(defaultValue =  "false", name="notRounded", required = false)boolean notRounded) throws NotFoundException {
 		
 		Trend out = new Trend();
+		
+		// used to round double to certain significant figures
+		MathContext mathContextTwo = new MathContext(2, RoundingMode.HALF_EVEN);
+		
+		// used to round double to certain significant figures
+		BigDecimal rounded;
 		
 		StationData current = dataDao.getCurrentStationData(station);
 		
@@ -76,6 +85,11 @@ public class TrendController {
 				humidity_qf = HumidityQualityFactor.NOT_AVALIABLE;
 			}
 			
+			if (!notRounded) {
+				rounded = new BigDecimal(current.temperature, mathContextTwo);
+				current.temperature = rounded.floatValue();
+			}
+			
 			out.currentTimestampUtc = currentUtcTimestamp;
 			out.currentQnhQf = pressure_qf.toString();
 			out.currentWindQf = wind_qf.toString();
@@ -87,10 +101,10 @@ public class TrendController {
 			List<StationData> dataSix = dataDao.getStationData(station, currentUtcTimestamp - sixHours - averageWindowLn, currentUtcTimestamp - sixHours + averageWindowLn);
 			List<StationData> dataEight = dataDao.getStationData(station, currentUtcTimestamp - eightHours - averageWindowLn, currentUtcTimestamp - eightHours + averageWindowLn);
 			
-			StationData twoAverage = StationData.averageFromList(dataTwo);
-			StationData fourAverage = StationData.averageFromList(dataFour);
-			StationData sixAverage = StationData.averageFromList(dataSix);
-			StationData eightAverage = StationData.averageFromList(dataEight);
+			StationData twoAverage = StationData.averageFromList(dataTwo, notRounded);
+			StationData fourAverage = StationData.averageFromList(dataFour, notRounded);
+			StationData sixAverage = StationData.averageFromList(dataSix, notRounded);
+			StationData eightAverage = StationData.averageFromList(dataEight, notRounded);
 			
 			out.temperatureTrend.currentValue = current.temperature;
 			out.temperatureTrend.twoHoursValue = twoAverage.temperature;

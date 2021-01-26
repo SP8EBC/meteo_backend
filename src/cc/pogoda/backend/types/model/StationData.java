@@ -1,5 +1,8 @@
 package cc.pogoda.backend.types.model;
 
+import java.math.BigDecimal;
+import java.math.MathContext;
+import java.math.RoundingMode;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -77,8 +80,23 @@ public class StationData extends MeteoData {
 		return out;
 	}
 	
-	public static StationData averageFromList(List<StationData> data) {
+	public static StationData averageFromList(List<StationData> data, boolean doesntRound) {
 		StationData out = new StationData();
+		
+		// rouding to four significant figures for pressure
+		MathContext mathContextFour = new MathContext(4, RoundingMode.HALF_EVEN);
+		
+		// rouding to two significant figures for values bigger than 10.0
+		MathContext mathContextThree = new MathContext(3, RoundingMode.HALF_EVEN);
+		
+		// rouding to two significant figures for values bigger than 1.0
+		MathContext mathContextTwo = new MathContext(2, RoundingMode.HALF_EVEN);
+		
+		// rouding to one significant figures for values from 0.0 to 1.0
+		MathContext mathContextOne = new MathContext(1, RoundingMode.HALF_EVEN);
+		
+		// used to round double to cerain decimal digits
+		BigDecimal rounded;
 		
 		if (data != null && data.size() > 1) {
 			
@@ -115,6 +133,36 @@ public class StationData extends MeteoData {
 			out.windspeed /= dataPoints;
 			
 			out.windgusts = gusts;
+			
+			if (!doesntRound) {
+				// rouding temperature
+				if (out.temperature > 10.0 || out.temperature < -10.0) {
+					rounded = new BigDecimal(out.temperature, mathContextThree);
+				}
+				else if (out.temperature > 1.0 || out.temperature < -1.0) {
+					rounded = new BigDecimal(out.temperature, mathContextTwo);
+				}
+				else {
+					rounded = new BigDecimal(out.temperature, mathContextOne);
+				}
+				out.temperature = rounded.floatValue();
+				
+				// rouding average wind speed
+				if (out.windspeed > 10.0) {
+					rounded = new BigDecimal(out.windspeed, mathContextThree);
+				}
+				else if (out.windspeed > 1.0) {
+					rounded = new BigDecimal(out.windspeed, mathContextTwo);
+				}
+				else {
+					rounded = new BigDecimal(out.windspeed, mathContextOne);
+				}
+				out.windspeed = rounded.floatValue();
+				
+				// rounding pressure
+				rounded = new BigDecimal(out.pressure, mathContextFour);
+				out.pressure = rounded.floatValue();
+			}
 			
 			out.winddir = (short)Math.toDegrees(Math.atan2(y / dataPoints, x / dataPoints));
 			
