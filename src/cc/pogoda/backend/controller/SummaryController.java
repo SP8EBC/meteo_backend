@@ -1,5 +1,8 @@
 package cc.pogoda.backend.controller;
 
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -33,6 +36,7 @@ public class SummaryController {
 	public Summary summaryControler(@RequestParam(value="station")String station) throws NotFoundException {
 		Summary s = dao.getSummaryPerStationName(station);
 	
+		long currentUtcTimestamp = ZonedDateTime.now().withZoneSameInstant(ZoneId.of("UTC")).toEpochSecond();
 		
 		if (s != null) {
 			
@@ -55,6 +59,12 @@ public class SummaryController {
 			
 			if (!stationDefinition.hasHumidity) {
 				humidity_qf = HumidityQualityFactor.NOT_AVALIABLE;
+			}
+			
+			if ((currentUtcTimestamp - s.last_timestamp > 3600)) {
+				wind_qf = WindQualityFactor.NO_DATA;
+				pressure_qf = PressureQualityFactor.NO_DATA;
+				humidity_qf = HumidityQualityFactor.NO_DATA;
 			}
 			
 			s.qnh_qf = pressure_qf.toString();

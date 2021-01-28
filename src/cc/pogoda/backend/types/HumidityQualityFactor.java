@@ -4,7 +4,8 @@ public enum HumidityQualityFactor {
 
 	FULL,
 	DEGRADED,
-	NOT_AVALIABLE;
+	NOT_AVALIABLE,
+	NO_DATA;
 	
 	public static HumidityQualityFactor fromBits(byte value, int version) {
 		

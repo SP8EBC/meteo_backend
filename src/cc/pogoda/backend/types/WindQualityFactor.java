@@ -3,7 +3,8 @@ package cc.pogoda.backend.types;
 public enum WindQualityFactor {
 	FULL,
 	DEGRADED,
-	NOT_AVALIABLE;
+	NOT_AVALIABLE,
+	NO_DATA;
 	
 	public static WindQualityFactor fromBits(byte value, int version) {
 		

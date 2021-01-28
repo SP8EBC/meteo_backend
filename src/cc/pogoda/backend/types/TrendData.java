@@ -1,20 +1,17 @@
 package cc.pogoda.backend.types;
 
-import java.util.List;
-
-import cc.pogoda.backend.types.model.StationData;
 
 public class TrendData {
 
-	public float currentValue;
+	public float current_value;
 	
-	public float twoHoursValue;
+	public float two_hours_value;
 	
-	public float fourHoursValue;
+	public float four_hours_value;
 	
-	public float sixHoursValue;
+	public float six_hours_value;
 	
-	public float eightHoursValue;
+	public float eight_hours_value;
 	
 	
 }

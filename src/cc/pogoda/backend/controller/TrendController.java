@@ -73,6 +73,8 @@ public class TrendController {
 			PressureQualityFactor pressure_qf = PressureQualityFactor.fromBits((byte) t.digital, stationDefinition.telemetryVersion);
 			HumidityQualityFactor humidity_qf = HumidityQualityFactor.fromBits((byte) t.digital, stationDefinition.telemetryVersion);
 			
+			long lastDataTimestamp = current.epoch;
+			
 			if (!stationDefinition.hasWind) {
 				wind_qf = WindQualityFactor.NOT_AVALIABLE;
 			}
@@ -85,62 +87,70 @@ public class TrendController {
 				humidity_qf = HumidityQualityFactor.NOT_AVALIABLE;
 			}
 			
+			// check if station transmit data
+			if (currentUtcTimestamp - lastDataTimestamp > 3600) {
+				// if last data is older than one hour set all Quality factor to non avaliable
+				wind_qf = WindQualityFactor.NO_DATA;
+				pressure_qf = PressureQualityFactor.NO_DATA;
+				humidity_qf = HumidityQualityFactor.NO_DATA;
+			}
+			
 			if (!notRounded) {
 				rounded = new BigDecimal(current.temperature, mathContextTwo);
 				current.temperature = rounded.floatValue();
 			}
 			
-			out.currentTimestampUtc = currentUtcTimestamp;
-			out.currentQnhQf = pressure_qf.toString();
-			out.currentWindQf = wind_qf.toString();
-			out.currentTemperatureQf = temperature_qf.toString();
-			out.currentHumidityQf = humidity_qf.toString();
+			out.last_timestamp = current.epoch;		// a timestamp of current data in UTC timezone
+			out.current_qnh_qf = pressure_qf.toString();
+			out.current_wind_qf = wind_qf.toString();
+			out.current_temperature_qf = temperature_qf.toString();
+			out.current_humidity_qf = humidity_qf.toString();
 			
-			List<StationData> dataTwo = dataDao.getStationData(station, currentUtcTimestamp - twoHours - averageWindowLn, currentUtcTimestamp - twoHours + averageWindowLn);
-			List<StationData> dataFour = dataDao.getStationData(station, currentUtcTimestamp - fourHours - averageWindowLn, currentUtcTimestamp - fourHours + averageWindowLn);
-			List<StationData> dataSix = dataDao.getStationData(station, currentUtcTimestamp - sixHours - averageWindowLn, currentUtcTimestamp - sixHours + averageWindowLn);
-			List<StationData> dataEight = dataDao.getStationData(station, currentUtcTimestamp - eightHours - averageWindowLn, currentUtcTimestamp - eightHours + averageWindowLn);
+			List<StationData> dataTwo = dataDao.getStationData(station, lastDataTimestamp - twoHours - averageWindowLn, lastDataTimestamp - twoHours + averageWindowLn);
+			List<StationData> dataFour = dataDao.getStationData(station, lastDataTimestamp - fourHours - averageWindowLn, lastDataTimestamp - fourHours + averageWindowLn);
+			List<StationData> dataSix = dataDao.getStationData(station, lastDataTimestamp - sixHours - averageWindowLn, lastDataTimestamp - sixHours + averageWindowLn);
+			List<StationData> dataEight = dataDao.getStationData(station, lastDataTimestamp - eightHours - averageWindowLn, lastDataTimestamp - eightHours + averageWindowLn);
 			
 			StationData twoAverage = StationData.averageFromList(dataTwo, notRounded);
 			StationData fourAverage = StationData.averageFromList(dataFour, notRounded);
 			StationData sixAverage = StationData.averageFromList(dataSix, notRounded);
 			StationData eightAverage = StationData.averageFromList(dataEight, notRounded);
 			
-			out.temperatureTrend.currentValue = current.temperature;
-			out.temperatureTrend.twoHoursValue = twoAverage.temperature;
-			out.temperatureTrend.fourHoursValue = fourAverage.temperature;
-			out.temperatureTrend.sixHoursValue = sixAverage.temperature;
-			out.temperatureTrend.eightHoursValue = eightAverage.temperature;
+			out.temperature_trend.current_value = current.temperature;
+			out.temperature_trend.two_hours_value = twoAverage.temperature;
+			out.temperature_trend.four_hours_value = fourAverage.temperature;
+			out.temperature_trend.six_hours_value = sixAverage.temperature;
+			out.temperature_trend.eight_hours_value = eightAverage.temperature;
 			
-			out.pressureTrend.currentValue = current.pressure;
-			out.pressureTrend.twoHoursValue = twoAverage.pressure;
-			out.pressureTrend.fourHoursValue = fourAverage.pressure;
-			out.pressureTrend.sixHoursValue = sixAverage.pressure;
-			out.pressureTrend.eightHoursValue = eightAverage.pressure;
+			out.pressure_trend.current_value = current.pressure;
+			out.pressure_trend.two_hours_value = twoAverage.pressure;
+			out.pressure_trend.four_hours_value = fourAverage.pressure;
+			out.pressure_trend.six_hours_value = sixAverage.pressure;
+			out.pressure_trend.eight_hours_value = eightAverage.pressure;
 			
-			out.humidityTrend.currentValue = current.humidity;
-			out.humidityTrend.twoHoursValue = twoAverage.humidity;
-			out.humidityTrend.fourHoursValue = fourAverage.humidity;
-			out.humidityTrend.sixHoursValue = sixAverage.humidity;
-			out.humidityTrend.eightHoursValue = eightAverage.humidity;
+			out.humidity_trend.current_value = current.humidity;
+			out.humidity_trend.two_hours_value = twoAverage.humidity;
+			out.humidity_trend.four_hours_value = fourAverage.humidity;
+			out.humidity_trend.six_hours_value = sixAverage.humidity;
+			out.humidity_trend.eight_hours_value = eightAverage.humidity;
 			
-			out.averageWindspeedTrend.currentValue = current.windspeed;
-			out.averageWindspeedTrend.twoHoursValue = twoAverage.windspeed;
-			out.averageWindspeedTrend.fourHoursValue = fourAverage.windspeed;
-			out.averageWindspeedTrend.sixHoursValue = sixAverage.windspeed;
-			out.averageWindspeedTrend.eightHoursValue = eightAverage.windspeed;
+			out.average_wind_speed_trend.current_value = current.windspeed;
+			out.average_wind_speed_trend.two_hours_value = twoAverage.windspeed;
+			out.average_wind_speed_trend.four_hours_value = fourAverage.windspeed;
+			out.average_wind_speed_trend.six_hours_value = sixAverage.windspeed;
+			out.average_wind_speed_trend.eight_hours_value = eightAverage.windspeed;
 		
-			out.maximumWindpseedTrend.currentValue = current.windgusts;
-			out.maximumWindpseedTrend.twoHoursValue = twoAverage.windgusts;
-			out.maximumWindpseedTrend.fourHoursValue = fourAverage.windgusts;
-			out.maximumWindpseedTrend.sixHoursValue = sixAverage.windgusts;
-			out.maximumWindpseedTrend.eightHoursValue = eightAverage.windgusts;
+			out.maximum_wind_speed_trend.current_value = current.windgusts;
+			out.maximum_wind_speed_trend.two_hours_value = twoAverage.windgusts;
+			out.maximum_wind_speed_trend.four_hours_value = fourAverage.windgusts;
+			out.maximum_wind_speed_trend.six_hours_value = sixAverage.windgusts;
+			out.maximum_wind_speed_trend.eight_hours_value = eightAverage.windgusts;
 			
-			out.windDirectionTrend.currentValue = current.winddir;
-			out.windDirectionTrend.twoHoursValue = twoAverage.winddir;
-			out.windDirectionTrend.fourHoursValue = fourAverage.winddir;
-			out.windDirectionTrend.sixHoursValue = sixAverage.winddir;
-			out.windDirectionTrend.eightHoursValue = eightAverage.winddir;
+			out.wind_direction_trend.current_value = current.winddir;
+			out.wind_direction_trend.two_hours_value = twoAverage.winddir;
+			out.wind_direction_trend.four_hours_value = fourAverage.winddir;
+			out.wind_direction_trend.six_hours_value = sixAverage.winddir;
+			out.wind_direction_trend.eight_hours_value = eightAverage.winddir;
 		}
 		else {
 			throw new NotFoundException();

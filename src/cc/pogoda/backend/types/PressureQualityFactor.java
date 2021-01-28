@@ -4,7 +4,8 @@ public enum PressureQualityFactor {
 	
 	FULL,
 	DEGRADED,
-	NOT_AVALIABLE;
+	NOT_AVALIABLE,
+	NO_DATA;
 	
 	public static PressureQualityFactor fromBits(byte value, int version) {
 		
