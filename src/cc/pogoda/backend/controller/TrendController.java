@@ -59,19 +59,25 @@ public class TrendController {
 		BigDecimal rounded;
 		
 		StationData current = dataDao.getCurrentStationData(station);
-		
+
 		long currentUtcTimestamp = ZonedDateTime.now().withZoneSameInstant(ZoneId.of("UTC")).toEpochSecond();
 		
-		if (current != null) {
-			
-			StationDefinition stationDefinition = stationsDefinitionDao.getStationByName(station);
+		StationDefinition stationDefinition = stationsDefinitionDao.getStationByName(station);
+
+		WindQualityFactor wind_qf = WindQualityFactor.NO_DATA;
+		TemperatureQualityFactor temperature_qf = TemperatureQualityFactor.NO_DATA;
+		PressureQualityFactor pressure_qf = PressureQualityFactor.NO_DATA;
+		HumidityQualityFactor humidity_qf = HumidityQualityFactor.NO_DATA;
+		
+		if (current != null && stationDefinition != null) {
 			
 			Telemetry t = telemetry.getTelemetryFromStationName(station);
-			
-			WindQualityFactor wind_qf =  WindQualityFactor.fromBits((byte) t.digital, stationDefinition.telemetryVersion);
-			TemperatureQualityFactor temperature_qf = TemperatureQualityFactor.fromBits((byte) t.digital, stationDefinition.telemetryVersion);
-			PressureQualityFactor pressure_qf = PressureQualityFactor.fromBits((byte) t.digital, stationDefinition.telemetryVersion);
-			HumidityQualityFactor humidity_qf = HumidityQualityFactor.fromBits((byte) t.digital, stationDefinition.telemetryVersion);
+			if (t != null) {
+				wind_qf =  WindQualityFactor.fromBits((byte) t.digital, stationDefinition.telemetryVersion);
+				temperature_qf = TemperatureQualityFactor.fromBits((byte) t.digital, stationDefinition.telemetryVersion);
+				pressure_qf = PressureQualityFactor.fromBits((byte) t.digital, stationDefinition.telemetryVersion);
+				humidity_qf = HumidityQualityFactor.fromBits((byte) t.digital, stationDefinition.telemetryVersion);
+			}
 			
 			long lastDataTimestamp = current.epoch;
 			
@@ -88,11 +94,12 @@ public class TrendController {
 			}
 			
 			// check if station transmit data
-			if (currentUtcTimestamp - lastDataTimestamp > 3600) {
+			if (t == null || currentUtcTimestamp - lastDataTimestamp > 3600) {
 				// if last data is older than one hour set all Quality factor to non avaliable
 				wind_qf = WindQualityFactor.NO_DATA;
 				pressure_qf = PressureQualityFactor.NO_DATA;
 				humidity_qf = HumidityQualityFactor.NO_DATA;
+				temperature_qf = TemperatureQualityFactor.NO_DATA;
 			}
 			
 			if (!notRounded) {
@@ -101,6 +108,7 @@ public class TrendController {
 			}
 			
 			out.last_timestamp = current.epoch;		// a timestamp of current data in UTC timezone
+			out.displayed_name = stationDefinition.displayedName;
 			out.current_qnh_qf = pressure_qf.toString();
 			out.current_wind_qf = wind_qf.toString();
 			out.current_temperature_qf = temperature_qf.toString();

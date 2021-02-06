@@ -32,13 +32,13 @@ public class LastDataController {
 		
 		if (data != null) {
 			
-			out.listOfStationData = new StationData[data.size()];
+			out.list_of_station_data = new StationData[data.size()];
 			
 			if (ascendingOrder) {
 				i = data.size() - 1;
 				
 				for (StationData d : data) {
-					out.listOfStationData[i] = d;
+					out.list_of_station_data[i] = d;
 					
 					i--;
 					
@@ -48,7 +48,7 @@ public class LastDataController {
 			}
 			else {
 				for (StationData d : data) {
-					out.listOfStationData[i] = d;
+					out.list_of_station_data[i] = d;
 					
 					i++;
 				}

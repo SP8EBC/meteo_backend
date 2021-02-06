@@ -4,7 +4,8 @@ public enum TemperatureQualityFactor {
 
 	FULL,
 	DEGRADED,
-	NOT_AVALIABLE;
+	NOT_AVALIABLE,
+	NO_DATA;
 	
 	public static TemperatureQualityFactor fromBits(byte value, int version) {	
 		

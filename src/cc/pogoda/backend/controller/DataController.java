@@ -31,7 +31,7 @@ public class DataController{
 	
 		ListOfStationData out = new ListOfStationData();
 		
-		out.listOfStationData = dataDao.getStationData(name, from, to).toArray(new StationData[0]);
+		out.list_of_station_data = dataDao.getStationData(name, from, to).toArray(new StationData[0]);
 		
 		return out;
 		
