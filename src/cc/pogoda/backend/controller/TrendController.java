@@ -72,11 +72,17 @@ public class TrendController {
 		if (current != null && stationDefinition != null) {
 			
 			Telemetry t = telemetry.getTelemetryFromStationName(station);
-			if (t != null) {
+			if (t != null && stationDefinition.telemetryVersion != 0) {
 				wind_qf =  WindQualityFactor.fromBits((byte) t.digital, stationDefinition.telemetryVersion);
 				temperature_qf = TemperatureQualityFactor.fromBits((byte) t.digital, stationDefinition.telemetryVersion);
 				pressure_qf = PressureQualityFactor.fromBits((byte) t.digital, stationDefinition.telemetryVersion);
 				humidity_qf = HumidityQualityFactor.fromBits((byte) t.digital, stationDefinition.telemetryVersion);
+			}
+			else {
+				wind_qf =  WindQualityFactor.FULL;
+				temperature_qf = TemperatureQualityFactor.FULL;
+				pressure_qf = PressureQualityFactor.FULL;
+				humidity_qf = HumidityQualityFactor.FULL;
 			}
 			
 			long lastDataTimestamp = current.epoch;
@@ -94,7 +100,7 @@ public class TrendController {
 			}
 			
 			// check if station transmit data
-			if (t == null || currentUtcTimestamp - lastDataTimestamp > 3600) {
+			if (currentUtcTimestamp - lastDataTimestamp > 3600) {
 				// if last data is older than one hour set all Quality factor to non avaliable
 				wind_qf = WindQualityFactor.NO_DATA;
 				pressure_qf = PressureQualityFactor.NO_DATA;

@@ -38,16 +38,29 @@ public class SummaryController {
 	
 		long currentUtcTimestamp = ZonedDateTime.now().withZoneSameInstant(ZoneId.of("UTC")).toEpochSecond();
 		
+		WindQualityFactor wind_qf;
+		TemperatureQualityFactor temperature_qf;
+		PressureQualityFactor pressure_qf;
+		HumidityQualityFactor humidity_qf;
+		
 		if (s != null) {
 			
 			StationDefinition stationDefinition = stationsDefinitionDao.getStationByName(station);
 			
 			Telemetry t = telemetry.getTelemetryFromStationName(station);
 			
-			WindQualityFactor wind_qf =  WindQualityFactor.fromBits((byte) t.digital, stationDefinition.telemetryVersion);
-			TemperatureQualityFactor temperature_qf = TemperatureQualityFactor.fromBits((byte) t.digital, stationDefinition.telemetryVersion);
-			PressureQualityFactor pressure_qf = PressureQualityFactor.fromBits((byte) t.digital, stationDefinition.telemetryVersion);
-			HumidityQualityFactor humidity_qf = HumidityQualityFactor.fromBits((byte) t.digital, stationDefinition.telemetryVersion);
+			if (t != null && stationDefinition.telemetryVersion != 0) {
+				wind_qf =  WindQualityFactor.fromBits((byte) t.digital, stationDefinition.telemetryVersion);
+				temperature_qf = TemperatureQualityFactor.fromBits((byte) t.digital, stationDefinition.telemetryVersion);
+				pressure_qf = PressureQualityFactor.fromBits((byte) t.digital, stationDefinition.telemetryVersion);
+				humidity_qf = HumidityQualityFactor.fromBits((byte) t.digital, stationDefinition.telemetryVersion);
+			}
+			else {
+				wind_qf = WindQualityFactor.FULL;
+				temperature_qf = TemperatureQualityFactor.FULL;
+				pressure_qf = PressureQualityFactor.FULL;
+				humidity_qf = HumidityQualityFactor.FULL;
+			}
 			
 			if (!stationDefinition.hasWind) {
 				wind_qf = WindQualityFactor.NOT_AVALIABLE;
