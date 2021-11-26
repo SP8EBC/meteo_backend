@@ -82,6 +82,9 @@ public class StationData extends MeteoData {
 	
 	public static StationData averageFromList(List<StationData> data, boolean doesntRound) {
 		StationData out = new StationData();
+
+		// rouding to four significant figures for pressure > 1000hPa
+		MathContext mathContextFive = new MathContext(5, RoundingMode.HALF_EVEN);
 		
 		// rouding to four significant figures for pressure
 		MathContext mathContextFour = new MathContext(4, RoundingMode.HALF_EVEN);
@@ -160,7 +163,12 @@ public class StationData extends MeteoData {
 				out.windspeed = rounded.floatValue();
 				
 				// rounding pressure
-				rounded = new BigDecimal(out.pressure, mathContextFour);
+				if (out.pressure >= 1000.0f) {
+					rounded = new BigDecimal(out.pressure, mathContextFive);
+				}
+				else {
+					rounded = new BigDecimal(out.pressure, mathContextFour);
+				}
 				out.pressure = rounded.floatValue();
 			}
 			
