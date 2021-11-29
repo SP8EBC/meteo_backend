@@ -21,7 +21,7 @@ public class StationLocalTime {
 	@Autowired
 	StationsDefinitionDao definitionDao;
 	
-	@RequestMapping(value = "/stationCurrentLocalTime/{stationName}", produces = "application/json;charset=UTF-8")
+	@RequestMapping(value = "/station/{stationName}/stationCurrentLocalTime", produces = "application/json;charset=UTF-8")
 	public StationCurrentLocalTime stationLocalTimeController(@PathVariable(required = true) String stationName) throws NotFoundException {
 		
 		StationCurrentLocalTime out = new StationCurrentLocalTime();

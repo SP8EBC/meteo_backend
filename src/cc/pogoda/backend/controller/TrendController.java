@@ -8,6 +8,7 @@ import java.time.ZonedDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -47,8 +48,8 @@ public class TrendController {
 	
 	private final static int averageWindowLn = 900;
 	
-	@RequestMapping(value = "/trend", produces = "application/json;charset=UTF-8")
-	public Trend getTrendPerStationName(@RequestParam(name="station")String station, @RequestParam(defaultValue =  "false", name="notRounded", required = false)boolean notRounded) throws NotFoundException {
+	@RequestMapping(value = "/station/{stationName}/trend", produces = "application/json;charset=UTF-8")
+	public Trend getTrendPerStationName(@PathVariable(required = true)String stationName, @RequestParam(defaultValue =  "false", name="notRounded", required = false)boolean notRounded) throws NotFoundException {
 		
 		Trend out = new Trend();
 		
@@ -58,11 +59,11 @@ public class TrendController {
 		// used to round double to certain significant figures
 		BigDecimal rounded;
 		
-		StationData current = dataDao.getCurrentStationData(station);
+		StationData current = dataDao.getCurrentStationData(stationName);
 
 		long currentUtcTimestamp = ZonedDateTime.now().withZoneSameInstant(ZoneId.of("UTC")).toEpochSecond();
 		
-		StationDefinition stationDefinition = stationsDefinitionDao.getStationByName(station);
+		StationDefinition stationDefinition = stationsDefinitionDao.getStationByName(stationName);
 
 		WindQualityFactor wind_qf = WindQualityFactor.NO_DATA;
 		TemperatureQualityFactor temperature_qf = TemperatureQualityFactor.NO_DATA;
@@ -71,7 +72,7 @@ public class TrendController {
 		
 		if (current != null && stationDefinition != null) {
 			
-			Telemetry t = telemetry.getTelemetryFromStationName(station);
+			Telemetry t = telemetry.getTelemetryFromStationName(stationName);
 			if (t != null && stationDefinition.telemetryVersion != 0) {
 				wind_qf =  WindQualityFactor.fromBits((byte) t.digital, stationDefinition.telemetryVersion);
 				temperature_qf = TemperatureQualityFactor.fromBits((byte) t.digital, stationDefinition.telemetryVersion);
@@ -120,10 +121,10 @@ public class TrendController {
 			out.current_temperature_qf = temperature_qf.toString();
 			out.current_humidity_qf = humidity_qf.toString();
 			
-			List<StationData> dataTwo = dataDao.getStationData(station, lastDataTimestamp - twoHours - averageWindowLn, lastDataTimestamp - twoHours + averageWindowLn);
-			List<StationData> dataFour = dataDao.getStationData(station, lastDataTimestamp - fourHours - averageWindowLn, lastDataTimestamp - fourHours + averageWindowLn);
-			List<StationData> dataSix = dataDao.getStationData(station, lastDataTimestamp - sixHours - averageWindowLn, lastDataTimestamp - sixHours + averageWindowLn);
-			List<StationData> dataEight = dataDao.getStationData(station, lastDataTimestamp - eightHours - averageWindowLn, lastDataTimestamp - eightHours + averageWindowLn);
+			List<StationData> dataTwo = dataDao.getStationData(stationName, lastDataTimestamp - twoHours - averageWindowLn, lastDataTimestamp - twoHours + averageWindowLn);
+			List<StationData> dataFour = dataDao.getStationData(stationName, lastDataTimestamp - fourHours - averageWindowLn, lastDataTimestamp - fourHours + averageWindowLn);
+			List<StationData> dataSix = dataDao.getStationData(stationName, lastDataTimestamp - sixHours - averageWindowLn, lastDataTimestamp - sixHours + averageWindowLn);
+			List<StationData> dataEight = dataDao.getStationData(stationName, lastDataTimestamp - eightHours - averageWindowLn, lastDataTimestamp - eightHours + averageWindowLn);
 			
 			StationData twoAverage = StationData.averageFromList(dataTwo, notRounded);
 			StationData fourAverage = StationData.averageFromList(dataFour, notRounded);

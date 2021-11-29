@@ -1,6 +1,7 @@
 package cc.pogoda.backend.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,9 +19,9 @@ public class DataController{
 	@Autowired
 	StationDataDao dataDao;
 	
-	@RequestMapping(value = "/stationData", produces = "application/json;charset=UTF-8")
+	@RequestMapping(value = "/station/{stationName}/stationData", produces = "application/json;charset=UTF-8")
 	public ListOfStationData getStationDataPerName(
-													@RequestParam(value="station")String name, 
+													@PathVariable(required = true)String stationName, 
 													@RequestParam(value="from")long from,
 													@RequestParam(value="to")long to) throws TooLongException 
 	{
@@ -31,7 +32,7 @@ public class DataController{
 	
 		ListOfStationData out = new ListOfStationData();
 		
-		out.list_of_station_data = dataDao.getStationData(name, from, to).toArray(new StationData[0]);
+		out.list_of_station_data = dataDao.getStationData(stationName, from, to).toArray(new StationData[0]);
 		
 		return out;
 		

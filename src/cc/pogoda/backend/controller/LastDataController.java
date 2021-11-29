@@ -3,6 +3,7 @@ package cc.pogoda.backend.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,8 +19,8 @@ public class LastDataController {
 	@Autowired
 	StationDataDao dataDao;
 	
-	@RequestMapping(value = "/lastStationData", produces = "application/json;charset=UTF-8")
-	public ListOfStationData getLastStationDataPerName(	@RequestParam(value="station")String name, 
+	@RequestMapping(value = "/station/{stationName}/lastStationData", produces = "application/json;charset=UTF-8")
+	public ListOfStationData getLastStationDataPerName(	@PathVariable(required = true)String stationName, 
 														@RequestParam(value="ascendingOrder", defaultValue = "false")boolean ascendingOrder, 
 														@RequestParam(value="isLong", defaultValue = "false")boolean isLong) throws NotFoundException {
 		int i = 0;
@@ -28,7 +29,7 @@ public class LastDataController {
 		
 		List<StationData> data;
 		
-		data = dataDao.getStationDataPerName(name, false, isLong);
+		data = dataDao.getStationDataPerName(stationName, false, isLong);
 		
 		if (data != null) {
 			
