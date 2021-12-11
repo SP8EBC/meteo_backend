@@ -14,7 +14,7 @@ import cc.pogoda.backend.types.view.ListOfStationData;
 @RestController
 public class DataController{
 
-	final static int maxLenght = 3600 * 24 * 7;		// 7 days
+	final static int maxLenght = 3600 * 24 * 9;		// 7 days
 	
 	@Autowired
 	StationDataDao dataDao;
