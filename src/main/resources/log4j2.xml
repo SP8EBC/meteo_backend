@@ -4,13 +4,13 @@
 
     <Appenders>
         <Console name="Console" target="SYSTEM_OUT">
-            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - A %msg%n"/>
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
         </Console>
 
-        <RollingRandomAccessFile name="RollingRandomAccessFileDebug" fileName="/var/log/tomcat8/debug.log"
+        <RollingRandomAccessFile name="RollingRandomAccessFileDebug" fileName="/var/log/tomcat8/meteo_backend/debug"
                                  filePattern="logs/$${date:yyyy-MM}/etl-%d{MM-dd-yyyy}-%i.log.gz"
                                  immediateFlush="false"
-                                 append="false">
+                                 append="true">
             <PatternLayout>
                 <Pattern>%d %p %c{1.} [%t] %m%n</Pattern>
             </PatternLayout>
@@ -19,10 +19,10 @@
                 <SizeBasedTriggeringPolicy size="250 MB"/>
             </Policies>
         </RollingRandomAccessFile>
-        <RollingRandomAccessFile name="RollingRandomAccessFile" fileName="/var/log/tomcat8/info.log"
+        <RollingRandomAccessFile name="RollingRandomAccessFile" fileName="/var/log/tomcat8/meteo_backend/info"
                                  filePattern="logs/$${date:yyyy-MM}/etl-%d{MM-dd-yyyy}-%i.log.gz"
                                  immediateFlush="false"
-                                 append="false">
+                                 append="true">
             <PatternLayout>
                 <Pattern>%d %p %c{1.} [%t] %m%n</Pattern>
             </PatternLayout>

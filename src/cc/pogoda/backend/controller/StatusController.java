@@ -6,6 +6,7 @@ import java.time.ZonedDateTime;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import cc.pogoda.backend.config.Consts;
@@ -17,7 +18,7 @@ public class StatusController {
 	
     private static Logger logger = LogManager.getLogger();
 	
-	@RequestMapping(value = "/status", produces = "application/json;charset=UTF-8")
+	@RequestMapping(value = "/status", produces = "application/json;charset=UTF-8", method = RequestMethod.GET)
 	public Status status() {
 		Status out = new Status();
 		

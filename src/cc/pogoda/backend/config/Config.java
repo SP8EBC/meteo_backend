@@ -42,7 +42,7 @@ public class Config {
 		}
 		
 		DriverManagerDataSource out = new DriverManagerDataSource();
-		out.setUrl("jdbc:mysql://localhost:3306/aprs2rrd?useSSL=false");
+		out.setUrl("jdbc:mysql://localhost:3306/aprs2rrd?useSSL=false&serverTimezone=UTC");
 		out.setDriverClassName("com.mysql.cj.jdbc.Driver");
 		out.setUsername("aprs2rrd");
 		out.setPassword("qwertyuiop");
