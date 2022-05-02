@@ -8,7 +8,7 @@
         </Console>
 
         <RollingRandomAccessFile name="RollingRandomAccessFileDebug" fileName="/var/log/tomcat8/meteo_backend/debug"
-                                 filePattern="logs/$${date:yyyy-MM}/etl-%d{MM-dd-yyyy}-%i.log.gz"
+                                 filePattern="/var/log/tomcat8/meteo_backend/$${date:yyyy-MM}/debug-%d{MM-dd-yyyy}-%i.log.gz"
                                  immediateFlush="false"
                                  append="true">
             <PatternLayout>
@@ -20,7 +20,7 @@
             </Policies>
         </RollingRandomAccessFile>
         <RollingRandomAccessFile name="RollingRandomAccessFile" fileName="/var/log/tomcat8/meteo_backend/info"
-                                 filePattern="logs/$${date:yyyy-MM}/etl-%d{MM-dd-yyyy}-%i.log.gz"
+                                 filePattern="/var/log/tomcat8/meteo_backend/$${date:yyyy-MM}/info-%d{MM-dd-yyyy}-%i.log.gz"
                                  immediateFlush="false"
                                  append="true">
             <PatternLayout>
@@ -39,7 +39,7 @@
         <Root  level="TRACE">
             <AppenderRef ref="RollingRandomAccessFileDebug" level="DEBUG"/>
             <AppenderRef ref="RollingRandomAccessFile" level="INFO"/>
-            <AppenderRef ref="Console"  level="TRACE"/>
+            <AppenderRef ref="Console"  level="INFO"/>
         </Root>
     </Loggers>
 </Configuration>
