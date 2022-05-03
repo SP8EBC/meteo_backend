@@ -4,6 +4,8 @@ import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
 import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
+import java.time.ZoneOffset;
 import java.util.List;
 
 import javax.persistence.Basic;
@@ -70,6 +72,7 @@ public class StationData extends MeteoData {
 		
 		out.id = this.id;
 //		out.timestampEpoch = this.datetime;
+		out.timestampEpoch = LocalDateTime.ofEpochSecond(this.epoch, 0, ZoneOffset.ofTotalSeconds(OffsetDateTime.now().getOffset().getTotalSeconds()));
 		out.Temp = this.temperature;
 		out.WindSpeed = this.windspeed;
 		out.WindGusts = this.windgusts;

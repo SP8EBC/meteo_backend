@@ -2,12 +2,15 @@ package cc.pogoda.backend.dao;
 
 import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -42,6 +45,7 @@ public class SummaryDao {
 	@Autowired
 	StationDataRepo stationDataRepo;
 	
+    private static Logger logger = LogManager.getLogger();
 	
 	@Transactional
 	public Summary getSummaryPerStationName(String call) {
@@ -78,10 +82,14 @@ public class SummaryDao {
 				
 		}
 		
+		logger.info("[SummaryDao][getSummaryPerStationName][genericData.size() = " + genericData.size() +"]");
+		
 		if (genericData.size() > 2) {
 		
 			GenericMeteoData newest = genericData.get(0);
 			LocalDateTime minush = newest.timestampEpoch.minusHours(1);
+			
+			logger.info("[SummaryDao][getSummaryPerStationName][minush = " + minush.format(DateTimeFormatter.ISO_DATE) +"][out.last_timestamp = " + out.last_timestamp +"][newest = " + newest.toString() +"]");
 			
 			out.last_timestamp = newest.timestampEpoch.toEpochSecond(OffsetDateTime.now().getOffset());
 			
