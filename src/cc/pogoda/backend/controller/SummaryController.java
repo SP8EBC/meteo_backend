@@ -3,6 +3,10 @@ package cc.pogoda.backend.controller;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,11 +37,17 @@ public class SummaryController {
 	@Autowired
 	StationsDefinitionDao stationsDefinitionDao;
 	
+	private @Autowired HttpServletRequest request;
+	
+    private static Logger logger = LogManager.getLogger();
+	
 	@RequestMapping(value = "/station/{stationName}/summary", produces = "application/json;charset=UTF-8")
 	public Summary summaryControlerNew(@PathVariable(required = true)String stationName) throws NotFoundException {
 		Summary s = dao.getSummaryPerStationName(stationName);
 	
 		long currentUtcTimestamp = ZonedDateTime.now().withZoneSameInstant(ZoneId.of("UTC")).toEpochSecond();
+		
+		logger.info("[SummaryController][summaryControlerNew][request.getRemoteAddr() = " + request.getRemoteAddr() + "][stationName = " + stationName +"][s = " + s.toString() +"]");
 		
 		WindQualityFactor wind_qf;
 		TemperatureQualityFactor temperature_qf;
@@ -99,6 +109,8 @@ public class SummaryController {
 	public Summary summaryControlerOld(@RequestParam(value="station")String station) throws NotFoundException {
 		Summary s = dao.getSummaryPerStationName(station);
 	
+		logger.info("[SummaryController][summaryControlerOld][request.getRemoteAddr() = " + request.getRemoteAddr() + "][station = " + station +"][s = " + s.toString() +"]");
+		
 		long currentUtcTimestamp = ZonedDateTime.now().withZoneSameInstant(ZoneId.of("UTC")).toEpochSecond();
 		
 		WindQualityFactor wind_qf;

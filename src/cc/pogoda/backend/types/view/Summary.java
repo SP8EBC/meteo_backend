@@ -32,4 +32,8 @@ public class Summary {
 	
 	public String wind_qf;
 	
+	
+	public String toString() {
+		return "[Summary][last_timestamp = " + last_timestamp +"][number_of_measurements = " + number_of_measurements +"]";
+	}
 }

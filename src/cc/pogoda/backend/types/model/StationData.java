@@ -25,8 +25,8 @@ public class StationData extends MeteoData {
 	@Basic
 	public long epoch;
 	
-	@Basic
-	public LocalDateTime datetime;
+//	@Basic
+//	public LocalDateTime datetime;
 	
 	@Basic
 	public String station;
@@ -69,7 +69,7 @@ public class StationData extends MeteoData {
 		GenericMeteoData out = new GenericMeteoData();
 		
 		out.id = this.id;
-		out.timestampEpoch = this.datetime;
+//		out.timestampEpoch = this.datetime;
 		out.Temp = this.temperature;
 		out.WindSpeed = this.windspeed;
 		out.WindGusts = this.windgusts;

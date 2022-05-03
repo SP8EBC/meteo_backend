@@ -4,6 +4,8 @@ import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.Map;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,6 +22,8 @@ public class StationLocalTime {
 
 	@Autowired
 	StationsDefinitionDao definitionDao;
+	
+    private static Logger logger = LogManager.getLogger();
 	
 	@RequestMapping(value = "/station/{stationName}/stationCurrentLocalTime", produces = "application/json;charset=UTF-8")
 	public StationCurrentLocalTime stationLocalTimeController(@PathVariable(required = true) String stationName) throws NotFoundException {

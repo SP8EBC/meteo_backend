@@ -69,4 +69,8 @@ public class StationDefinition {
 	
 	@Basic
 	public byte telemetryVersion;
+	
+	public String toString() {
+		return "[StationDefinition][id = " + id + "][name = " + name + "][enabled = " + enabled +"][callsign = " + callsign +"][displayedName = " + displayedName + "][telemetryVersion = " + telemetryVersion + "]";
+	}
 }

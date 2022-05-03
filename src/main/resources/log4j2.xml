@@ -7,9 +7,9 @@
             <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
         </Console>
 
-        <RollingRandomAccessFile name="RollingRandomAccessFileDebug" fileName="/var/log/tomcat8/meteo_backend/debug"
-                                 filePattern="/var/log/tomcat8/meteo_backend/$${date:yyyy-MM}/debug-%d{MM-dd-yyyy}-%i.log.gz"
-                                 immediateFlush="false"
+        <RollingRandomAccessFile name="RollingRandomAccessFileDebug" fileName="/var/log/tomcat8/meteo_backend/error"
+                                 filePattern="/var/log/tomcat8/meteo_backend/$${date:yyyy-MM}/error-%d{MM-dd-yyyy}-%i.log.gz"
+                                 immediateFlush="true"
                                  append="true">
             <PatternLayout>
                 <Pattern>%d %p %c{1.} [%t] %m%n</Pattern>
@@ -21,7 +21,7 @@
         </RollingRandomAccessFile>
         <RollingRandomAccessFile name="RollingRandomAccessFile" fileName="/var/log/tomcat8/meteo_backend/info"
                                  filePattern="/var/log/tomcat8/meteo_backend/$${date:yyyy-MM}/info-%d{MM-dd-yyyy}-%i.log.gz"
-                                 immediateFlush="false"
+                                 immediateFlush="true"
                                  append="true">
             <PatternLayout>
                 <Pattern>%d %p %c{1.} [%t] %m%n</Pattern>
@@ -37,7 +37,7 @@
     </Appenders>
     <Loggers>
         <Root  level="TRACE">
-            <AppenderRef ref="RollingRandomAccessFileDebug" level="DEBUG"/>
+            <AppenderRef ref="RollingRandomAccessFileError" level="ERROR"/>
             <AppenderRef ref="RollingRandomAccessFile" level="INFO"/>
             <AppenderRef ref="Console"  level="INFO"/>
         </Root>

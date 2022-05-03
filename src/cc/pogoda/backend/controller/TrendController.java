@@ -7,6 +7,8 @@ import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -48,8 +50,12 @@ public class TrendController {
 	
 	private final static int averageWindowLn = 900;
 	
+    private static Logger logger = LogManager.getLogger();
+	
 	@RequestMapping(value = "/station/{stationName}/trend", produces = "application/json;charset=UTF-8")
 	public Trend getTrendPerStationName(@PathVariable(required = true)String stationName, @RequestParam(defaultValue =  "false", name="notRounded", required = false)boolean notRounded) throws NotFoundException {
+		
+		logger.info("[TrendController][getTrendPerStationName][stationName = " + stationName +"][notRounded = " + notRounded + "]");
 		
 		Trend out = new Trend();
 		
@@ -65,6 +71,8 @@ public class TrendController {
 		
 		StationDefinition stationDefinition = stationsDefinitionDao.getStationByName(stationName);
 
+		logger.info("[getTrendPerStationName][stationName = " + stationName + "][stationDefinition = " + stationDefinition.toString() +"]");
+		
 		WindQualityFactor wind_qf = WindQualityFactor.NO_DATA;
 		TemperatureQualityFactor temperature_qf = TemperatureQualityFactor.NO_DATA;
 		PressureQualityFactor pressure_qf = PressureQualityFactor.NO_DATA;
@@ -99,6 +107,8 @@ public class TrendController {
 			if (!stationDefinition.hasHumidity) {
 				humidity_qf = HumidityQualityFactor.NOT_AVALIABLE;
 			}
+			
+			logger.info("[getTrendPerStationName][stationName = " + stationName + "][currentUtcTimestamp = " + currentUtcTimestamp +"][lastDataTimestamp = " + lastDataTimestamp +"]");
 			
 			// check if station transmit data
 			if (currentUtcTimestamp - lastDataTimestamp > 3600) {
