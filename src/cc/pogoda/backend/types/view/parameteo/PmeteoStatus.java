@@ -2,6 +2,10 @@ package cc.pogoda.backend.types.view.parameteo;
 
 public class PmeteoStatus {
 	
+	public String sw_ver;
+	
+	public String sw_date;
+	
 	public String callsign;
 	
 	public byte ssid;

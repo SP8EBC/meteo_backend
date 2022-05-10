@@ -16,11 +16,15 @@ public class PmeteoMeasurements {
 	
 	short wind_average;
 	
-	short wind_current_instantaneous;
+	short wind_gust;
+	
+	short wind_current;
 	
 	short wind_minimal;
 	
-	short wind_gust;
+	int pwm_first;
+	
+	int pwm_second;
 	
 	public String toString() {
 		return "[PmeteoMeasurements][temperature_dallas = " + temperature_dallas +"][pressure = " + pressure +"][wind_direction = " + wind_direction +"]";

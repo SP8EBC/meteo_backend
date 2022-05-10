@@ -16,7 +16,7 @@ public class PMeteoMeasurementsController {
     private static Logger logger = LogManager.getLogger();
 
     
-	@RequestMapping(value = "/parameteo/{stationName}/measurements", produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
+	@RequestMapping(value = "/parameteo/{stationName}/measurements/v1", produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
 	public void postMeteoStatusForStation(@RequestBody PmeteoMeasurements measurements, @PathVariable(required = true)String stationName) {
 		
 		logger.info("[PMeteoStatusController][postMeteoStatusForStation][stationName = " + stationName +"][measurements = " + measurements +"]");
