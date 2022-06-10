@@ -2,9 +2,9 @@ package cc.pogoda.backend.dao.repository;
 
 import org.springframework.data.repository.CrudRepository;
 
-import cc.pogoda.backend.types.model.parameteo.PmeteoStatus;
+import cc.pogoda.backend.types.model.parameteo.PmeteoStatusModel;
 
-public interface PMeteoStatusCrudRepo extends CrudRepository<PmeteoStatus, Integer> {
+public interface PMeteoStatusCrudRepo extends CrudRepository<PmeteoStatusModel, Integer> {
 
-	PmeteoStatus findByStation(String station);
+	PmeteoStatusModel findByStation(String station);
 }

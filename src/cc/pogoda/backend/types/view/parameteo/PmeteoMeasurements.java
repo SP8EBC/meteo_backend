@@ -2,32 +2,65 @@ package cc.pogoda.backend.types.view.parameteo;
 
 public class PmeteoMeasurements {
 
-	short temperature_dallas;
+	public short temperature_dallas;
 	
-	short temperature_pt;
+	public short temperature_pt;
 	
-	short temperature_internal;
+	public short temperature_internal;
 	
-	short pressure;
+	public short temperature_modbus;
 	
-	short humidity;
+	public short pressure;
 	
-	short wind_direction;
+	public short humidity;
 	
-	short wind_average;
+	public short wind_direction;
 	
-	short wind_gust;
+	public short wind_average;
 	
-	short wind_current;
+	public short wind_gust;
 	
-	short wind_minimal;
+	public short wind_current;
 	
-	int pwm_first;
+	public short wind_minimal;
 	
-	int pwm_second;
+	public short pm2_5;
+	
+	public short pm10;
+	
+	public byte ssid;
+	
+	public int master_time;
+	
+	public String callsign;
+	
+	public String api_mac;
 	
 	public String toString() {
-		return "[PmeteoMeasurements][temperature_dallas = " + temperature_dallas +"][pressure = " + pressure +"][wind_direction = " + wind_direction +"]";
+		return "[PmeteoMeasurements][callsign = " + callsign +"][temperature_dallas = " + temperature_dallas +"][pressure = " + pressure +"][wind_direction = " + wind_direction +"]";
 
 	}
+	/*
+	 * {
+"temperature_dallas":248,
+"temperature_pt":0,
+"temperature_internal":292,
+"temperature_modbus":269,
+"pressure":9402,
+"humidity":56,
+"wind_direction":261,
+"wind_average":0,
+"wind_gust":0,
+"wind_current":0,
+"wind_minimal":0,
+"pm2_5":21,
+"pm10":5,
+"ssid":1,
+"master_time":232250,
+"callsign":"ABAKUS",
+"api_mac":"00000000000000000000000000000000"} 
+	 * 
+	 * 
+	 */
 }
+

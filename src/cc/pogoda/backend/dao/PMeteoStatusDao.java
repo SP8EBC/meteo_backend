@@ -1,7 +1,5 @@
 package cc.pogoda.backend.dao;
 
-import java.time.LocalDateTime;
-import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 
 import javax.persistence.EntityManager;
@@ -23,12 +21,12 @@ public class PMeteoStatusDao {
 	EntityManager em;
 	
 	public void updateOrInsertStatus(PmeteoStatus view, String station) {
-		cc.pogoda.backend.types.model.parameteo.PmeteoStatus model;
+		cc.pogoda.backend.types.model.parameteo.PmeteoStatusModel model;
 		
 		model = statusRepo.findByStation(station);
 		
 		if (model == null) {
-			model = new cc.pogoda.backend.types.model.parameteo.PmeteoStatus();
+			model = new cc.pogoda.backend.types.model.parameteo.PmeteoStatusModel();
 			model.station = station;
 		}
 		

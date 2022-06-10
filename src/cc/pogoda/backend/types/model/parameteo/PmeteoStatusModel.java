@@ -9,7 +9,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "data_parameteo_status")
-public class PmeteoStatus {
+public class PmeteoStatusModel {
 	
 	@Id
 	@Basic
