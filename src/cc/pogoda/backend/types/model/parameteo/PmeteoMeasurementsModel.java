@@ -59,13 +59,7 @@ public class PmeteoMeasurementsModel {
 	public short pm10;
 	
 	@Basic
-	public byte ssid;
-	
-	@Basic
 	public int masterTime;
-	
-	@Basic
-	public String callsign;
 	
 	@Basic
 	public String apiMac;

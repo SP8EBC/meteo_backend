@@ -27,17 +27,19 @@ public class PmeteoMeasurements {
 	public short pm2_5;
 	
 	public short pm10;
-	
-	public byte ssid;
-	
+		
 	public int master_time;
-	
-	public String callsign;
-	
+		
 	public String api_mac;
 	
+	public int dallas_qf_curr;
+	
+	public int dallas_qf_err;
+	
+	public int rtu_io_errors;
+	
 	public String toString() {
-		return "[PmeteoMeasurements][callsign = " + callsign +"][temperature_dallas = " + temperature_dallas +"][pressure = " + pressure +"][wind_direction = " + wind_direction +"]";
+		return "[PmeteoMeasurements][temperature_dallas = " + temperature_dallas +"][pressure = " + pressure +"][wind_direction = " + wind_direction +"]";
 
 	}
 	/*

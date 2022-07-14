@@ -30,13 +30,11 @@ public class PMeteoMeasurementsDao {
 		model.epoch = ZonedDateTime.now().toEpochSecond();
 		
 		model.apiMac = m.api_mac;
-		model.callsign = m.callsign;
 		model.humidity = m.humidity;
 		model.masterTime = m.master_time;
 		model.pm10 = m.pm10;
 		model.pm2a5 = m.pm2_5;
 		model.pressure = m.pressure;
-		model.ssid = m.ssid;
 		model.temperatureDallas = m.temperature_dallas;
 		model.temperatureInternal = m.temperature_internal;
 		model.temperatureModbus = m.temperature_modbus;

@@ -27,7 +27,7 @@ import cc.pogoda.backend.dao.SummaryDao;
 @EnableJpaRepositories(basePackages = {"cc.pogoda.backend.dao.repository"})
 @ComponentScan("cc.pogoda.backend")
 public class Config {
-
+	
 	@Bean
 	public SummaryDao summaryDao() {
 		return new SummaryDao();
