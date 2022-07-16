@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import cc.pogoda.backend.dao.StationsDefinitionDao;
 import cc.pogoda.backend.types.NotFoundException;
-import cc.pogoda.backend.types.model.StationDefinition;
+import cc.pogoda.backend.types.model.StationDefinitionModel;
 import cc.pogoda.backend.types.view.StationCurrentLocalTime;
 
 @RestController
@@ -30,7 +30,7 @@ public class StationLocalTime {
 		
 		StationCurrentLocalTime out = new StationCurrentLocalTime();
 		
-		StationDefinition station = null;
+		StationDefinitionModel station = null;
 		
 		//String stationName;
 		

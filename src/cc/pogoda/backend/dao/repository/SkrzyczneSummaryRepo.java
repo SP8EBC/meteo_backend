@@ -4,9 +4,9 @@ import java.util.List;
 
 import org.springframework.data.repository.Repository;
 
-import cc.pogoda.backend.types.model.SkrzyczneMeteoData;
+import cc.pogoda.backend.types.model.SkrzyczneMeteoDataModel;
 
-public interface SkrzyczneSummaryRepo extends Repository<SkrzyczneMeteoData, Integer> {
+public interface SkrzyczneSummaryRepo extends Repository<SkrzyczneMeteoDataModel, Integer> {
 	
-	List<SkrzyczneMeteoData> findFirst50ByOrderByTimestampEpochDesc();
+	List<SkrzyczneMeteoDataModel> findFirst50ByOrderByTimestampEpochDesc();
 }

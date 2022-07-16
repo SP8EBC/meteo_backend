@@ -33,8 +33,8 @@ public enum StationsGroupCategory {
 		case 1: out = PARAGLIDING; break;
 		case 2: out = SAILING; break;
 		case 3: out = SKIING; break;
-		case 4: out = CITIES; break;
-		case 5:
+		case 4: out = MOUNTAINS; break;
+		case 5: out = CITIES; break;
 		}
 		
 		return out;

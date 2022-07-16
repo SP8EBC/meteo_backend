@@ -23,9 +23,9 @@ import cc.pogoda.backend.types.NotFoundException;
 import cc.pogoda.backend.types.PressureQualityFactor;
 import cc.pogoda.backend.types.TemperatureQualityFactor;
 import cc.pogoda.backend.types.WindQualityFactor;
-import cc.pogoda.backend.types.model.StationData;
-import cc.pogoda.backend.types.model.StationDefinition;
-import cc.pogoda.backend.types.model.Telemetry;
+import cc.pogoda.backend.types.model.StationDataModel;
+import cc.pogoda.backend.types.model.StationDefinitionModel;
+import cc.pogoda.backend.types.model.TelemetryModel;
 import cc.pogoda.backend.types.view.Trend;
 
 @RestController
@@ -65,11 +65,11 @@ public class TrendController {
 		// used to round double to certain significant figures
 		BigDecimal rounded;
 		
-		StationData current = dataDao.getCurrentStationData(stationName);
+		StationDataModel current = dataDao.getCurrentStationData(stationName);
 
 		long currentUtcTimestamp = ZonedDateTime.now().withZoneSameInstant(ZoneId.of("UTC")).toEpochSecond();
 		
-		StationDefinition stationDefinition = stationsDefinitionDao.getStationByName(stationName);
+		StationDefinitionModel stationDefinition = stationsDefinitionDao.getStationByName(stationName);
 
 		logger.info("[getTrendPerStationName][stationName = " + stationName + "][stationDefinition = " + stationDefinition.toString() +"]");
 		
@@ -80,7 +80,7 @@ public class TrendController {
 		
 		if (current != null && stationDefinition != null) {
 			
-			Telemetry t = telemetry.getTelemetryFromStationName(stationName);
+			TelemetryModel t = telemetry.getTelemetryFromStationName(stationName);
 			if (t != null && stationDefinition.telemetryVersion != 0) {
 				wind_qf =  WindQualityFactor.fromBits((byte) t.digital, stationDefinition.telemetryVersion);
 				temperature_qf = TemperatureQualityFactor.fromBits((byte) t.digital, stationDefinition.telemetryVersion);
@@ -131,15 +131,15 @@ public class TrendController {
 			out.current_temperature_qf = temperature_qf.toString();
 			out.current_humidity_qf = humidity_qf.toString();
 			
-			List<StationData> dataTwo = dataDao.getStationData(stationName, lastDataTimestamp - twoHours - averageWindowLn, lastDataTimestamp - twoHours + averageWindowLn);
-			List<StationData> dataFour = dataDao.getStationData(stationName, lastDataTimestamp - fourHours - averageWindowLn, lastDataTimestamp - fourHours + averageWindowLn);
-			List<StationData> dataSix = dataDao.getStationData(stationName, lastDataTimestamp - sixHours - averageWindowLn, lastDataTimestamp - sixHours + averageWindowLn);
-			List<StationData> dataEight = dataDao.getStationData(stationName, lastDataTimestamp - eightHours - averageWindowLn, lastDataTimestamp - eightHours + averageWindowLn);
+			List<StationDataModel> dataTwo = dataDao.getStationData(stationName, lastDataTimestamp - twoHours - averageWindowLn, lastDataTimestamp - twoHours + averageWindowLn);
+			List<StationDataModel> dataFour = dataDao.getStationData(stationName, lastDataTimestamp - fourHours - averageWindowLn, lastDataTimestamp - fourHours + averageWindowLn);
+			List<StationDataModel> dataSix = dataDao.getStationData(stationName, lastDataTimestamp - sixHours - averageWindowLn, lastDataTimestamp - sixHours + averageWindowLn);
+			List<StationDataModel> dataEight = dataDao.getStationData(stationName, lastDataTimestamp - eightHours - averageWindowLn, lastDataTimestamp - eightHours + averageWindowLn);
 			
-			StationData twoAverage = StationData.averageFromList(dataTwo, notRounded);
-			StationData fourAverage = StationData.averageFromList(dataFour, notRounded);
-			StationData sixAverage = StationData.averageFromList(dataSix, notRounded);
-			StationData eightAverage = StationData.averageFromList(dataEight, notRounded);
+			StationDataModel twoAverage = StationDataModel.averageFromList(dataTwo, notRounded);
+			StationDataModel fourAverage = StationDataModel.averageFromList(dataFour, notRounded);
+			StationDataModel sixAverage = StationDataModel.averageFromList(dataSix, notRounded);
+			StationDataModel eightAverage = StationDataModel.averageFromList(dataEight, notRounded);
 			
 			out.temperature_trend.current_value = current.temperature;
 			out.temperature_trend.two_hours_value = twoAverage.temperature;

@@ -18,7 +18,7 @@ import cc.pogoda.backend.types.MeteoData;
 
 @Entity
 @Table(name = "data_station")
-public class StationData extends MeteoData {
+public class StationDataModel extends MeteoData {
 
 	@Id
 	@Basic
@@ -83,8 +83,8 @@ public class StationData extends MeteoData {
 		return out;
 	}
 	
-	public static StationData averageFromList(List<StationData> data, boolean doesntRound) {
-		StationData out = new StationData();
+	public static StationDataModel averageFromList(List<StationDataModel> data, boolean doesntRound) {
+		StationDataModel out = new StationDataModel();
 
 		// rouding to four significant figures for pressure > 1000hPa
 		MathContext mathContextFive = new MathContext(5, RoundingMode.HALF_EVEN);
@@ -116,7 +116,7 @@ public class StationData extends MeteoData {
 			// the returned value of wind gusts is the maximum found in the input set
 			float gusts = 0.0f;
 			
-			for (StationData d : data) {
+			for (StationDataModel d : data) {
 				out.temperature += d.temperature;
 				out.pressure += d.pressure;
 				out.humidity += d.humidity;

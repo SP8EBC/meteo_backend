@@ -14,7 +14,7 @@ import cc.pogoda.backend.types.MeteoData;
 
 @Entity
 @Table(name = "bezmiech")
-public class BezmiechMeteoData extends MeteoData {
+public class BezmiechMeteoDataModel extends MeteoData {
 	
 	@Id
 	@Basic

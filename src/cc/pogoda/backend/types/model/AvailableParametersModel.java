@@ -1,6 +1,6 @@
 package cc.pogoda.backend.types.model;
 
-public class AvailableParameters {
+public class AvailableParametersModel {
 
 	
 	public boolean hasWind;

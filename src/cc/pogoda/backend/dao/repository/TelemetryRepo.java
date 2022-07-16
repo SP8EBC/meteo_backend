@@ -2,9 +2,9 @@ package cc.pogoda.backend.dao.repository;
 
 import org.springframework.data.repository.Repository;
 
-import cc.pogoda.backend.types.model.Telemetry;
+import cc.pogoda.backend.types.model.TelemetryModel;
 
-public interface TelemetryRepo extends Repository<Telemetry, Integer> {
+public interface TelemetryRepo extends Repository<TelemetryModel, Integer> {
 
-	Telemetry findTopByStationOrderByIdDesc(String station);
+	TelemetryModel findTopByStationOrderByIdDesc(String station);
 }

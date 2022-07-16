@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.web.context.WebApplicationContext;
 
 import cc.pogoda.backend.dao.repository.StationsDefinitionRepo;
-import cc.pogoda.backend.types.model.StationDefinition;
+import cc.pogoda.backend.types.model.StationDefinitionModel;
 
 @Repository
 public class StationsDefinitionDao {
@@ -24,16 +24,16 @@ public class StationsDefinitionDao {
 	@PersistenceContext
 	EntityManager em;
 	
-	public List<StationDefinition> getListOfAllStations() {
+	public List<StationDefinitionModel> getListOfAllStations() {
 		
-		List<StationDefinition> out = null;
+		List<StationDefinitionModel> out = null;
 		
 		out = repo.findAll();
 		
 		return out;
 	}
 	
-	public StationDefinition getStationByName(String name) {
+	public StationDefinitionModel getStationByName(String name) {
 		
 		return repo.findByName(name);
 	}

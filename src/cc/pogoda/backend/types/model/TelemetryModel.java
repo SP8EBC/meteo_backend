@@ -10,7 +10,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "data_telemetry")
-public class Telemetry {
+public class TelemetryModel {
 
 	@Id
 	@Basic

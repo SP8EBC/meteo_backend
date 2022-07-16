@@ -1,5 +1,6 @@
 package cc.pogoda.backend.controller;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
@@ -10,8 +11,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import cc.pogoda.backend.dao.StationsGroupDao;
-import cc.pogoda.backend.types.model.StationsGroup;
-import cc.pogoda.backend.types.view.StationsGroupView;
+import cc.pogoda.backend.types.model.StationsGroupModel;
+import cc.pogoda.backend.types.view.LocaleEntry;
+import cc.pogoda.backend.types.view.StationsGroup;
 
 @RestController
 public class StationGroupsController {
@@ -22,7 +24,23 @@ public class StationGroupsController {
     private StationsGroupDao dao;
     
 	@RequestMapping(value = "/groups/all", produces = "application/json;charset=UTF-8", method = RequestMethod.GET)
-    public List<StationsGroupView> getAllGroups() {
-    	return dao.getAll();
+    public List<StationsGroup> getAllGroups() {
+		
+		List<StationsGroup> output = new LinkedList<>();
+		
+		List<StationsGroupModel> all = dao.getAll();
+		
+		for (StationsGroupModel g : all) {
+			StationsGroup view = new StationsGroup();
+			view.isBuiltin = false;
+			view.isEmpty = false;
+			view.category = g.category;
+			view.id = g.id;
+			view.locale = LocaleEntry.fromModelList(g.localeList);
+			
+			output.add(view);
+		}
+		
+    	return output;
     }
 }

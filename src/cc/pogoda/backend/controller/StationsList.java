@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import cc.pogoda.backend.dao.StationsDefinitionDao;
-import cc.pogoda.backend.types.model.StationDefinition;
+import cc.pogoda.backend.types.model.StationDefinitionModel;
 import cc.pogoda.backend.types.view.ListOfAllStations;
 
 
@@ -32,13 +32,13 @@ public class StationsList {
 		
 		ListOfAllStations out = new ListOfAllStations();
 		
-		List<StationDefinition> stations = definitionDao.getListOfAllStations();
+		List<StationDefinitionModel> stations = definitionDao.getListOfAllStations();
 		
-		out.stations = new StationDefinition[stations.size()];
+		out.stations = new StationDefinitionModel[stations.size()];
 		
 		logger.info("[StationsList][ListOfAllStations][request.getRemoteAddr() = " + request.getRemoteAddr() +"][out.stations.length = " + out.stations.length + "]");
 		
-		for (StationDefinition def : stations) {
+		for (StationDefinitionModel def : stations) {
 			out.stations[i] = def;
 			
 			i++;

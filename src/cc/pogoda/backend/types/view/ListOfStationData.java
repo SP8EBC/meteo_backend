@@ -1,8 +1,8 @@
 package cc.pogoda.backend.types.view;
 
-import cc.pogoda.backend.types.model.StationData;
+import cc.pogoda.backend.types.model.StationDataModel;
 
 public class ListOfStationData {
 
-	public StationData[] list_of_station_data;
+	public StationDataModel[] list_of_station_data;
 }

@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import cc.pogoda.backend.dao.StationDataDao;
 import cc.pogoda.backend.types.NotFoundException;
-import cc.pogoda.backend.types.model.StationData;
+import cc.pogoda.backend.types.model.StationDataModel;
 import cc.pogoda.backend.types.view.ListOfStationData;
 
 @RestController
@@ -35,7 +35,7 @@ public class LastDataController {
 		
 		ListOfStationData out = new ListOfStationData();
 		
-		List<StationData> data;
+		List<StationDataModel> data;
 		
 		data = dataDao.getStationDataPerName(stationName, false, isLong);
 		
@@ -43,12 +43,12 @@ public class LastDataController {
 		
 		if (data != null) {
 			
-			out.list_of_station_data = new StationData[data.size()];
+			out.list_of_station_data = new StationDataModel[data.size()];
 			
 			if (ascendingOrder) {
 				i = data.size() - 1;
 				
-				for (StationData d : data) {
+				for (StationDataModel d : data) {
 					out.list_of_station_data[i] = d;
 					
 					i--;
@@ -58,7 +58,7 @@ public class LastDataController {
 				}
 			}
 			else {
-				for (StationData d : data) {
+				for (StationDataModel d : data) {
 					out.list_of_station_data[i] = d;
 					
 					i++;

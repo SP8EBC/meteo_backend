@@ -21,9 +21,9 @@ import cc.pogoda.backend.dao.repository.SkrzyczneSummaryRepo;
 import cc.pogoda.backend.dao.repository.StationDataRepo;
 import cc.pogoda.backend.types.GenericMeteoData;
 import cc.pogoda.backend.types.MeteoData;
-import cc.pogoda.backend.types.model.BezmiechMeteoData;
-import cc.pogoda.backend.types.model.SkrzyczneMeteoData;
-import cc.pogoda.backend.types.model.StationData;
+import cc.pogoda.backend.types.model.BezmiechMeteoDataModel;
+import cc.pogoda.backend.types.model.SkrzyczneMeteoDataModel;
+import cc.pogoda.backend.types.model.StationDataModel;
 import cc.pogoda.backend.types.view.Summary;
 
 @Repository
@@ -63,19 +63,19 @@ public class SummaryDao {
 			
 		switch (call) {
 		case "skrzyczne":
-			List<SkrzyczneMeteoData> l = skrzyczneSummaryRepo.findFirst50ByOrderByTimestampEpochDesc();
-			for (SkrzyczneMeteoData m : l)
+			List<SkrzyczneMeteoDataModel> l = skrzyczneSummaryRepo.findFirst50ByOrderByTimestampEpochDesc();
+			for (SkrzyczneMeteoDataModel m : l)
 				genericData.add(m.convertToGeneric());
 			break;
 		case "bezmiechowa":
 		case "bezmiech":
-			List<BezmiechMeteoData> lb = bezmiechSummaryRepo.findFirst50ByOrderByTimestampEpochDesc();
-			for (BezmiechMeteoData m : lb)
+			List<BezmiechMeteoDataModel> lb = bezmiechSummaryRepo.findFirst50ByOrderByTimestampEpochDesc();
+			for (BezmiechMeteoDataModel m : lb)
 				genericData.add(m.convertToGeneric());
 			break;
 		default:
-			List<StationData> ll = stationDataRepo.findFirst50ByStationOrderByEpochDesc(call);
-			for (StationData d : ll) {
+			List<StationDataModel> ll = stationDataRepo.findFirst50ByStationOrderByEpochDesc(call);
+			for (StationDataModel d : ll) {
 				genericData.add(d.convertToGeneric());
 			}
 			break;

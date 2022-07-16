@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import cc.pogoda.backend.dao.StationDataDao;
 import cc.pogoda.backend.types.TooLongException;
-import cc.pogoda.backend.types.model.StationData;
+import cc.pogoda.backend.types.model.StationDataModel;
 import cc.pogoda.backend.types.view.ListOfStationData;
 
 @RestController
@@ -36,7 +36,7 @@ public class DataController{
 	
 		ListOfStationData out = new ListOfStationData();
 		
-		out.list_of_station_data = dataDao.getStationData(stationName, from, to).toArray(new StationData[0]);
+		out.list_of_station_data = dataDao.getStationData(stationName, from, to).toArray(new StationDataModel[0]);
 		
 		return out;
 		

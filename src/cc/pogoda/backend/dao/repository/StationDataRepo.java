@@ -6,19 +6,19 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.Repository;
 import org.springframework.data.repository.query.Param;
 
-import cc.pogoda.backend.types.model.StationData;
+import cc.pogoda.backend.types.model.StationDataModel;
 
-public interface StationDataRepo extends Repository<StationData, Integer> {
+public interface StationDataRepo extends Repository<StationDataModel, Integer> {
 
-	List<StationData> findFirst50ByStationOrderByEpochDesc(String station);
-	List<StationData> findFirst50ByStationOrderByEpochAsc(String station);
+	List<StationDataModel> findFirst50ByStationOrderByEpochDesc(String station);
+	List<StationDataModel> findFirst50ByStationOrderByEpochAsc(String station);
 	
-	List<StationData> findFirst2000ByStationOrderByEpochDesc(String station);
-	List<StationData> findFirst2000ByStationOrderByEpochAsc(String station);
+	List<StationDataModel> findFirst2000ByStationOrderByEpochDesc(String station);
+	List<StationDataModel> findFirst2000ByStationOrderByEpochAsc(String station);
 	
-	StationData findFirstByStationOrderByEpochDesc(String station);
+	StationDataModel findFirstByStationOrderByEpochDesc(String station);
 	
 	@Query("Select d from StationData d where d.station = :station and d.epoch  > :from and d.epoch < :to")
-	List<StationData> findDataBetweenEpoch(@Param("station") String station, @Param("from")long from, @Param("to")long to);
+	List<StationDataModel> findDataBetweenEpoch(@Param("station") String station, @Param("from")long from, @Param("to")long to);
 
 }

@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.web.context.WebApplicationContext;
 
 import cc.pogoda.backend.dao.repository.TelemetryRepo;
-import cc.pogoda.backend.types.model.Telemetry;
+import cc.pogoda.backend.types.model.TelemetryModel;
 
 @Repository
 public class TelemetryDao {
@@ -22,8 +22,8 @@ public class TelemetryDao {
 	@Autowired
 	TelemetryRepo telemetryRepo;
 	
-	public Telemetry getTelemetryFromStationName(String name) {
-		Telemetry telemetry = null;
+	public TelemetryModel getTelemetryFromStationName(String name) {
+		TelemetryModel telemetry = null;
 
 		telemetry = telemetryRepo.findTopByStationOrderByIdDesc(name);
 		

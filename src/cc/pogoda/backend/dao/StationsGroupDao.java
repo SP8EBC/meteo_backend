@@ -12,7 +12,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.web.context.WebApplicationContext;
 
 import cc.pogoda.backend.dao.repository.StationGroupsRepo;
-import cc.pogoda.backend.types.model.StationsGroup;
+import cc.pogoda.backend.types.model.StationsGroupModel;
 
 @Repository
 public class StationsGroupDao {
@@ -28,7 +28,7 @@ public class StationsGroupDao {
 	
     private static Logger logger = LogManager.getLogger();
 	
-	public List<StationsGroup> getAll() {
+	public List<StationsGroupModel> getAll() {
 		logger.debug("[StationsGroupDao][getAll]");
 		return repo.findAll();
 	}

@@ -21,8 +21,8 @@ import cc.pogoda.backend.types.NotFoundException;
 import cc.pogoda.backend.types.PressureQualityFactor;
 import cc.pogoda.backend.types.TemperatureQualityFactor;
 import cc.pogoda.backend.types.WindQualityFactor;
-import cc.pogoda.backend.types.model.StationDefinition;
-import cc.pogoda.backend.types.model.Telemetry;
+import cc.pogoda.backend.types.model.StationDefinitionModel;
+import cc.pogoda.backend.types.model.TelemetryModel;
 import cc.pogoda.backend.types.view.Summary;
 
 @RestController
@@ -56,9 +56,9 @@ public class SummaryController {
 		
 		if (s != null) {
 			
-			StationDefinition stationDefinition = stationsDefinitionDao.getStationByName(stationName);
+			StationDefinitionModel stationDefinition = stationsDefinitionDao.getStationByName(stationName);
 			
-			Telemetry t = telemetry.getTelemetryFromStationName(stationName);
+			TelemetryModel t = telemetry.getTelemetryFromStationName(stationName);
 			
 			if (t != null && stationDefinition.telemetryVersion != 0) {
 				wind_qf =  WindQualityFactor.fromBits((byte) t.digital, stationDefinition.telemetryVersion);
@@ -120,9 +120,9 @@ public class SummaryController {
 		
 		if (s != null) {
 			
-			StationDefinition stationDefinition = stationsDefinitionDao.getStationByName(station);
+			StationDefinitionModel stationDefinition = stationsDefinitionDao.getStationByName(station);
 			
-			Telemetry t = telemetry.getTelemetryFromStationName(station);
+			TelemetryModel t = telemetry.getTelemetryFromStationName(station);
 			
 			if (t != null && stationDefinition.telemetryVersion != 0) {
 				wind_qf =  WindQualityFactor.fromBits((byte) t.digital, stationDefinition.telemetryVersion);

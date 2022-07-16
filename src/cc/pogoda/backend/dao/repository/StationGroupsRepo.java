@@ -4,9 +4,9 @@ import java.util.List;
 
 import org.springframework.data.repository.Repository;
 
-import cc.pogoda.backend.types.model.StationsGroup;
+import cc.pogoda.backend.types.model.StationsGroupModel;
 
-public interface StationGroupsRepo extends Repository<StationsGroup, Integer> {
+public interface StationGroupsRepo extends Repository<StationsGroupModel, Integer> {
 
-	public List<StationsGroup> findAll();
+	public List<StationsGroupModel> findAll();
 }

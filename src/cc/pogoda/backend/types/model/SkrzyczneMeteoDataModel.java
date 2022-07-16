@@ -14,7 +14,7 @@ import cc.pogoda.backend.types.MeteoData;
 
 @Entity
 @Table(name = "skrzyczne")
-public class SkrzyczneMeteoData extends MeteoData {
+public class SkrzyczneMeteoDataModel extends MeteoData {
 	
 	@Id
 	@Basic

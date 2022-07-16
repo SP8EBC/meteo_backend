@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import cc.pogoda.backend.dao.StationsDefinitionDao;
-import cc.pogoda.backend.types.model.AvailableParameters;
-import cc.pogoda.backend.types.model.StationDefinition;
+import cc.pogoda.backend.types.model.AvailableParametersModel;
+import cc.pogoda.backend.types.model.StationDefinitionModel;
 
 @RestController
 public class AvailableParametersController {
@@ -20,11 +20,11 @@ public class AvailableParametersController {
     private static Logger logger = LogManager.getLogger();
 	
 	@RequestMapping(value = "/station/{stationName}/availableParameters", produces = "application/json;charset=UTF-8")
-	public AvailableParameters getAvailableParametersForStation(@PathVariable(required = true)String stationName) {
+	public AvailableParametersModel getAvailableParametersForStation(@PathVariable(required = true)String stationName) {
 		
-		AvailableParameters out = new AvailableParameters();
+		AvailableParametersModel out = new AvailableParametersModel();
 		
-		StationDefinition station_def = definitionDao.getStationByName(stationName);
+		StationDefinitionModel station_def = definitionDao.getStationByName(stationName);
 		
 		out.hasHumidity = station_def.hasHumidity;
 		out.hasQnh = station_def.hasQnh;

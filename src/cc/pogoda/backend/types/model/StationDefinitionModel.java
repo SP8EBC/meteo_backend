@@ -7,7 +7,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "data_station_def")
-public class StationDefinition {
+public class StationDefinitionModel {
 	
 	@Id
 	@Basic

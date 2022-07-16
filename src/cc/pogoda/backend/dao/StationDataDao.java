@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.web.context.WebApplicationContext;
 
 import cc.pogoda.backend.dao.repository.StationDataRepo;
-import cc.pogoda.backend.types.model.StationData;
+import cc.pogoda.backend.types.model.StationDataModel;
 import cc.pogoda.backend.types.view.ListOfStationData;
 
 @Repository
@@ -25,22 +25,22 @@ public class StationDataDao {
 	@PersistenceContext
 	EntityManager em;
 	
-	public StationData getCurrentStationData(String name) {
+	public StationDataModel getCurrentStationData(String name) {
 		return repo.findFirstByStationOrderByEpochDesc(name);
 	}
 	
-	public List<StationData> getStationDataPerName(String name) {
+	public List<StationDataModel> getStationDataPerName(String name) {
 		
-		List<StationData> out;
+		List<StationDataModel> out;
 				
 		out = repo.findFirst50ByStationOrderByEpochDesc(name);
 		
 		return out;
 	}
 	
-	public List<StationData> getStationDataPerName(String name, boolean ascendingOrder, boolean isLong) {
+	public List<StationDataModel> getStationDataPerName(String name, boolean ascendingOrder, boolean isLong) {
 		
-		List<StationData> out = null;
+		List<StationDataModel> out = null;
 		
 		if (ascendingOrder == false && isLong == false)
 			out = repo.findFirst50ByStationOrderByEpochDesc(name);
@@ -55,8 +55,8 @@ public class StationDataDao {
 		return out;
 	}
 	
-	public List<StationData> getStationData(String name, long timestampFrom, long timestampTo) {
-		List<StationData> out = null;
+	public List<StationDataModel> getStationData(String name, long timestampFrom, long timestampTo) {
+		List<StationDataModel> out = null;
 		
 		out = repo.findDataBetweenEpoch(name, timestampFrom, timestampTo);
 		
