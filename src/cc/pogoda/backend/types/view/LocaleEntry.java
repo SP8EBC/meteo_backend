@@ -9,7 +9,7 @@ public class LocaleEntry {
 
 	public int id;
 	
-	public int localeId;
+	public int stationGroupId;
 	
 	public String language;
 	
@@ -20,7 +20,7 @@ public class LocaleEntry {
 		
 		out.id = model.id;
 		out.language = model.language;
-		out.localeId = model.localeId;
+		out.stationGroupId = model.stationGroupId;
 		out.text = model.text;
 		
 		return out;

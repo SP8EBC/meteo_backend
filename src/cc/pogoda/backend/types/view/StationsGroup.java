@@ -11,6 +11,8 @@ public class StationsGroup {
 	
 	public java.util.List<LocaleEntry> locale;
 	
+	public boolean isEnabled;
+	
 	public boolean isEmpty;
 	
 	public boolean isBuiltin;

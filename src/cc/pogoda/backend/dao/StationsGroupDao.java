@@ -35,7 +35,7 @@ public class StationsGroupDao {
 		
 		List<StationsGroupModel> out = new LinkedList<>();
 		
-		TypedQuery<StationsGroupModel> query = em.createQuery("SELECT m FROM StationsGroupModel m INNER JOIN m.localeList", StationsGroupModel.class);
+		TypedQuery<StationsGroupModel> query = em.createQuery("SELECT m FROM StationsGroupModel m LEFT JOIN m.localeList", StationsGroupModel.class);
 		
 		out = query.getResultList();
 		

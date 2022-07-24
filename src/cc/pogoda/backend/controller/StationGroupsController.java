@@ -37,6 +37,7 @@ public class StationGroupsController {
 			view.category = g.category;
 			view.id = g.id;
 			view.locale = LocaleEntry.fromModelList(g.localeList);
+			view.isEnabled = g.enabled;
 			
 			output.add(view);
 		}

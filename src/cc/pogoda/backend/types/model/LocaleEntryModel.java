@@ -1,13 +1,10 @@
 package cc.pogoda.backend.types.model;
 
-import java.util.List;
-
 import javax.persistence.Basic;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -20,7 +17,7 @@ public class LocaleEntryModel {
 	public int id;
 	
 	@Basic
-	public int localeId;
+	public int stationGroupId;
 	
 	@Basic
 	public String language;
@@ -34,7 +31,7 @@ public class LocaleEntryModel {
 	 * is used by parent entity to links 
 	 * 
 	 */
-    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "localeList")
-    //@JoinColumn(name = "localeId", nullable = false, insertable = false, updatable = false)
-	List<StationsGroupModel> stationsGroupModel;
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
+    @JoinColumn(name = "stationGroupId", nullable = false, insertable = false, updatable = false)
+	StationsGroupModel stationsGroupModel;
 }
