@@ -8,6 +8,8 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -32,6 +34,8 @@ public class StationsGroupModel {
 	 * Here, the value of mappedBy is the name of the association-mapping attribute on the owning side. With this, we have now established a bidirectional association between our Employee and Email entities.
 	 * 
 	 */
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "stationsGroupModel")
+	@ManyToMany(fetch = FetchType.EAGER /*, mappedBy = "stationsGroupModel" */ )
+    //@JoinColumn(name = "locale", nullable = false, insertable = false, updatable = false)
+	@JoinTable(name = "data_locale", joinColumns = @JoinColumn(name = "locale"))
 	public java.util.List<LocaleEntryModel> localeList;
 }

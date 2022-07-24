@@ -1,9 +1,11 @@
 package cc.pogoda.backend.dao;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -30,6 +32,13 @@ public class StationsGroupDao {
 	
 	public List<StationsGroupModel> getAll() {
 		logger.debug("[StationsGroupDao][getAll]");
-		return repo.findAll();
+		
+		List<StationsGroupModel> out = new LinkedList<>();
+		
+		TypedQuery<StationsGroupModel> query = em.createQuery("SELECT m FROM StationsGroupModel m INNER JOIN m.localeList", StationsGroupModel.class);
+		
+		out = query.getResultList();
+		
+		return out;
 	}
 }
