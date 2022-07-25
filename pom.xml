@@ -11,7 +11,7 @@
       <encoding>UTF-8</encoding>
       <jettyVersion>7.2.0.v20101020</jettyVersion>
       <hibernateVersion>5.4.24.Final</hibernateVersion>
-      <jacksonVersion>2.13.2.1</jacksonVersion>
+      <jacksonVersion>2.13.2</jacksonVersion>
       <springVersion>5.3.20</springVersion>
       <springDataVersion>2.2.2.RELEASE</springDataVersion>
       <freemarker-version>2.3.23</freemarker-version>
@@ -23,11 +23,6 @@
      	<artifactId>jaxb-api</artifactId>
      	<version>2.2.1</version>
      </dependency>
-	 <dependency>
-	    <groupId>com.fasterxml.jackson.core</groupId>
-	    <artifactId>jackson-core</artifactId>
-	    <version>${jacksonVersion}</version>
-	</dependency>
  	<dependency>
 	    <groupId>com.fasterxml.jackson.core</groupId>
 	    <artifactId>jackson-databind</artifactId>

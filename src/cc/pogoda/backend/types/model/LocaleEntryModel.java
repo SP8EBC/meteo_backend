@@ -27,8 +27,8 @@ public class LocaleEntryModel {
 	
 	/**
 	 * This is a reference (join) to stations group definition stored in MySQL in table 'data_station_groups'. 
-	 * Annotation parameter 'name = "localeId"' defines a field ***within*** 'data_locale' which value
-	 * is used by parent entity to links 
+	 * Annotation parameter 'name = "stationGroupId"' defines a field ***within*** 'data_locale' which value
+	 * is used by parent entity (StationGroupModel) to links this locale to certain station group
 	 * 
 	 */
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
