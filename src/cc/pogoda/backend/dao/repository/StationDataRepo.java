@@ -18,7 +18,7 @@ public interface StationDataRepo extends Repository<StationDataModel, Integer> {
 	
 	StationDataModel findFirstByStationOrderByEpochDesc(String station);
 	
-	@Query("Select d from StationData d where d.station = :station and d.epoch  > :from and d.epoch < :to")
+	@Query("Select d from StationDataModel d where d.station = :station and d.epoch  > :from and d.epoch < :to")
 	List<StationDataModel> findDataBetweenEpoch(@Param("station") String station, @Param("from")long from, @Param("to")long to);
 
 }

@@ -35,9 +35,20 @@ public class StationsGroupDao {
 		
 		List<StationsGroupModel> out = new LinkedList<>();
 		
-		TypedQuery<StationsGroupModel> query = em.createQuery("SELECT m FROM StationsGroupModel m LEFT JOIN m.localeList LEFT JOIN m.bondingList", StationsGroupModel.class);
+		TypedQuery<StationsGroupModel> query = em.createQuery("SELECT m FROM StationsGroupModel m LEFT JOIN m.localeList", StationsGroupModel.class);
 		
 		out = query.getResultList();
+		
+		return out;
+	}
+	
+	public StationsGroupModel getAllBondingsForGroup(int id) {
+		
+		StationsGroupModel out = new StationsGroupModel();
+		
+		TypedQuery<StationsGroupModel> query = em.createQuery("SELECT m FROM StationsGroupModel m LEFT JOIN m.bondingList WHERE m.id = " + id, StationsGroupModel.class);
+		
+		out = query.getSingleResult();
 		
 		return out;
 	}
