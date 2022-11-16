@@ -6,13 +6,16 @@ import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import cc.pogoda.backend.dao.StationsGroupDao;
+import cc.pogoda.backend.types.model.StationGroupsBondingsModel;
 import cc.pogoda.backend.types.model.StationsGroupModel;
 import cc.pogoda.backend.types.view.LocaleEntry;
+import cc.pogoda.backend.types.view.StationGroupStations;
 import cc.pogoda.backend.types.view.StationsGroup;
 
 @RestController
@@ -44,4 +47,15 @@ public class StationGroupsController {
 		
     	return output;
     }
+	
+	@RequestMapping(value = "/groups/stations/{id}", produces = "application/json;charset=UTF-8", method = RequestMethod.GET)
+	public List<StationGroupStations> getAllStationsForGroup(@PathVariable(required = true) int id) {
+		
+		List<StationGroupStations> out = new LinkedList<StationGroupStations>();
+		
+		List<StationGroupsBondingsModel> r = dao.getAllBondingsForGroup(id);
+		
+		return out;
+		
+	}
 }

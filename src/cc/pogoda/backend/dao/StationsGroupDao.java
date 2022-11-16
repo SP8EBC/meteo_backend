@@ -14,6 +14,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.web.context.WebApplicationContext;
 
 import cc.pogoda.backend.dao.repository.StationGroupsRepo;
+import cc.pogoda.backend.types.model.StationGroupsBondingsModel;
 import cc.pogoda.backend.types.model.StationsGroupModel;
 
 @Repository
@@ -31,24 +32,24 @@ public class StationsGroupDao {
     private static Logger logger = LogManager.getLogger();
 	
 	public List<StationsGroupModel> getAll() {
-		logger.debug("[StationsGroupDao][getAll]");
-		
 		List<StationsGroupModel> out = new LinkedList<>();
 		
 		TypedQuery<StationsGroupModel> query = em.createQuery("SELECT m FROM StationsGroupModel m LEFT JOIN m.localeList", StationsGroupModel.class);
 		
 		out = query.getResultList();
 		
+		logger.debug("[StationsGroupDao][getAll][out.size() = " + out.size() + "]");
+		
 		return out;
 	}
 	
-	public StationsGroupModel getAllBondingsForGroup(int id) {
+	public List<StationGroupsBondingsModel> getAllBondingsForGroup(int id) {
 		
-		StationsGroupModel out = new StationsGroupModel();
+		List<StationGroupsBondingsModel> out = new LinkedList<>();
 		
-		TypedQuery<StationsGroupModel> query = em.createQuery("SELECT m FROM StationsGroupModel m LEFT JOIN m.bondingList WHERE m.id = " + id, StationsGroupModel.class);
+		TypedQuery<StationGroupsBondingsModel> query = em.createQuery("SELECT m FROM StationGroupsBondingsModel m WHERE m.groupId = " + id, StationGroupsBondingsModel.class);
 		
-		out = query.getSingleResult();
+		out = query.getResultList();
 		
 		return out;
 	}

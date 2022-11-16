@@ -1,5 +1,7 @@
 package cc.pogoda.backend.controller;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,10 +22,12 @@ public class PMeteoStatusController {
     @Autowired
     PMeteoStatusDao dao;
     
+	private @Autowired HttpServletRequest request;
+    
 	@RequestMapping(value = "/parameteo/{stationName}/status/v1", produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
 	public void putMeteoStatusForStation(@RequestBody PmeteoStatus status, @PathVariable(required = true)String stationName) {
 		
-		logger.info("[PMeteoStatusController][putMeteoStatusForStation][stationName = " + stationName +"][status = " + status +"]");
+		logger.info("[PMeteoStatusController][putMeteoStatusForStation][request.getRemoteAddr() = " + request.getRemoteAddr() + "][stationName = " + stationName +"][status = " + status +"]");
 		
 		dao.updateOrInsertStatus(status, stationName);
 	}

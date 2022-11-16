@@ -43,6 +43,6 @@ public class StationsGroupModel {
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "stationsGroupModel")
 	public java.util.Set<LocaleEntryModel> localeList;
 	
-	@OneToMany(mappedBy = "stationsGroupModel")
-	public java.util.Set<StationGroupsBondingsModel> bondingList;
+//	@OneToMany(mappedBy = "stationsGroupModel")
+//	public java.util.Set<StationGroupsBondingsModel> bondingList;
 }

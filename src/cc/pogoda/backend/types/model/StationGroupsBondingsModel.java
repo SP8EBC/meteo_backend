@@ -16,10 +16,13 @@ public class StationGroupsBondingsModel {
 	@Basic
 	public int id;
 	
+	@Basic
+	public int groupId;
+	
+	@Basic
 	public int stationId;
 	
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
-    @JoinColumn(name = "groupId", nullable = false, insertable = false, updatable = false)
-	StationsGroupModel stationsGroupModel;
-    //public int groupId;
+    @JoinColumn(name = "stationId", nullable = false, insertable = false, updatable = false)
+    StationDefinitionModel stationDefinitionModel;
 }
