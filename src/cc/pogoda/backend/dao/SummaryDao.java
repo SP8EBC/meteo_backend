@@ -19,11 +19,13 @@ import org.springframework.web.context.WebApplicationContext;
 import cc.pogoda.backend.dao.repository.BezmiechSummaryRepo;
 import cc.pogoda.backend.dao.repository.SkrzyczneSummaryRepo;
 import cc.pogoda.backend.dao.repository.StationDataRepo;
+import cc.pogoda.backend.dao.repository.SummaryRepo;
 import cc.pogoda.backend.types.GenericMeteoData;
 import cc.pogoda.backend.types.MeteoData;
 import cc.pogoda.backend.types.model.BezmiechMeteoDataModel;
 import cc.pogoda.backend.types.model.SkrzyczneMeteoDataModel;
 import cc.pogoda.backend.types.model.StationDataModel;
+import cc.pogoda.backend.types.model.SummaryModel;
 import cc.pogoda.backend.types.view.Summary;
 
 @Repository
@@ -45,8 +47,37 @@ public class SummaryDao {
 	@Autowired
 	StationDataRepo stationDataRepo;
 	
+	@Autowired
+	SummaryRepo summaryRepo;
+	
     private static Logger logger = LogManager.getLogger();
 	
+    @Transactional
+    public Summary getNewSummaryPerStationName(String call) {
+    	Summary out = null;
+    	
+    	final SummaryModel summary = summaryRepo.findFirstByStation(call);
+    	
+    	if (summary != null) {
+    		
+    		out = new Summary();
+    		
+	    	out.average_speed = summary.average;
+	    	out.avg_temperature = summary.temperature;
+	    	out.direction = (short) summary.direction;
+	    	out.gusts = summary.gusts;
+	    	out.hour_gusts = summary.hourgusts;
+	    	out.hour_max_average_speed = summary.hourmaxavg;
+	    	out.hour_min_average_speed = summary.hourminavg;
+	    	out.humidity = (byte) summary.humidity;
+	    	out.last_timestamp = summary.lasttimestamp;
+	    	out.number_of_measurements = summary.numberofmeasurements;
+	    	out.qnh = (short) summary.qnh;
+    	}
+    	
+    	return out;
+    }
+    
 	@Transactional
 	public Summary getSummaryPerStationName(String call) {
 		

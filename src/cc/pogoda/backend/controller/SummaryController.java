@@ -43,11 +43,10 @@ public class SummaryController {
 	
 	@RequestMapping(value = "/station/{stationName}/summary", produces = "application/json;charset=UTF-8")
 	public Summary summaryControlerNew(@PathVariable(required = true)String stationName) throws NotFoundException {
-		Summary s = dao.getSummaryPerStationName(stationName);
-	
-		long currentUtcTimestamp = ZonedDateTime.now().withZoneSameInstant(ZoneId.of("UTC")).toEpochSecond();
+		//Summary s = dao.getSummaryPerStationName(stationName);
+		Summary s = dao.getNewSummaryPerStationName(stationName);
 		
-		logger.info("[SummaryController][summaryControlerNew][request.getRemoteAddr() = " + request.getRemoteAddr() + "][stationName = " + stationName +"][s = " + s.toString() +"]");
+		long currentUtcTimestamp = ZonedDateTime.now().withZoneSameInstant(ZoneId.of("UTC")).toEpochSecond();
 		
 		WindQualityFactor wind_qf;
 		TemperatureQualityFactor temperature_qf;
@@ -55,6 +54,8 @@ public class SummaryController {
 		HumidityQualityFactor humidity_qf;
 		
 		if (s != null) {
+			
+			logger.info("[SummaryController][summaryControlerNew][request.getRemoteAddr() = " + request.getRemoteAddr() + "][stationName = " + stationName +"][s = " + s.toString() +"]");
 			
 			StationDefinitionModel stationDefinition = stationsDefinitionDao.getStationByName(stationName);
 			
