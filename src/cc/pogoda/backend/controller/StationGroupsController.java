@@ -16,6 +16,7 @@ import cc.pogoda.backend.types.model.StationGroupsBondingsModel;
 import cc.pogoda.backend.types.model.StationsGroupModel;
 import cc.pogoda.backend.types.view.LocaleEntry;
 import cc.pogoda.backend.types.view.StationGroupStations;
+import cc.pogoda.backend.types.view.StationGroupStationsStation;
 import cc.pogoda.backend.types.view.StationsGroup;
 
 @RestController
@@ -54,6 +55,20 @@ public class StationGroupsController {
 		List<StationGroupStations> out = new LinkedList<StationGroupStations>();
 		
 		List<StationGroupsBondingsModel> r = dao.getAllBondingsForGroup(id);
+		
+		StationGroupStations s = new StationGroupStations();
+		s.stationIds = new LinkedList<>();
+		s.stationGroupId = id;
+		out.add(s);
+		
+		for (StationGroupsBondingsModel model : r) {
+			StationGroupStationsStation station = new StationGroupStationsStation();
+			
+			station.stationId = model.id;
+			station.stationName = model.getStationDefinitionModel().name;
+			
+			s.stationIds.add(station);
+		}
 		
 		return out;
 		

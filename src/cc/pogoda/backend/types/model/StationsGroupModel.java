@@ -9,12 +9,16 @@ import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import cc.pogoda.backend.types.StationsGroupCategory;
+import cc.pogoda.backend.types.model.web.IconModel;
 
 @Entity
 @Table(name = "data_station_groups")
@@ -42,6 +46,10 @@ public class StationsGroupModel {
 	 */
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "stationsGroupModel")
 	public java.util.Set<LocaleEntryModel> localeList;
+	
+    @JsonIgnore
+	@OneToOne(mappedBy = "stationGroupModel")
+	public IconModel icons;
 	
 //	@OneToMany(mappedBy = "stationsGroupModel")
 //	public java.util.Set<StationGroupsBondingsModel> bondingList;

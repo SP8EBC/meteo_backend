@@ -7,7 +7,12 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import cc.pogoda.backend.types.model.web.IconModel;
 
 @Entity
 @Table(name = "data_station_def")

@@ -6,5 +6,5 @@ public class StationGroupStations {
 
 	public int stationGroupId;
 	
-	public List<Integer> stationIds;
+	public List<StationGroupStationsStation> stationIds;
 }

@@ -19,10 +19,14 @@ public class StationGroupsBondingsModel {
 	@Basic
 	public int groupId;
 	
-	@Basic
-	public int stationId;
+//	@Basic
+//	public int stationId;
 	
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
-    @JoinColumn(name = "stationId", nullable = false, insertable = false, updatable = false)
+    @JoinColumn(name = "stationId")
     StationDefinitionModel stationDefinitionModel;
+
+	public StationDefinitionModel getStationDefinitionModel() {
+		return stationDefinitionModel;
+	}
 }

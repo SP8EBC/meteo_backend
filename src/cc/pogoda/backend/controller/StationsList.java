@@ -14,7 +14,6 @@ import cc.pogoda.backend.dao.StationsDefinitionDao;
 import cc.pogoda.backend.types.model.StationDefinitionModel;
 import cc.pogoda.backend.types.view.ListOfAllStations;
 
-
 @RestController
 public class StationsList {
 
