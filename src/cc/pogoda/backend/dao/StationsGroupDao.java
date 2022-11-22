@@ -25,7 +25,7 @@ public class StationsGroupDao {
     
     @Autowired
     private StationGroupsRepo repo;
-	
+    
 	@PersistenceContext
 	EntityManager em;
 	
@@ -53,4 +53,16 @@ public class StationsGroupDao {
 		
 		return out;
 	}
+	
+//	public List<StationGroupsBondingsModel> getAllBondingsForStation(int id) {
+//		
+//		List<StationGroupsBondingsModel> out = new LinkedList<>();
+//
+//		TypedQuery<StationGroupsBondingsModel> query = em.createQuery("SELECT m FROM StationDefinition sd WHERE sd.stationId = " + id, StationGroupsBondingsModel.class);
+//		
+//		out = query.getResultList();
+//		
+//		return out;
+//		
+//	}
 }

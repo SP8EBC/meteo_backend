@@ -22,6 +22,12 @@ public class StationGroupsBondingsModel {
 //	@Basic
 //	public int stationId;
 	
+	/**
+	 * This is a relation to a station bonded by this bonding.
+	 * {@link StationGroupsBondingsModel.stationId} is a column / field
+	 * inside {@link StationGroupsBondingsModel} and 'data_station_groups_bondings' 
+	 * which defines the station identifier.
+	 */
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "stationId")
     StationDefinitionModel stationDefinitionModel;

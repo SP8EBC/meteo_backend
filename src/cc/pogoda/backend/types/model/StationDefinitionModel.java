@@ -1,9 +1,11 @@
 package cc.pogoda.backend.types.model;
 
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Basic;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
@@ -78,6 +80,15 @@ public class StationDefinitionModel {
 	
 	@Basic
 	public byte telemetryVersion;
+	
+	/**
+	 * This is a relation to all station groups this station belongs to. 'mappedBy = "stationDefinitionModel"'
+	 * defines a field name inside {@link StationGroupsBondingsModel} class which points to the station 
+	 * (an instance of this class) 
+	 */
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "stationDefinitionModel")
+	@JsonIgnore
+	public Set<StationGroupsBondingsModel> groupsStationBelongsTo;
 	
 	public String toString() {
 		return "[StationDefinition][id = " + id + "][name = " + name + "][enabled = " + enabled +"][callsign = " + callsign +"][displayedName = " + displayedName + "][telemetryVersion = " + telemetryVersion + "]";
