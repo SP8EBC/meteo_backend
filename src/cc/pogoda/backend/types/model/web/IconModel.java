@@ -19,7 +19,7 @@ public class IconModel {
 	public int id;
 	
 //	@Basic
-//	public int stationid;
+//	public int stationgroupid;
 	
 	@Basic
 	public String full;

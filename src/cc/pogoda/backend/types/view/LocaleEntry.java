@@ -27,7 +27,7 @@ public class LocaleEntry {
 		return out;
 	}
 	
-	public static List<LocaleEntry> fromModelList(Set<cc.pogoda.backend.types.model.LocaleEntryModel> list) {
+	public static List<LocaleEntry> fromModelList(List<cc.pogoda.backend.types.model.LocaleEntryModel> list) {
 		LinkedList<LocaleEntry> out = new LinkedList<LocaleEntry>();
 		
 		for (LocaleEntryModel entry : list) {

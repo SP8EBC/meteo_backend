@@ -88,7 +88,7 @@ public class StationDefinitionModel {
 	 */
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "stationDefinitionModel")
 	@JsonIgnore
-	public Set<StationGroupsBondingsModel> groupsStationBelongsTo;
+	public List<StationGroupsBondingsModel> groupsStationBelongsTo;
 	
 	public String toString() {
 		return "[StationDefinition][id = " + id + "][name = " + name + "][enabled = " + enabled +"][callsign = " + callsign +"][displayedName = " + displayedName + "][telemetryVersion = " + telemetryVersion + "]";

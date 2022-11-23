@@ -45,7 +45,7 @@ public class StationsGroupModel {
 	 * bounded, but single locale (LocaleEntryModel) can be connected with only one station group
 	 */
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "stationsGroupModel")
-	public java.util.Set<LocaleEntryModel> localeList;
+	public java.util.List<LocaleEntryModel> localeList;
 	
     @JsonIgnore
 	@OneToOne(mappedBy = "stationGroupModel")

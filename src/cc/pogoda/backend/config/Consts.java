@@ -9,4 +9,8 @@ public class Consts {
 	public static final int BUILD_VERSION_NUM = 30;
 	
 	public static final String VERSION = "meteo_backend_" + MAIN_VERSION_NUM + "-" + PATCH_VERSION_NUM + "-" + BUILD_VERSION_NUM;
+	
+	public static final String DEFAULT_AVAILABLE_ICON = "";
+	public static final String DEFAULT_DEGR_ICON = "";
+	public static final String DEFAULT_NAVBLE_ICON = "";
 }

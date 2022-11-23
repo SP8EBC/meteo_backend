@@ -43,6 +43,19 @@ public class StationsGroupDao {
 		return out;
 	}
 	
+	public StationsGroupModel getGroupDefinition(int id) {
+		
+		StationsGroupModel out = new StationsGroupModel();
+		
+		TypedQuery<StationsGroupModel> query = em.createQuery("SELECT m FROM StationsGroupModel m LEFT JOIN m.localeList WHERE m.id = " + id, StationsGroupModel.class);
+		
+		out = query.getSingleResult();
+		
+		logger.debug("[StationsGroupDao][getStationDefinition]");
+		
+		return out;		
+	}
+	
 	public List<StationGroupsBondingsModel> getAllBondingsForGroup(int id) {
 		
 		List<StationGroupsBondingsModel> out = new LinkedList<>();
