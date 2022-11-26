@@ -90,6 +90,7 @@ public class SummaryController {
 				wind_qf = WindQualityFactor.NO_DATA;
 				pressure_qf = PressureQualityFactor.NO_DATA;
 				humidity_qf = HumidityQualityFactor.NO_DATA;
+				temperature_qf = TemperatureQualityFactor.NO_DATA;
 			}
 			
 			s.qnh_qf = pressure_qf.toString();

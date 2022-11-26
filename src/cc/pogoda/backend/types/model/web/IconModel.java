@@ -34,6 +34,10 @@ public class IconModel {
 	@JoinColumn(name = "stationgroupid")
 	public StationsGroupModel stationGroupModel;
 	
+	public String toString() {
+		return "[IconModel][id = " + id +"][full = " + full +"][degraded = " + degraded +"][notavailable = " + notavailable +"]";
+	}
+	
 	public IconModel() {
 		id = 0;
 		full = "";
