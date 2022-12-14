@@ -1,0 +1,2 @@
+#!/bin/bash
+openapi-generator-cli.jar.4.3.1 generate -i openapi.yaml -g cpp-restsdk
