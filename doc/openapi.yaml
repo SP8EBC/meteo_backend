@@ -1,8 +1,7 @@
 openapi: 3.0.3
 info:
   title: Pogoda.cc
-  description: |-
-    Backend API specification for pogoda.cc system
+  description: Backend API specification for pogoda.cc system
   contact:
     email: sp8ebc@interia.pl
   license:
@@ -38,7 +37,7 @@ paths:
         - name: stationName
           in: path
           required: true
-          schema: 
+          schema:
             type: string
       responses:
         '200':
@@ -46,7 +45,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/AvailableParametersModel'          
+                $ref: '#/components/schemas/AvailableParametersModel'
             application/xml:
               schema:
                 $ref: '#/components/schemas/AvailableParametersModel'
@@ -57,25 +56,24 @@ paths:
       tags:
         - station
       summary: Get measurements data for specified period
-      description: This endpoint returns all measurements done between two specified timestamps. 
-        Maximum time period is limited to 7 days at once!!
+      description: This endpoint returns all measurements done between two specified timestamps. Maximum time period is limited to 7 days at once!!
       parameters:
         - name: stationName
           in: path
           required: true
-          schema: 
+          schema:
             type: string
         - name: from
           in: query
           required: true
-          description: "Timestamp in UNIX epoch format (UTC)"
+          description: Timestamp in UNIX epoch format (UTC)
           schema:
             type: integer
             format: int64
         - name: to
           in: query
           required: true
-          description: "Timestamp in UNIX epoch format (UTC)"
+          description: Timestamp in UNIX epoch format (UTC)
           schema:
             type: integer
             format: int64
@@ -87,7 +85,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/StationDataModel'          
+                  $ref: '#/components/schemas/StationDataModel'
             application/xml:
               schema:
                 type: array
@@ -105,11 +103,11 @@ paths:
         - name: stationName
           in: path
           required: true
-          schema: 
+          schema:
             type: string
         - name: ascendingOrder
           in: query
-          description: "Set to true to change sorting order to older-first"
+          description: Set to true to change sorting order to older-first
           required: true
           schema:
             type: integer
@@ -117,7 +115,7 @@ paths:
         - name: isLong
           in: query
           required: true
-          description: "Set to true to get last 2000 records instead of 50"
+          description: Set to true to get last 2000 records instead of 50
           schema:
             type: integer
             format: int64
@@ -129,7 +127,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/StationDataModel'          
+                  $ref: '#/components/schemas/StationDataModel'
             application/xml:
               schema:
                 type: array
@@ -147,7 +145,7 @@ paths:
         - name: stationName
           in: path
           required: true
-          schema: 
+          schema:
             type: string
       responses:
         '200':
@@ -155,7 +153,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Summary'          
+                $ref: '#/components/schemas/Summary'
             application/xml:
               schema:
                 $ref: '#/components/schemas/Summary'
@@ -171,7 +169,7 @@ paths:
         - name: stationName
           in: path
           required: true
-          schema: 
+          schema:
             type: string
       responses:
         '200':
@@ -179,7 +177,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Trend'          
+                $ref: '#/components/schemas/Trend'
             application/xml:
               schema:
                 $ref: '#/components/schemas/Trend'
@@ -195,7 +193,7 @@ paths:
         - name: stationName
           in: path
           required: true
-          schema: 
+          schema:
             type: string
       responses:
         '200':
@@ -203,7 +201,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/StationCurrentLocalTime'          
+                $ref: '#/components/schemas/StationCurrentLocalTime'
             application/xml:
               schema:
                 $ref: '#/components/schemas/StationCurrentLocalTime'
@@ -220,15 +218,14 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ListOfAllStations'          
-            application/xml:
-              schema:
-                $ref: '#/components/schemas/ListOfAllStations'
+                type: array
+                items:
+                  $ref: '#/components/schemas/StationDefinitionModel'
   /groups/all:
     get:
       tags:
         - meteo system
-      summary: 'Returns a list of all station groups defined in the system'
+      summary: Returns a list of all station groups defined in the system
       description: ''
       responses:
         '200':
@@ -238,7 +235,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/StationsGroup'          
+                  $ref: '#/components/schemas/StationsGroup'
             application/xml:
               schema:
                 type: array
@@ -248,13 +245,13 @@ paths:
     get:
       tags:
         - meteo system
-      summary: 'Returns all stations associated with given group'
+      summary: Returns all stations associated with given group
       description: ''
       parameters:
         - name: id
           in: path
           required: true
-          schema: 
+          schema:
             type: integer
             format: int32
       responses:
@@ -265,7 +262,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/StationGroupStations'          
+                  $ref: '#/components/schemas/StationGroupStations'
             application/xml:
               schema:
                 type: array
@@ -274,7 +271,7 @@ paths:
 components:
   schemas:
     AvailableParametersModel:
-      description: "desc"
+      description: desc
       properties:
         hasWind:
           type: boolean
@@ -288,7 +285,7 @@ components:
           type: integer
           format: int8
     StationDefinitionModel:
-      description: "dupa"
+      description: dupa
       type: object
       properties:
         id:
@@ -296,30 +293,30 @@ components:
           format: int32
           example: 1
         name:
-          description: "description123"
+          description: description123
           type: string
-          example: "skrzyczne"
+          example: skrzyczne
         enabled:
           type: boolean
           example: true
         callsign:
           type: string
-          example: "SR9NSK"
+          example: SR9NSK
         ssid:
           type: integer
           format: int8
         displayedName:
           type: string
-          example: "Skrzyczne"
+          example: Skrzyczne
         displayedLocation:
           type: string
-          example: "Góra Skrzyczne, Beskid Śląski"
+          example: Góra Skrzyczne, Beskid Śląski
         sponsorUrl:
           type: string
-          example: "http://skrzyczne.pl"
+          example: http://skrzyczne.pl
         backgroundJpg:
           type: string
-          example: ""
+          example: ''
         backgroundJpgAlign:
           type: integer
           format: int32
@@ -348,7 +345,7 @@ components:
       items:
         $ref: '#/components/schemas/StationDefinitionModel'
     LocaleEntry:
-      description: "LocaleEntry"
+      description: LocaleEntry
       type: object
       properties:
         id:
@@ -369,7 +366,7 @@ components:
         year:
           type: integer
           format: int32
-        month: 
+        month:
           type: integer
           format: int32
         day:
@@ -511,7 +508,7 @@ components:
           type: integer
           format: int32
         epoch:
-          description: "UTC timestamp in UNIX epoch when this measurement was taken"
+          description: UTC timestamp in UNIX epoch when this measurement was taken
           type: integer
           format: int64
         station:
