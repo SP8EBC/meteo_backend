@@ -1,7 +1,8 @@
 openapi: 3.0.3
 info:
   title: Pogoda.cc
-  description: Backend API specification for pogoda.cc system
+  description: |-
+    Backend API specification for pogoda.cc system
   contact:
     email: sp8ebc@interia.pl
   license:
@@ -12,7 +13,7 @@ externalDocs:
   description: API source code
   url: https://github.com/SP8EBC/meteo_backend
 servers:
-  - url: http://pogoda.cc:8080/meteo_backend_web/
+  - url: http://pogoda.cc:8080/meteo_backend/
 tags:
   - name: station
     description: Get measurements sent by stations
@@ -26,6 +27,8 @@ tags:
       url: http://swagger.io
   - name: meteo system
     description: Endpoints specific for MeteoSystem android app
+  - name: mrozowiska
+    description: Endpoints speciic for dedicated weather stations for scientific measurements in Tatra Mountains
 paths:
   /station/{stationName}/availableParameters:
     get:
@@ -37,7 +40,7 @@ paths:
         - name: stationName
           in: path
           required: true
-          schema:
+          schema: 
             type: string
       responses:
         '200':
@@ -45,7 +48,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/AvailableParametersModel'
+                $ref: '#/components/schemas/AvailableParametersModel'          
             application/xml:
               schema:
                 $ref: '#/components/schemas/AvailableParametersModel'
@@ -56,24 +59,25 @@ paths:
       tags:
         - station
       summary: Get measurements data for specified period
-      description: This endpoint returns all measurements done between two specified timestamps. Maximum time period is limited to 7 days at once!!
+      description: This endpoint returns all measurements done between two specified timestamps. 
+        Maximum time period is limited to 7 days at once!!
       parameters:
         - name: stationName
           in: path
           required: true
-          schema:
+          schema: 
             type: string
         - name: from
           in: query
           required: true
-          description: Timestamp in UNIX epoch format (UTC)
+          description: "Timestamp in UNIX epoch format (UTC)"
           schema:
             type: integer
             format: int64
         - name: to
           in: query
           required: true
-          description: Timestamp in UNIX epoch format (UTC)
+          description: "Timestamp in UNIX epoch format (UTC)"
           schema:
             type: integer
             format: int64
@@ -85,7 +89,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/StationDataModel'
+                  $ref: '#/components/schemas/StationDataModel'          
             application/xml:
               schema:
                 type: array
@@ -103,11 +107,11 @@ paths:
         - name: stationName
           in: path
           required: true
-          schema:
+          schema: 
             type: string
         - name: ascendingOrder
           in: query
-          description: Set to true to change sorting order to older-first
+          description: "Set to true to change sorting order to older-first"
           required: true
           schema:
             type: integer
@@ -115,7 +119,7 @@ paths:
         - name: isLong
           in: query
           required: true
-          description: Set to true to get last 2000 records instead of 50
+          description: "Set to true to get last 2000 records instead of 50"
           schema:
             type: integer
             format: int64
@@ -127,7 +131,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/StationDataModel'
+                  $ref: '#/components/schemas/StationDataModel'          
             application/xml:
               schema:
                 type: array
@@ -145,7 +149,7 @@ paths:
         - name: stationName
           in: path
           required: true
-          schema:
+          schema: 
             type: string
       responses:
         '200':
@@ -153,7 +157,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Summary'
+                $ref: '#/components/schemas/Summary'          
             application/xml:
               schema:
                 $ref: '#/components/schemas/Summary'
@@ -169,7 +173,7 @@ paths:
         - name: stationName
           in: path
           required: true
-          schema:
+          schema: 
             type: string
       responses:
         '200':
@@ -177,7 +181,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Trend'
+                $ref: '#/components/schemas/Trend'          
             application/xml:
               schema:
                 $ref: '#/components/schemas/Trend'
@@ -193,7 +197,7 @@ paths:
         - name: stationName
           in: path
           required: true
-          schema:
+          schema: 
             type: string
       responses:
         '200':
@@ -201,7 +205,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/StationCurrentLocalTime'
+                $ref: '#/components/schemas/StationCurrentLocalTime'          
             application/xml:
               schema:
                 $ref: '#/components/schemas/StationCurrentLocalTime'
@@ -218,14 +222,15 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/StationDefinitionModel'
+                $ref: '#/components/schemas/ListOfAllStations'          
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/ListOfAllStations'
   /groups/all:
     get:
       tags:
         - meteo system
-      summary: Returns a list of all station groups defined in the system
+      summary: 'Returns a list of all station groups defined in the system'
       description: ''
       responses:
         '200':
@@ -235,7 +240,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/StationsGroup'
+                  $ref: '#/components/schemas/StationsGroup'          
             application/xml:
               schema:
                 type: array
@@ -245,13 +250,13 @@ paths:
     get:
       tags:
         - meteo system
-      summary: Returns all stations associated with given group
+      summary: 'Returns all stations associated with given group'
       description: ''
       parameters:
         - name: id
           in: path
           required: true
-          schema:
+          schema: 
             type: integer
             format: int32
       responses:
@@ -262,16 +267,115 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/StationGroupStations'
+                  $ref: '#/components/schemas/StationGroupStations'          
             application/xml:
               schema:
                 type: array
                 items:
                   $ref: '#/components/schemas/StationGroupStations'
+  /tatry/{station}/fivethousands:
+    get:
+      tags:
+        - mrozowiska
+      summary: "Returns last 5000 measurements for given station"
+      parameters:
+        - name: station
+          in: path
+          required: true
+          description: "Station name: litworowy, mulowy etc."
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful operation
+          content:
+             application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TatryData'        
+  /tatry/{station}/last:
+    get:
+      tags:
+        - mrozowiska
+      summary: "Returns newest measurement for given station"
+      parameters:
+        - name: station
+          in: path
+          required: true
+          description: "Station name: litworowy, mulowy etc."
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful operation
+          content:
+             application/json:
+              schema:
+                $ref: '#/components/schemas/TatryData'  
 components:
   schemas:
+    TatryData:
+      description: "View specific to custom weather station installed to measure extremely low temperatures in Tatra"
+      properties:
+        id:
+          type: integer
+          example: 9
+        epoch:
+          type: integer
+          format: int64
+          description: "Timestamp when this data record has been received from station"
+          example: 1672859594
+        station:
+          type: string
+          description: "Station name, the what was put into HTTP query"
+          example: "litworowy"
+        temperature_from_wx_fame:
+          type: number
+          format: float
+          description: "Temperature in degrees celsius, recalculated by the controller and sent using APRS weather packets fomat, with 1 degrees F resolution"
+          example: 7.22222
+        raw_measurement_from_telemetry_frame:
+          type: integer
+          format: int32
+          description: "Raw measurements from PT sensor amplifier (MAX31865) in range from 0x0000 to 0xFFFF"
+          example: 7186
+        calculated_measurement_from_telemetry_frame:
+          type: number
+          format: float
+          description: "Raw measurement recalculated by the backend to degrees celsius"
+          example: 7.86596
+        voltage:
+          type: number
+          format: float
+          description: "Battery voltage in Volts"
+          example: 12.58
+          
+        max31865_status:
+          type: integer
+          format: int32
+          description: "Content of error status register from MAX31865 amplifier. For more information please refer to datasheet"
+        lse_rdy:
+          type: boolean
+          description: "Station controller status: Set to true if Low Speed External Oscillator is running"
+        rtc_en:
+          type: boolean
+          description: "Station controller status: Set to true if Real Time Clock works properly"
+        max31865_init_ok:
+          type: boolean
+          description: "Station controller status: If MAX31865 has been properly initialized after wakeup or powerup"
+        sleep:
+          type: boolean
+          description: "Station controller status: If controller went to deep sleep between transmission of two consecutive weather frames"
+        spi_comm_error:
+          type: boolean
+          description: "Station controller status: If there were at least one SPI bus communication problem between transmission of two consecutive weather frames"
+          example: false
+        spi_comm_ok:
+          type: boolean
+          description: "Station controller status: If there were at least one succesfull SPI bus communication problem between transmission of two consecutive weather frames"
     AvailableParametersModel:
-      description: desc
+      description: "desc"
       properties:
         hasWind:
           type: boolean
@@ -285,7 +389,7 @@ components:
           type: integer
           format: int8
     StationDefinitionModel:
-      description: dupa
+      description: "dupa"
       type: object
       properties:
         id:
@@ -293,30 +397,30 @@ components:
           format: int32
           example: 1
         name:
-          description: description123
+          description: "description123"
           type: string
-          example: skrzyczne
+          example: "skrzyczne"
         enabled:
           type: boolean
           example: true
         callsign:
           type: string
-          example: SR9NSK
+          example: "SR9NSK"
         ssid:
           type: integer
           format: int8
         displayedName:
           type: string
-          example: Skrzyczne
+          example: "Skrzyczne"
         displayedLocation:
           type: string
-          example: Góra Skrzyczne, Beskid Śląski
+          example: "Góra Skrzyczne, Beskid Śląski"
         sponsorUrl:
           type: string
-          example: http://skrzyczne.pl
+          example: "http://skrzyczne.pl"
         backgroundJpg:
           type: string
-          example: ''
+          example: ""
         backgroundJpgAlign:
           type: integer
           format: int32
@@ -345,7 +449,7 @@ components:
       items:
         $ref: '#/components/schemas/StationDefinitionModel'
     LocaleEntry:
-      description: LocaleEntry
+      description: "LocaleEntry"
       type: object
       properties:
         id:
@@ -366,7 +470,7 @@ components:
         year:
           type: integer
           format: int32
-        month:
+        month: 
           type: integer
           format: int32
         day:
@@ -508,7 +612,7 @@ components:
           type: integer
           format: int32
         epoch:
-          description: UTC timestamp in UNIX epoch when this measurement was taken
+          description: "UTC timestamp in UNIX epoch when this measurement was taken"
           type: integer
           format: int64
         station:
