@@ -29,6 +29,9 @@ tags:
     description: Endpoints specific for MeteoSystem android app
   - name: mrozowiska
     description: Endpoints speciic for dedicated weather stations for scientific measurements in Tatra Mountains
+    externalDocs:
+      description: More information about project
+      url: https://mrozowiska.pl/
 paths:
   /station/{stationName}/availableParameters:
     get:
@@ -350,7 +353,6 @@ components:
           format: float
           description: "Battery voltage in Volts"
           example: 12.58
-          
         max31865_status:
           type: integer
           format: int32
