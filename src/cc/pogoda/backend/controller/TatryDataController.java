@@ -1,5 +1,12 @@
 package cc.pogoda.backend.controller;
 
+import java.time.Instant;
+import java.time.OffsetDateTime;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.zone.ZoneOffsetTransition;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -23,6 +30,8 @@ public class TatryDataController {
 	
     private static Logger logger = LogManager.getLogger();
     
+    private static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-YY HH:mm");
+    
     @Autowired
     TatryRepo tatryRepo;
     
@@ -38,8 +47,11 @@ public class TatryDataController {
 			TatryData view = new TatryData();
 			
 			view.station = stationName;
-			
 			view.epoch = elem.epoch;
+			
+			ZonedDateTime dateTime = ZonedDateTime.ofInstant(Instant.ofEpochSecond(view.epoch), ZoneId.of("UTC")).withZoneSameInstant(ZoneId.of("Europe/Warsaw"));
+			view.warsaw_local_date_time_excel_fmt = formatter.format(dateTime);	// DD-MM-YY HH:MM
+			
 			view.id = elem.id;
 			view.calculated_measurement_from_telemetry_frame = elem.rawmeasurementrecalc;
 			view.raw_measurement_from_telemetry_frame = elem.rawmeasurement;
@@ -73,6 +85,10 @@ public class TatryDataController {
 		output.station = stationName;
 		
 		output.epoch = model.epoch;
+		
+		ZonedDateTime dateTime = ZonedDateTime.ofInstant(Instant.ofEpochSecond(output.epoch), ZoneId.of("UTC")).withZoneSameInstant(ZoneId.of("Europe/Warsaw"));
+		output.warsaw_local_date_time_excel_fmt = formatter.format(dateTime);	// DD-MM-YY HH:MM
+		
 		output.id = model.id;
 		output.calculated_measurement_from_telemetry_frame = model.rawmeasurementrecalc;
 		output.raw_measurement_from_telemetry_frame = model.rawmeasurement;

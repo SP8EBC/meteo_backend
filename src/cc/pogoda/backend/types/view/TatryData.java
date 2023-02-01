@@ -7,6 +7,8 @@ public class TatryData {
 	
 	public long epoch;
 	
+	public String warsaw_local_date_time_excel_fmt;
+	
 	public String station;
 	
 	public float temperature_from_wx_frame;
