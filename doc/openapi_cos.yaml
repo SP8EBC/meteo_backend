@@ -1,0 +1,659 @@
+openapi: 3.0.3
+info:
+  title: Pogoda.cc
+  description: Backend API specification for pogoda.cc system
+  contact:
+    email: sp8ebc@interia.pl
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.11
+externalDocs:
+  description: API source code
+  url: https://github.com/SP8EBC/meteo_backend
+servers:
+  - url: http://pogoda.cc:8080/meteo_backend_cos/
+  - url: https://pogoda.cc:8443/meteo_backend_cos/
+tags:
+  - name: station
+    description: Get measurements sent by stations
+    externalDocs:
+      description: Find out more
+      url: http://swagger.io
+  - name: list of all stations
+    description: Lists all weather stations defined in the system
+    externalDocs:
+      description: Find out more about our store
+      url: http://swagger.io
+  - name: meteo system
+    description: Endpoints specific for MeteoSystem android app
+  - name: mrozowiska
+    description: Endpoints speciic for dedicated weather stations for scientific measurements in Tatra Mountains
+    externalDocs:
+      description: More information about project
+      url: https://mrozowiska.pl/
+paths:
+  /station/{stationName}/availableParameters:
+    get:
+      tags:
+        - station
+      summary: Get all parameters measured by station
+      description: ...
+      parameters:
+        - name: stationName
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AvailableParametersModel'
+        '404':
+          description: Station doesn't exist
+  /station/{stationName}/stationData:
+    get:
+      tags:
+        - station
+      summary: Get measurements data for specified period
+      description: This endpoint returns all measurements done between two specified timestamps. Maximum time period is limited to 7 days at once!!
+      parameters:
+        - name: stationName
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: from
+          in: query
+          required: true
+          description: Timestamp in UNIX epoch format (UTC)
+          schema:
+            type: integer
+            format: int64
+        - name: to
+          in: query
+          required: true
+          description: Timestamp in UNIX epoch format (UTC)
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/StationDataModel'
+        '416':
+          description: Requested time period is too long
+  /station/{stationName}/lastStationData:
+    get:
+      tags:
+        - station
+      summary: Get last data measured by station
+      description: Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.
+      parameters:
+        - name: stationName
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: ascendingOrder
+          in: query
+          description: Set to true to change sorting order to older-first
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: isLong
+          in: query
+          required: true
+          description: Set to true to get last 2000 records instead of 50
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/StationDataModel'
+        '400':
+          description: Invalid tag value
+  /station/{stationName}/summary:
+    get:
+      tags:
+        - station
+      summary: Returns measurement summary for station
+      description: Summary
+      parameters:
+        - name: stationName
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Summary'
+        '404':
+          description: Station not found
+  /station/{stationName}/trend:
+    get:
+      tags:
+        - station
+      summary: Returns trend of measurement changes
+      description: Summary
+      parameters:
+        - name: stationName
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Trend'
+        '404':
+          description: Station not found
+  /station/{stationName}/stationCurrentLocalTime:
+    get:
+      tags:
+        - station
+      summary: Returns current local RTC time for a station
+      description: Used mainly to synchronize RTC clock in ParaMETEO
+      parameters:
+        - name: stationName
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StationCurrentLocalTime'
+        '404':
+          description: Station not found
+  /listOfAllStations:
+    get:
+      tags:
+        - list of all stations
+      description: ''
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListOfAllStations'
+  /groups/all:
+    get:
+      tags:
+        - meteo system
+      summary: Returns a list of all station groups defined in the system
+      description: ''
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/StationsGroup'
+  /groups/stations/{id}:
+    get:
+      tags:
+        - meteo system
+      summary: Returns all stations associated with given group
+      description: ''
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/StationGroupStations'
+  /tatry/{station}/fivethousands:
+    get:
+      tags:
+        - mrozowiska
+      summary: Returns last 5000 measurements for given station
+      parameters:
+        - name: station
+          in: path
+          required: true
+          description: 'Station name: litworowy, mulowy etc.'
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TatryData'
+  /tatry/{station}/last:
+    get:
+      tags:
+        - mrozowiska
+      summary: Returns newest measurement for given station
+      parameters:
+        - name: station
+          in: path
+          required: true
+          description: 'Station name: litworowy, mulowy etc.'
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TatryData'
+components:
+  schemas:
+    TatryData:
+      description: View specific to custom weather station installed to measure extremely low temperatures in Tatra
+      properties:
+        id:
+          type: integer
+          example: 9
+        epoch:
+          type: integer
+          format: int64
+          description: Timestamp when this data record has been received from station
+          example: 1672859594
+        warsaw_local_date_time_excel_fmt:
+          type: string
+          description: Epoch timestamp converted to local time for Warsaw and then printed in MS Excel compatible
+          example: 01-02-23 21:31
+        station:
+          type: string
+          description: Station name, the what was put into HTTP query
+          example: litworowy
+        temperature_from_wx_fame:
+          type: number
+          format: float
+          description: Temperature in degrees celsius, recalculated by the controller and sent using APRS weather packets fomat, with 1 degrees F resolution
+          example: 7.22222
+        raw_measurement_from_telemetry_frame:
+          type: integer
+          format: int32
+          description: Raw measurements from PT sensor amplifier (MAX31865) in range from 0x0000 to 0xFFFF
+          example: 7186
+        calculated_measurement_from_telemetry_frame:
+          type: number
+          format: float
+          description: Raw measurement recalculated by the backend to degrees celsius
+          example: 7.86596
+        voltage:
+          type: number
+          format: float
+          description: Battery voltage in Volts
+          example: 12.58
+        max31865_status:
+          type: integer
+          format: int32
+          description: Content of error status register from MAX31865 amplifier. For more information please refer to datasheet
+        lse_rdy:
+          type: boolean
+          description: 'Station controller status: Set to true if Low Speed External Oscillator is running'
+        rtc_en:
+          type: boolean
+          description: 'Station controller status: Set to true if Real Time Clock works properly'
+        max31865_init_ok:
+          type: boolean
+          description: 'Station controller status: If MAX31865 has been properly initialized after wakeup or powerup'
+        sleep:
+          type: boolean
+          description: 'Station controller status: If controller went to deep sleep between transmission of two consecutive weather frames'
+        spi_comm_error:
+          type: boolean
+          description: 'Station controller status: If there were at least one SPI bus communication problem between transmission of two consecutive weather frames'
+          example: false
+        spi_comm_ok:
+          type: boolean
+          description: 'Station controller status: If there were at least one succesfull SPI bus communication problem between transmission of two consecutive weather frames'
+    AvailableParametersModel:
+      description: desc
+      properties:
+        hasWind:
+          type: boolean
+        hasQnh:
+          type: boolean
+        hasHumidity:
+          type: boolean
+        hasRain:
+          type: boolean
+        telemetryVersion:
+          type: integer
+          format: int8
+    StationDefinitionModel:
+      description: dupa
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+          example: 1
+        name:
+          description: description123
+          type: string
+          example: skrzyczne
+        enabled:
+          type: boolean
+          example: true
+        callsign:
+          type: string
+          example: SR9NSK
+        ssid:
+          type: integer
+          format: int8
+        displayedName:
+          type: string
+          example: Skrzyczne
+        displayedLocation:
+          type: string
+          example: Góra Skrzyczne, Beskid Śląski
+        sponsorUrl:
+          type: string
+          example: http://skrzyczne.pl
+        backgroundJpg:
+          type: string
+          example: ''
+        backgroundJpgAlign:
+          type: integer
+          format: int32
+        stationNameTextColour:
+          type: integer
+          format: int32
+          example: 1
+        moreInfo:
+          type: string
+        lat:
+          type: number
+        lon:
+          type: number
+        timezone:
+          type: string
+        hasWind:
+          type: boolean
+        hasQnh:
+          type: boolean
+        hasHumidity:
+          type: boolean
+        hasRain:
+          type: boolean
+    ListOfAllStations:
+      type: array
+      items:
+        $ref: '#/components/schemas/StationDefinitionModel'
+    LocaleEntry:
+      description: LocaleEntry
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+          example: 1
+        stationGroupId:
+          type: integer
+          format: int32
+          example: 1
+        language:
+          type: string
+        text:
+          type: string
+    StationCurrentLocalTime:
+      type: object
+      properties:
+        year:
+          type: integer
+          format: int32
+        month:
+          type: integer
+          format: int32
+        day:
+          type: integer
+          format: int32
+        hour:
+          type: integer
+          format: int32
+        minute:
+          type: integer
+          format: int32
+        second:
+          type: integer
+          format: int32
+        timezone:
+          type: string
+        timezone_offset:
+          type: integer
+          format: int32
+    StationGroupStationsStation:
+      type: object
+      properties:
+        stationId:
+          type: integer
+          format: int32
+        stationName:
+          type: string
+    StationGroupStations:
+      type: object
+      properties:
+        stationGroupId:
+          type: integer
+          format: int32
+        stationIds:
+          type: array
+          items:
+            $ref: '#/components/schemas/StationGroupStationsStation'
+    StationsGroup:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        category:
+          type: string
+          enum:
+            - PARAGLIDING
+            - SAILING
+            - MOUNTAINS
+            - CITIES
+            - CUSTOM
+        locale:
+          type: array
+          items:
+            $ref: '#/components/schemas/LocaleEntry'
+        isEnabled:
+          type: boolean
+        isEmpty:
+          type: boolean
+        isBuiltin:
+          type: boolean
+    Status:
+      type: object
+      properties:
+        backend_api_version_string:
+          type: string
+        backend_api_main_version_number:
+          type: integer
+          format: int32
+        backend_api_patch_version_number:
+          type: integer
+          format: int32
+        backend_api_build_version_number:
+          type: integer
+          format: int32
+        status:
+          type: integer
+          format: int32
+        api_timestamp_epoch:
+          type: integer
+          format: int64
+        api_tz_offset_string:
+          type: string
+        api_tz_offset_seconds:
+          type: integer
+          format: int32
+        api_timezone:
+          type: string
+          format: int32
+    Summary:
+      type: object
+      properties:
+        last_timestamp:
+          type: integer
+          format: int64
+        number_of_measurements:
+          type: integer
+          format: int32
+        avg_temperature:
+          type: number
+          format: float
+        temperature_qf:
+          type: string
+        qnh:
+          type: integer
+          format: int16
+        qnh_qf:
+          type: string
+        humidity:
+          type: integer
+          format: int8
+        humidity_qf:
+          type: string
+        direction:
+          type: integer
+          format: int16
+        average_speed:
+          type: number
+          format: float
+        gusts:
+          type: number
+          format: float
+        hour_gusts:
+          type: number
+          format: float
+        hour_max_average_speed:
+          type: number
+          format: float
+        hour_min_average_speed:
+          type: number
+          format: float
+        wind_qf:
+          type: number
+          format: float
+    StationDataModel:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        epoch:
+          description: UTC timestamp in UNIX epoch when this measurement was taken
+          type: integer
+          format: int64
+        station:
+          type: string
+        temperature:
+          type: number
+          format: float
+        humidity:
+          type: integer
+          format: int16
+        pressure:
+          type: number
+          format: float
+        winddir:
+          type: integer
+          format: int16
+        windspeed:
+          type: number
+          format: float
+        windgusts:
+          type: number
+          format: float
+        tsource:
+          type: string
+        wsource:
+          type: string
+        psource:
+          type: string
+    TrendData:
+      type: object
+      properties:
+        curent_value:
+          type: number
+          format: float
+        two_hours_value:
+          type: number
+          format: float
+        four_hours_value:
+          type: number
+          format: float
+        six_hours_value:
+          type: number
+          format: float
+        eight_hours_value:
+          type: number
+          format: float
+    Trend:
+      type: object
+      properties:
+        last_timestamp:
+          type: integer
+          format: int64
+        displayed_name:
+          type: string
+        current_temperature_qf:
+          type: string
+        current_qnh_qf:
+          type: string
+        current_humidity_qf:
+          type: string
+        current_wind_qf:
+          type: string
+        temperature_trend:
+          $ref: '#/components/schemas/TrendData'
+        humidity_trend:
+          $ref: '#/components/schemas/TrendData'
+        pressure_trend:
+          $ref: '#/components/schemas/TrendData'
+        average_wind_speed_trend:
+          $ref: '#/components/schemas/TrendData'
+        maximum_wind_speed_trend:
+          $ref: '#/components/schemas/TrendData'
+        wind_direction_trend:
+          $ref: '#/components/schemas/TrendData'
