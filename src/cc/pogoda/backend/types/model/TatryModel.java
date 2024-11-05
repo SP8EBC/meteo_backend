@@ -51,4 +51,19 @@ public class TatryModel {
 	
 	@Basic
 	public byte spiok;
+	
+	@Basic
+	public String source;
+	
+	@Basic
+	public String frame;
+	
+	@Basic
+	public String originatorcall;
+	
+	@Basic 
+	public int originatorssid;
+	
+	@Basic
+	public long insertepoch;
 }

@@ -1,6 +1,5 @@
 package cc.pogoda.backend.types.view;
 
-
 public class TatryData {
 
 	public int id;
@@ -32,4 +31,14 @@ public class TatryData {
 	public boolean spi_comm_error;
 	
 	public boolean spi_comm_ok;
+	
+	public String aprs_frame_type;
+	
+	public String aprs_frame_content;
+
+	public String receiving_aprs_gate_callsign;
+	
+	public int receiving_aprs_gate_ssid;
+		
+	public String db_insert_warsaw_local_date_time_excel_fmt;
 }

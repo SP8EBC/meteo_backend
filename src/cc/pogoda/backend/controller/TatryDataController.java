@@ -66,6 +66,14 @@ public class TatryDataController {
 			view.spi_comm_error = (elem.spier > 0) ? true : false;
 			view.spi_comm_ok = (elem.spiok > 0) ? true : false;
 			
+			view.aprs_frame_type = elem.source;
+			view.aprs_frame_content = elem.frame;
+			view.receiving_aprs_gate_callsign = elem.originatorcall;
+			view.receiving_aprs_gate_ssid = elem.originatorssid;
+			
+			ZonedDateTime dbInsertDt = ZonedDateTime.ofInstant(Instant.ofEpochSecond(elem.insertepoch), ZoneId.of("UTC")).withZoneSameInstant(ZoneId.of("Europe/Warsaw"));
+			view.db_insert_warsaw_local_date_time_excel_fmt = formatter.format(dbInsertDt);
+			
 			out.add(view);
 		}
 		
