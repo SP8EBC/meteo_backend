@@ -12,7 +12,7 @@
       <jettyVersion>7.2.0.v20101020</jettyVersion>
       <hibernateVersion>5.4.24.Final</hibernateVersion>
       <jacksonVersion>2.13.2</jacksonVersion>
-      <springVersion>5.3.27</springVersion>
+      <springVersion>6.1.14</springVersion>
       <springDataVersion>2.2.2.RELEASE</springDataVersion>
       <freemarker-version>2.3.23</freemarker-version>
   </properties>
