@@ -14,6 +14,8 @@ import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.PathMatchConfigurer;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import cc.pogoda.backend.dao.SummaryDao;
 import jakarta.persistence.EntityManagerFactory;
@@ -25,7 +27,7 @@ import jakarta.persistence.EntityManagerFactory;
 @EnableTransactionManagement
 @EnableJpaRepositories(basePackages = {"cc.pogoda.backend.dao.repository"})
 @ComponentScan("cc.pogoda.backend")
-public class Config {
+public class Config implements WebMvcConfigurer {
 	
 	@Bean
 	public SummaryDao summaryDao() {
@@ -80,5 +82,11 @@ public class Config {
        transactionManager.setEntityManagerFactory(emf);
  
        return transactionManager;
+   }
+   
+   @SuppressWarnings("deprecation")
+@Override
+   public void configurePathMatch(PathMatchConfigurer configurer) {
+       configurer.setUseTrailingSlashMatch(true);
    }
 }
