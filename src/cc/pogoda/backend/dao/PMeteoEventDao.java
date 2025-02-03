@@ -2,8 +2,6 @@ package cc.pogoda.backend.dao;
 
 import java.time.ZonedDateTime;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -11,6 +9,8 @@ import org.springframework.stereotype.Repository;
 import cc.pogoda.backend.dao.repository.PMeteoEventCrudRepo;
 import cc.pogoda.backend.types.model.parameteo.PmeteoEventModel;
 import cc.pogoda.backend.types.view.parameteo.PmeteoEvent;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 
 @Repository
 public class PMeteoEventDao {

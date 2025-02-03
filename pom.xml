@@ -6,14 +6,14 @@
   <packaging>war</packaging>
   
   <properties>
-      <maven.compiler.source>1.8</maven.compiler.source>
-      <maven.compiler.target>1.8</maven.compiler.target>
+      <maven.compiler.source>17</maven.compiler.source>
+      <maven.compiler.target>17</maven.compiler.target>
       <encoding>UTF-8</encoding>
       <jettyVersion>7.2.0.v20101020</jettyVersion>
-      <hibernateVersion>5.4.24.Final</hibernateVersion>
-      <jacksonVersion>2.13.2</jacksonVersion>
-      <springVersion>5.3.27</springVersion>
-      <springDataVersion>2.2.2.RELEASE</springDataVersion>
+      <hibernateVersion>6.5.2.Final</hibernateVersion>
+      <jacksonVersion>2.17.2</jacksonVersion>
+      <springVersion>6.2.1</springVersion>
+      <springDataVersion>3.4.1</springDataVersion>
       <freemarker-version>2.3.23</freemarker-version>
   </properties>
   
@@ -116,6 +116,7 @@
         <artifactId>maven-compiler-plugin</artifactId>
         <version>3.7.0</version>
         <configuration>
+        <parameters>true</parameters>
           <source>1.8</source>
           <target>1.8</target>
         </configuration>

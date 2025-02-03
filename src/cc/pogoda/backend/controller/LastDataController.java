@@ -2,7 +2,7 @@ package cc.pogoda.backend.controller;
 
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
+//import jakarta.servlet.http.HttpServletRequest;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -16,6 +16,7 @@ import cc.pogoda.backend.dao.StationDataDao;
 import cc.pogoda.backend.types.NotFoundException;
 import cc.pogoda.backend.types.model.StationDataModel;
 import cc.pogoda.backend.types.view.ListOfStationData;
+import jakarta.servlet.http.HttpServletRequest;
 
 @RestController
 public class LastDataController {

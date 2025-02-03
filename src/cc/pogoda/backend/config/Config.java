@@ -2,8 +2,6 @@ package cc.pogoda.backend.config;
 
 import java.util.HashMap;
 
-import javax.persistence.EntityManagerFactory;
-
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -18,6 +16,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import cc.pogoda.backend.dao.SummaryDao;
+import jakarta.persistence.EntityManagerFactory;
 
 
 @Configuration
@@ -59,7 +58,9 @@ public class Config {
 		
 		HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
 		vendorAdapter.setShowSql(true);
-		vendorAdapter.setDatabasePlatform("org.hibernate.dialect.MySQL5Dialect");
+		//vendorAdapter.setDatabasePlatform("org.hibernate.dialect.MySQL5Dialect");
+		// org.hibernate.cj.dialect.MySQLDialect
+		vendorAdapter.setDatabasePlatform("org.hibernate.dialect.MySQLDialect");
 		
 		out.setJpaVendorAdapter(vendorAdapter);
 		out.setJpaPropertyMap(jpaProperties);
