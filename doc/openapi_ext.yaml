@@ -12,8 +12,8 @@ externalDocs:
   description: API source code
   url: https://github.com/SP8EBC/meteo_backend
 servers:
-  - url: http://pogoda.cc:8080/meteo_backend_cos/
-  - url: https://pogoda.cc:8443/meteo_backend_cos/
+  - url: http://pogoda.cc:8080/meteo_backend_ext/
+  - url: https://pogoda.cc:8443/meteo_backend_ext/
 tags:
   - name: station
     description: Get measurements sent by stations
@@ -38,7 +38,7 @@ paths:
       tags:
         - station
       summary: Get all parameters measured by station
-      description: ...
+      description: Values returned by this endpoint should not be consider as constant (non-changeable). If the system will detect that some sensor on the station is not behaving, it may mark some parameters as not measured / not present. The API doesn't block a client from GETing weather values, even if some values are not measured correctly (or at all). Simply the client shall ignore everything what is returned here as 'false' 
       parameters:
         - name: stationName
           in: path
@@ -132,7 +132,7 @@ paths:
     get:
       tags:
         - station
-      summary: Returns measurement summary for station
+      summary: Returns measurement summary for station. Please consider values of all quality factors. A structure of returned view will not change if some parameter is not measured, or telemetry reports a problem with a sensor. A client shall simply ignored everything what is NOT_AVAILABLE
       description: Summary
       parameters:
         - name: stationName
@@ -345,7 +345,7 @@ components:
           type: boolean
           description: 'Station controller status: If there were at least one succesfull SPI bus communication problem between transmission of two consecutive weather frames'
     AvailableParametersModel:
-      description: desc
+      description: Names here should be self explanatory.
       properties:
         hasWind:
           type: boolean
@@ -359,7 +359,7 @@ components:
           type: integer
           format: int8
     StationDefinitionModel:
-      description: dupa
+      description: Defines single station in the system
       type: object
       properties:
         id:
@@ -367,7 +367,7 @@ components:
           format: int32
           example: 1
         name:
-          description: description123
+          description: this 'name' should be used as a value of '{station}' in requests 
           type: string
           example: skrzyczne
         enabled:
@@ -534,42 +534,52 @@ components:
       type: object
       properties:
         last_timestamp:
+          description: UNIX epoch timestamp of last measurement sent by a station. If this is older than, let's say one hour, the station may be treated as non-functioning
           type: integer
           format: int64
         number_of_measurements:
+          description: how many measurements were used to calculate this summary - each station can transmit measurements with different frequency. 
           type: integer
           format: int32
         avg_temperature:
           type: number
           format: float
         temperature_qf:
+          description: may be one of 'FULL', 'DEGRADED', 'NOT_AVALIABLE' (that this is a typo) or 'NO_DATA'. If it is set to 'NOT_AVALIABLE' or 'NO_DATA' a value of avg_temperature shall be ignored
           type: string
         qnh:
           type: integer
           format: int16
         qnh_qf:
+          description: may be one of 'FULL', 'DEGRADED', 'NOT_AVALIABLE' (that this is a typo) or 'NO_DATA'. If it is set to 'NOT_AVALIABLE' or 'NO_DATA' a value of qnh shall be ignored
           type: string
         humidity:
           type: integer
           format: int8
         humidity_qf:
+          description: may be one of 'FULL', 'DEGRADED', 'NOT_AVALIABLE' (that this is a typo) or 'NO_DATA'. If it is set to 'NOT_AVALIABLE' or 'NO_DATA' a value of humidity shall be ignored
           type: string
         direction:
           type: integer
           format: int16
         average_speed:
+          description: Last average windspeed reported by a station. in meters per second
           type: number
           format: float
         gusts:
+          description: Last maximum wind speed reported by a station in meters per second
           type: number
           format: float
         hour_gusts:
+          description: in meters per second
           type: number
           format: float
         hour_max_average_speed:
+          description: maximum average wind speed reported in last hour in meters per second
           type: number
           format: float
         hour_min_average_speed:
+          description: minimum average wind speed reported in last hour in meters per second
           type: number
           format: float
         wind_qf:
