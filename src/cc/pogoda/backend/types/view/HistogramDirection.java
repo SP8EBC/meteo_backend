@@ -5,96 +5,96 @@ public class HistogramDirection {
 	 * How many records has been used to create this dataset
 	 */
 	public int totalRecords;
-	
+
 	/**
-	 * UNIX Epoch timestamp of the oldest record in the input dataset. 
+	 * UNIX Epoch timestamp of the oldest record in the input dataset.
 	 * @note this might be newer that a begin of a range requested by the user
 	 */
 	public long oldestRecordTimestamp;
-	
+
 	/**
-	 * UNIX Epoch timestamp of the oldest record in the input dataset. 
+	 * UNIX Epoch timestamp of the oldest record in the input dataset.
 	 * @note this might be older than an end of the range requested by the user
 	 */
 	public long newestRecordTimestamp;
-	
-	/**
-	 * N to NNW
-	 */
-	public int northToNorthNorthWest;
-	
-	/**
-	 * NNW to NW
-	 */
-	public int northNorthWestToNorthWest;
-	
-	/**
-	 * NW to WNW
-	 */
-	public int northWestToWestNorthWest;
-	
-	/**
-	 * WNW to W
-	 */
-	public int westNorthWestToWest;
-	
-	/**
-	 * W to WSW
-	 */
-	public int westToWestSouthWest;
 
 	/**
-	 * WSW to SW
+	 * N to NNE
 	 */
-	public int westSouthWestToSouthWest;
+	public int nToNne;
 
 	/**
-	 * SW to SSW
+	 * NNE to NE
 	 */
-	public int southWestToSouthSouthWest;
-	
+	public int nneToNe;
+
 	/**
-	 * SSW to S
+	 * NE to ENE
 	 */
-	public int southSouthWestToSouth;
-	
+	public int neToEne;
+
 	/**
-	 * S to SSE
+	 * ENE to E
 	 */
-	public int southToSouthSouthEast;
-	
+	public int eneToE;
+
 	/**
-	 * SSE to SE
+	 * E to ESE
 	 */
-	public int southSouthEastToSouthEast;
-	
+	public int eToEse;
+
 	/**
-	 * SE to ESE
+	 * ESE to SE
 	 */
-	public int southEastToEastSouthEast;
-	
+	public int eseToSe;
+
 	/**
-	 * ESE to E
+	 * SE to SSE
 	 */
-	public int eastSouthEastToEast;
-	
+	public int seToSse;
+
 	/**
-	 * E to ENE
+	 * SSE to S
 	 */
-	public int eastToEastNorthEast;
-	
+	public int sseToS;
+
 	/**
-	 * ENE to NE
+	 * S to SSW
 	 */
-	public int eastNorthEastToNorthEast;
-	
+	public int sToSsw;
+
 	/**
-	 * NE to NNE
+	 * SSW to SW
 	 */
-	public int northEastToNorthNorthEast;
-	
+	public int sswToSw;
+
 	/**
-	 * NNE to N
+	 * SW to WSW
 	 */
-	public int northNorthEastToNorth;
+	public int swToWsw;
+
+	/**
+	 * WSW to W
+	 */
+	public int wswToW;
+
+	/**
+	 * W to WNW
+	 */
+	public int wToWnw;
+
+	/**
+	 * WNW to NW
+	 */
+	public int wnwToNw;
+
+	/**
+	 * NW to NNW
+	 */
+	public int nwToNnw;
+
+	/**
+	 * NNW to N
+	 */
+	public int nnwToN;
 }
