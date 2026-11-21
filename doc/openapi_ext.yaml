@@ -58,7 +58,7 @@ paths:
     get:
       tags:
         - station
-      summary: Get measurements data for specified period
+      summary: Gets a list of measurements data for specified period
       description: This endpoint returns all measurements done between two specified timestamps. Maximum time period is limited to 7 days at once!!
       parameters:
         - name: stationName
@@ -95,8 +95,8 @@ paths:
     get:
       tags:
         - station
-      summary: Get last data measured by station
-      description: Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.
+      summary: Gets a list of recent measurements reported by selected station
+      description: 
       parameters:
         - name: stationName
           in: path
@@ -132,8 +132,8 @@ paths:
     get:
       tags:
         - station
-      summary: Returns measurement summary for station. Please consider values of all quality factors. A structure of returned view will not change if some parameter is not measured, or telemetry reports a problem with a sensor. A client shall simply ignored everything what is NOT_AVAILABLE
-      description: Summary
+      description: Returns measurement summary for a station. Please consider values of all quality factors. A structure of returned view will not change if some parameter is not measured, or telemetry reports a problem with a sensor. A client shall simply ignore everything what is NOT_AVAILABLE
+      summary: Summary of measures from last hour
       parameters:
         - name: stationName
           in: path
@@ -371,18 +371,23 @@ components:
           type: string
           example: skrzyczne
         enabled:
+          description: this controls if a station is shown in "Meteo System" android app. It may be set to false even if station is working OK, simply to hide it for some reason.
           type: boolean
           example: true
         callsign:
+          description: APRS callsign or FANET device ID as hex string
           type: string
           example: SR9NSK
         ssid:
+          description: SSID for APRS callsign
           type: integer
           format: int8
         displayedName:
+          description: name displayed in "Meteo System" and on pogoda.cc website
           type: string
           example: Skrzyczne
         displayedLocation:
+          descsription: displayed in station details under 'displayedName'
           type: string
           example: Góra Skrzyczne, Beskid Śląski
         sponsorUrl:
@@ -538,26 +543,27 @@ components:
           type: integer
           format: int64
         number_of_measurements:
-          description: how many measurements were used to calculate this summary - each station can transmit measurements with different frequency. 
+          description: how many measurements were used to calculate this summary - each station can transmit measurements with different frequency but this endpoint operate on data from 1 hour
           type: integer
           format: int32
         avg_temperature:
+          description: last temperature reported by the station. each station measures this in aprox 10 sec intervals and calculate internal average over 2~3 minutes (depending on configuration)
           type: number
           format: float
         temperature_qf:
-          description: may be one of 'FULL', 'DEGRADED', 'NOT_AVALIABLE' (that this is a typo) or 'NO_DATA'. If it is set to 'NOT_AVALIABLE' or 'NO_DATA' a value of avg_temperature shall be ignored
+          description: may be one of 'FULL', 'DEGRADED', 'NOT_AVALIABLE' (yes, this is a typo) or 'NO_DATA'. If it is set to 'NOT_AVALIABLE' or 'NO_DATA' a value of avg_temperature shall be ignored
           type: string
         qnh:
           type: integer
           format: int16
         qnh_qf:
-          description: may be one of 'FULL', 'DEGRADED', 'NOT_AVALIABLE' (that this is a typo) or 'NO_DATA'. If it is set to 'NOT_AVALIABLE' or 'NO_DATA' a value of qnh shall be ignored
+          description: may be one of 'FULL', 'DEGRADED', 'NOT_AVALIABLE' (yes, this is a typo) or 'NO_DATA'. If it is set to 'NOT_AVALIABLE' or 'NO_DATA' a value of qnh shall be ignored
           type: string
         humidity:
           type: integer
           format: int8
         humidity_qf:
-          description: may be one of 'FULL', 'DEGRADED', 'NOT_AVALIABLE' (that this is a typo) or 'NO_DATA'. If it is set to 'NOT_AVALIABLE' or 'NO_DATA' a value of humidity shall be ignored
+          description: may be one of 'FULL', 'DEGRADED', 'NOT_AVALIABLE' (yes, this is a typo) or 'NO_DATA'. If it is set to 'NOT_AVALIABLE' or 'NO_DATA' a value of humidity shall be ignored
           type: string
         direction:
           type: integer
