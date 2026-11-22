@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>meteo_backend</groupId>
   <artifactId>meteo_backend</artifactId>
-  <version>0.1.0-SNAPSHOT</version>
+  <version>0.34.0-SNAPSHOT</version>
   <packaging>war</packaging>
   
   <properties>

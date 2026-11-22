@@ -2,9 +2,9 @@ package cc.pogoda.backend.config;
 
 public class Consts {
 
-	public static final int MAIN_VERSION_NUM = 1;
+	public static final int MAIN_VERSION_NUM = 0;
 	
-	public static final int PATCH_VERSION_NUM = 0;
+	public static final int PATCH_VERSION_NUM = 34;
 	
 	public static final int BUILD_VERSION_NUM = BuildInfo.BUILD_DATE;
 	
