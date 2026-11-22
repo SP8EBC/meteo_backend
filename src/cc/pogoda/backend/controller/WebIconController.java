@@ -63,7 +63,6 @@ public class WebIconController {
 		// current time
 		long currentUtcTimestamp = ZonedDateTime.now().withZoneSameInstant(ZoneId.of("UTC")).toEpochSecond();
 		
-		logger.info("[getIconForStation][request.getRemoteAddr() = " + request.getRemoteAddr() + "][stationName = " + stationName +"]");
 		
 		// get station definition for that name, what also get mappings to groups
 		StationDefinitionModel stationDefinition = stationsDefinitionDao.getStationByName(stationName);
@@ -79,7 +78,6 @@ public class WebIconController {
 			// get icons for that groups
 			icons = groupModel.icons;
 			
-			logger.info("[getIconForStation][group = " + group +"][icons = " + icons +"]");
 		}
 		else {
 			// set default values
@@ -89,7 +87,6 @@ public class WebIconController {
 			icons.degraded = Consts.DEFAULT_DEGR_ICON;
 			icons.notavailable = Consts.DEFAULT_NAVBLE_ICON;
 			
-			logger.info("[getIconForStation] default icons have been loaded");
 			
 			//icons = iconRepo.findFirstByStationgroupid(IconRepo.DEFAULT_GROUP_ICON);
 		}
@@ -194,7 +191,6 @@ public class WebIconController {
 				degraded = false;
 			}
 			
-			logger.info("[getIconForStation][noData = " + noData +"][ok = " + ok +"][degraded = " + degraded +"]");
 			
 			// now choose an icon
 			if (noData) {

@@ -40,7 +40,6 @@ public class LastDataController {
 		
 		data = dataDao.getStationDataPerName(stationName, false, isLong);
 		
-		logger.info("[LastDataController][getLastStationDataPerName][request.getRemoteAddr() = " + request.getRemoteAddr() +"][stationName = " + stationName + "][ascendingOrder = " + ascendingOrder +"][isLong = " + isLong +"]");
 		
 		if (data != null) {
 			
@@ -70,7 +69,6 @@ public class LastDataController {
 			throw new NotFoundException();
 		}
 		
-		logger.info("[LastDataController][getLastStationDataPerName][request.getRemoteAddr() = " + request.getRemoteAddr() +"][stationName = " + stationName + "][out.list_of_station_data.length = " + out.list_of_station_data.length +"]");
 		
 		return out;
 	}

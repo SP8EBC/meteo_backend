@@ -54,7 +54,6 @@ public class SummaryController {
 		
 		if (s != null) {
 			
-			logger.info("[SummaryController][summaryControlerNew][request.getRemoteAddr() = " + request.getRemoteAddr() + "][stationName = " + stationName +"][s = " + s.toString() +"]");
 			
 			StationDefinitionModel stationDefinition = stationsDefinitionDao.getStationByName(stationName);
 			

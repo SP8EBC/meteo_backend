@@ -27,7 +27,6 @@ public class PMeteoStatusController {
 	@RequestMapping(value = "/parameteo/{stationName}/status/v1", produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
 	public void putMeteoStatusForStation(@RequestBody PmeteoStatus status, @PathVariable(required = true)String stationName) {
 		
-		logger.info("[PMeteoStatusController][putMeteoStatusForStation][request.getRemoteAddr() = " + request.getRemoteAddr() + "][stationName = " + stationName +"][status = " + status +"]");
 		
 		dao.updateOrInsertStatus(status, stationName);
 	}

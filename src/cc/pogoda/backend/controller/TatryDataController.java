@@ -37,7 +37,6 @@ public class TatryDataController {
     
 	@RequestMapping(value = "/tatry/{stationName}/fivethousands", produces = "application/json;charset=UTF-8")
 	public List<TatryData> getLongResultsForName(@PathVariable(required = true) String stationName) {
-		logger.info("[getLongResultsForName][request.getRemoteAddr() = " + request.getRemoteAddr() + "][stationName = " + stationName +"]");
 		
 		List<TatryData> out = new LinkedList<TatryData>();
 		

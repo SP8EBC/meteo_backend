@@ -113,14 +113,12 @@ public class SummaryDao {
 				
 		}
 		
-		logger.info("[SummaryDao][getSummaryPerStationName][genericData.size() = " + genericData.size() +"]");
 		
 		if (genericData.size() > 2) {
 		
 			GenericMeteoData newest = genericData.get(0);
 			LocalDateTime minush = newest.timestampEpoch.minusHours(1);
 			
-			logger.info("[SummaryDao][getSummaryPerStationName][minush = " + minush.format(DateTimeFormatter.ISO_DATE) +"][out.last_timestamp = " + out.last_timestamp +"][newest = " + newest.toString() +"]");
 			
 			out.last_timestamp = newest.timestampEpoch.toEpochSecond(OffsetDateTime.now().getOffset());
 			

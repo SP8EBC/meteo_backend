@@ -191,6 +191,75 @@ paths:
                 $ref: '#/components/schemas/StationCurrentLocalTime'
         '404':
           description: Station not found
+  /station/{stationName}/histogram/direction:
+    get:
+      tags:
+        - station
+      summary: Histogram of wind direction for specified period
+      description: Counts measurements into 16 bins of wind direction, each 22.5 degrees wide, starting from north (0 degrees) and going clockwise. The last bin (nnwToN) also includes measurements of exactly 360 degrees. If `from` or `to` is not provided (or set to zero), histogram is calculated for the last 2 hours. Maximum time period is limited to 24 hours at once!!
+      parameters:
+        - $ref: '#/components/parameters/HistogramStationName'
+        - $ref: '#/components/parameters/HistogramFrom'
+        - $ref: '#/components/parameters/HistogramTo'
+      responses:
+        '200':
+          description: Successful operation. If there is no data for requested period, all counters and timestamps are set to zero
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HistogramDirection'
+        '400':
+          description: Invalid value of `from` or `to` parameter (not a number)
+        '404':
+          description: Station doesn't exist
+        '416':
+          description: Requested time period is longer than 24 hours
+  /station/{stationName}/histogram/speed:
+    get:
+      tags:
+        - station
+      summary: Histogram of average wind speed for specified period
+      description: Counts measurements into 11 bins of average wind speed, each 1 m/s wide, from 0 m/s up to 10 m/s. Every measurement equal to or above 10 m/s is counted in the last bin (overTen). If `from` or `to` is not provided (or set to zero), histogram is calculated for the last 2 hours. Maximum time period is limited to 24 hours at once!!
+      parameters:
+        - $ref: '#/components/parameters/HistogramStationName'
+        - $ref: '#/components/parameters/HistogramFrom'
+        - $ref: '#/components/parameters/HistogramTo'
+      responses:
+        '200':
+          description: Successful operation. If there is no data for requested period, all counters and timestamps are set to zero
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HistogramSpeed'
+        '400':
+          description: Invalid value of `from` or `to` parameter (not a number)
+        '404':
+          description: Station doesn't exist
+        '416':
+          description: Requested time period is longer than 24 hours
+  /station/{stationName}/histogram/gusts:
+    get:
+      tags:
+        - station
+      summary: Histogram of wind gusts for specified period
+      description: Counts measurements into 11 bins of wind gusts (maximum wind speed), each 1 m/s wide, from 0 m/s up to 10 m/s. Every measurement equal to or above 10 m/s is counted in the last bin (overTen). If `from` or `to` is not provided (or set to zero), histogram is calculated for the last 2 hours. Maximum time period is limited to 24 hours at once!!
+      parameters:
+        - $ref: '#/components/parameters/HistogramStationName'
+        - $ref: '#/components/parameters/HistogramFrom'
+        - $ref: '#/components/parameters/HistogramTo'
+      responses:
+        '200':
+          description: Successful operation. If there is no data for requested period, all counters and timestamps are set to zero
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HistogramSpeed'
+        '400':
+          description: Invalid value of `from` or `to` parameter (not a number)
+        '404':
+          description: Station doesn't exist
+        '416':
+          description: Requested time period is longer than 24 hours
   /listOfAllStations:
     get:
       tags:
@@ -281,6 +350,31 @@ paths:
               schema:
                 $ref: '#/components/schemas/TatryData'
 components:
+  parameters:
+    HistogramStationName:
+      name: stationName
+      in: path
+      required: true
+      schema:
+        type: string
+    HistogramFrom:
+      name: from
+      in: query
+      required: false
+      description: Begin of time period, timestamp in UNIX epoch format (UTC), exclusive. If not provided or set to zero, the last 2 hours are used
+      schema:
+        type: integer
+        format: int64
+        default: 0
+    HistogramTo:
+      name: to
+      in: query
+      required: false
+      description: End of time period, timestamp in UNIX epoch format (UTC), exclusive. If not provided or set to zero, the last 2 hours are used
+      schema:
+        type: integer
+        format: int64
+        default: 0
   schemas:
     TatryData:
       description: View specific to custom weather station installed to measure extremely low temperatures in Tatra
@@ -673,3 +767,143 @@ components:
           $ref: '#/components/schemas/TrendData'
         wind_direction_trend:
           $ref: '#/components/schemas/TrendData'
+    HistogramDirection:
+      description: Histogram of wind direction. Each bin holds a number of measurements with wind direction within the range given in its description, lower bound inclusive and upper bound exclusive
+      type: object
+      properties:
+        totalRecords:
+          description: How many measurements have been used to create this histogram
+          type: integer
+          format: int32
+        oldestRecordTimestamp:
+          description: UTC timestamp in UNIX epoch of the oldest measurement used. Might be newer than the begin of requested time period
+          type: integer
+          format: int64
+        newestRecordTimestamp:
+          description: UTC timestamp in UNIX epoch of the newest measurement used. Might be older than the end of requested time period
+          type: integer
+          format: int64
+        nToNne:
+          description: N to NNE, 0 - 22.5 degrees
+          type: integer
+          format: int32
+        nneToNe:
+          description: NNE to NE, 22.5 - 45 degrees
+          type: integer
+          format: int32
+        neToEne:
+          description: NE to ENE, 45 - 67.5 degrees
+          type: integer
+          format: int32
+        eneToE:
+          description: ENE to E, 67.5 - 90 degrees
+          type: integer
+          format: int32
+        eToEse:
+          description: E to ESE, 90 - 112.5 degrees
+          type: integer
+          format: int32
+        eseToSe:
+          description: ESE to SE, 112.5 - 135 degrees
+          type: integer
+          format: int32
+        seToSse:
+          description: SE to SSE, 135 - 157.5 degrees
+          type: integer
+          format: int32
+        sseToS:
+          description: SSE to S, 157.5 - 180 degrees
+          type: integer
+          format: int32
+        sToSsw:
+          description: S to SSW, 180 - 202.5 degrees
+          type: integer
+          format: int32
+        sswToSw:
+          description: SSW to SW, 202.5 - 225 degrees
+          type: integer
+          format: int32
+        swToWsw:
+          description: SW to WSW, 225 - 247.5 degrees
+          type: integer
+          format: int32
+        wswToW:
+          description: WSW to W, 247.5 - 270 degrees
+          type: integer
+          format: int32
+        wToWnw:
+          description: W to WNW, 270 - 292.5 degrees
+          type: integer
+          format: int32
+        wnwToNw:
+          description: WNW to NW, 292.5 - 315 degrees
+          type: integer
+          format: int32
+        nwToNnw:
+          description: NW to NNW, 315 - 337.5 degrees
+          type: integer
+          format: int32
+        nnwToN:
+          description: NNW to N, 337.5 - 360 degrees (360 inclusive)
+          type: integer
+          format: int32
+    HistogramSpeed:
+      description: Histogram of wind speed or wind gusts. Each bin holds a number of measurements with value within the range given in its description, lower bound inclusive and upper bound exclusive
+      type: object
+      properties:
+        totalRecords:
+          description: How many measurements have been used to create this histogram
+          type: integer
+          format: int32
+        oldestRecordTimestamp:
+          description: UTC timestamp in UNIX epoch of the oldest measurement used. Might be newer than the begin of requested time period
+          type: integer
+          format: int64
+        newestRecordTimestamp:
+          description: UTC timestamp in UNIX epoch of the newest measurement used. Might be older than the end of requested time period
+          type: integer
+          format: int64
+        lessThanOne:
+          description: 0 - 1 m/s
+          type: integer
+          format: int32
+        oneToTwo:
+          description: 1 - 2 m/s
+          type: integer
+          format: int32
+        twoToThree:
+          description: 2 - 3 m/s
+          type: integer
+          format: int32
+        threeToFour:
+          description: 3 - 4 m/s
+          type: integer
+          format: int32
+        fourToFive:
+          description: 4 - 5 m/s
+          type: integer
+          format: int32
+        fiveToSix:
+          description: 5 - 6 m/s
+          type: integer
+          format: int32
+        sixToSeven:
+          description: 6 - 7 m/s
+          type: integer
+          format: int32
+        sevenToEight:
+          description: 7 - 8 m/s
+          type: integer
+          format: int32
+        eightToNine:
+          description: 8 - 9 m/s
+          type: integer
+          format: int32
+        nineToTen:
+          description: 9 - 10 m/s
+          type: integer
+          format: int32
+        overTen:
+          description: 10 m/s and above
+          type: integer
+          format: int32

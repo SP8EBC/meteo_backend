@@ -22,7 +22,6 @@ public class StatusController {
 	public Status status() {
 		Status out = new Status();
 		
-		logger.info("test");
 		
 		ZonedDateTime current = ZonedDateTime.now();
 		

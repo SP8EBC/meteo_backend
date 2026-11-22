@@ -35,7 +35,6 @@ public class StationsList {
 		
 		out.stations = new StationDefinitionModel[stations.size()];
 		
-		logger.info("[StationsList][ListOfAllStations][request.getRemoteAddr() = " + request.getRemoteAddr() +"][out.stations.length = " + out.stations.length + "]");
 		
 		for (StationDefinitionModel def : stations) {
 			out.stations[i] = def;

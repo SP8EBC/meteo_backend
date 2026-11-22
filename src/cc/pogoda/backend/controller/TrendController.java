@@ -55,7 +55,6 @@ public class TrendController {
 	@RequestMapping(value = "/station/{stationName}/trend", produces = "application/json;charset=UTF-8")
 	public Trend getTrendPerStationName(@PathVariable(required = true)String stationName, @RequestParam(defaultValue =  "false", name="notRounded", required = false)boolean notRounded) throws NotFoundException {
 		
-		logger.info("[TrendController][getTrendPerStationName][stationName = " + stationName +"][notRounded = " + notRounded + "]");
 		
 		Trend out = new Trend();
 		
@@ -71,7 +70,6 @@ public class TrendController {
 		
 		StationDefinitionModel stationDefinition = stationsDefinitionDao.getStationByName(stationName);
 
-		logger.info("[getTrendPerStationName][stationName = " + stationName + "][stationDefinition = " + stationDefinition.toString() +"]");
 		
 		WindQualityFactor wind_qf = WindQualityFactor.NO_DATA;
 		TemperatureQualityFactor temperature_qf = TemperatureQualityFactor.NO_DATA;
@@ -108,7 +106,6 @@ public class TrendController {
 				humidity_qf = HumidityQualityFactor.NOT_AVALIABLE;
 			}
 			
-			logger.info("[getTrendPerStationName][stationName = " + stationName + "][currentUtcTimestamp = " + currentUtcTimestamp +"][lastDataTimestamp = " + lastDataTimestamp +"]");
 			
 			// check if station transmit data
 			if (currentUtcTimestamp - lastDataTimestamp > 3600) {
