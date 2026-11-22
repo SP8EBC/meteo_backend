@@ -16,6 +16,8 @@
       <springDataVersion>3.5.13</springDataVersion>
       <freemarker-version>2.3.23</freemarker-version>
       <log4jVersion>2.26.1</log4jVersion>
+      <maven.build.timestamp.format>yyyyMMdd</maven.build.timestamp.format>
+      <build.date>${maven.build.timestamp}</build.date>
   </properties>
   
   <dependencyManagement>
@@ -128,6 +130,23 @@
   <build>
     <sourceDirectory>src</sourceDirectory>
     <plugins>
+      <plugin>
+        <!-- generates BuildInfo.java (build date) from src-templates -->
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>templating-maven-plugin</artifactId>
+        <version>3.0.0</version>
+        <executions>
+          <execution>
+            <id>filter-src</id>
+            <goals>
+              <goal>filter-sources</goal>
+            </goals>
+            <configuration>
+              <sourceDirectory>${basedir}/src-templates</sourceDirectory>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
       <plugin>
         <artifactId>maven-compiler-plugin</artifactId>
         <version>3.13.0</version>
