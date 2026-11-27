@@ -57,6 +57,14 @@ public class HistogramController {
 		}
 	}
 
+	/**
+	 * Divides sum of values by number of values, returns zero if there are no values
+	 * to avoid NaN (0/0), which cannot be serialized to valid JSON
+	 */
+	private static float average(float sum, int count) {
+		return count > 0 ? sum / count : 0.0f;
+	}
+
 	@RequestMapping(value = "/station/{stationName}/histogram/direction", produces = "application/json;charset=UTF-8")
 	public HistogramDirection getHistogramDirectionPerStationName(@PathVariable(required = true) String stationName,
 			@RequestParam(value = "from", defaultValue = "0") long from,
@@ -89,7 +97,8 @@ public class HistogramController {
 			for (StationDataModel record : stationData) {
 				// extract this for convenient
 				final short direction = record.winddir;
-
+				final float average = record.windspeed;
+				
 				// update oldest and newest timestamp found so far
 				if (record.epoch < out.oldestRecordTimestamp) {
 					out.oldestRecordTimestamp = record.epoch;
@@ -102,36 +111,52 @@ public class HistogramController {
 				// each bin is 22.5 degrees wide
 				if (direction >= 0 && direction < 22.5) {
 					out.nToNne++;
+					out.averageSpeedNToNne += average;
 				} else if (direction >= 22.5 && direction < 45) {
 					out.nneToNe++;
+					out.averageSpeedNneToNe += average;
 				} else if (direction >= 45 && direction < 67.5) {
 					out.neToEne++;
+					out.averageSpeedNeToEne += average;
 				} else if (direction >= 67.5 && direction < 90) {
 					out.eneToE++;
+					out.averageSpeedEneToE += average;
 				} else if (direction >= 90 && direction < 112.5) {
 					out.eToEse++;
+					out.averageSpeedEToEse += average;
 				} else if (direction >= 112.5 && direction < 135) {
 					out.eseToSe++;
+					out.averageSpeedEseToSe += average;
 				} else if (direction >= 135 && direction < 157.5) {
 					out.seToSse++;
+					out.averageSpeedSeToSse += average;
 				} else if (direction >= 157.5 && direction < 180) {
 					out.sseToS++;
+					out.averageSpeedSseToS += average;
 				} else if (direction >= 180 && direction < 202.5) {
 					out.sToSsw++;
+					out.averageSpeedSToSsw += average;
 				} else if (direction >= 202.5 && direction < 225) {
 					out.sswToSw++;
+					out.averageSpeedSswToSw += average;
 				} else if (direction >= 225 && direction < 247.5) {
 					out.swToWsw++;
+					out.averageSpeedSwToWsw += average;
 				} else if (direction >= 247.5 && direction < 270) {
 					out.wswToW++;
+					out.averageSpeedWswToW += average;
 				} else if (direction >= 270 && direction < 292.5) {
 					out.wToWnw++;
+					out.averageSpeedWToWnw += average;
 				} else if (direction >= 292.5 && direction < 315) {
 					out.wnwToNw++;
+					out.averageSpeedWnwToNw += average;
 				} else if (direction >= 315 && direction < 337.5) {
 					out.nwToNnw++;
+					out.averageSpeedNwToNnw += average;
 				} else if (direction >= 337.5 && direction <= 360) {
 					out.nnwToN++;
+					out.averageSpeedNnwToN += average;
 				} else {
 					logger.error(
 							"[getHistogramDirectionPerStationName] invalid wind direction {} for station {}, record epoch {}",
@@ -142,7 +167,24 @@ public class HistogramController {
 			// if there is no data for this station, clear records counter and return
 			out.totalRecords = 0;
 		}
-
+		
+		out.averageSpeedNToNne = average(out.averageSpeedNToNne, out.nToNne);
+		out.averageSpeedNneToNe = average(out.averageSpeedNneToNe, out.nneToNe);
+		out.averageSpeedNeToEne = average(out.averageSpeedNeToEne, out.neToEne);
+		out.averageSpeedEneToE = average(out.averageSpeedEneToE, out.eneToE);
+		out.averageSpeedEToEse = average(out.averageSpeedEToEse, out.eToEse);
+		out.averageSpeedEseToSe = average(out.averageSpeedEseToSe, out.eseToSe);
+		out.averageSpeedSeToSse = average(out.averageSpeedSeToSse, out.seToSse);
+		out.averageSpeedSseToS = average(out.averageSpeedSseToS, out.sseToS);
+		out.averageSpeedSToSsw = average(out.averageSpeedSToSsw, out.sToSsw);
+		out.averageSpeedSswToSw = average(out.averageSpeedSswToSw, out.sswToSw);
+		out.averageSpeedSwToWsw = average(out.averageSpeedSwToWsw, out.swToWsw);
+		out.averageSpeedWswToW = average(out.averageSpeedWswToW, out.wswToW);
+		out.averageSpeedWToWnw = average(out.averageSpeedWToWnw, out.wToWnw);
+		out.averageSpeedWnwToNw = average(out.averageSpeedWnwToNw, out.wnwToNw);
+		out.averageSpeedNwToNnw = average(out.averageSpeedNwToNnw, out.nwToNnw);
+		out.averageSpeedNnwToN = average(out.averageSpeedNnwToN, out.nnwToN);
+		
 		return out;
 
 	}
