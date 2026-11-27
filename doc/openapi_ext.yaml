@@ -203,7 +203,7 @@ paths:
         - $ref: '#/components/parameters/HistogramTo'
       responses:
         '200':
-          description: Successful operation. If there is no data for requested period, all counters and timestamps are set to zero
+          description: Successful operation. If there is no data for requested period, all counters, average speeds and timestamps are set to zero
           content:
             application/json:
               schema:
@@ -768,7 +768,7 @@ components:
         wind_direction_trend:
           $ref: '#/components/schemas/TrendData'
     HistogramDirection:
-      description: Histogram of wind direction. Each bin holds a number of measurements with wind direction within the range given in its description, lower bound inclusive and upper bound exclusive
+      description: Histogram of wind direction. Each bin holds a number of measurements with wind direction within the range given in its description, lower bound inclusive and upper bound exclusive, and an average wind speed of these measurements
       type: object
       properties:
         totalRecords:
@@ -787,66 +787,130 @@ components:
           description: N to NNE, 0 - 22.5 degrees
           type: integer
           format: int32
+        averageSpeedNToNne:
+          description: Average wind speed in m/s of all measurements counted in nToNne bin. Zero if the bin is empty
+          type: number
+          format: float
         nneToNe:
           description: NNE to NE, 22.5 - 45 degrees
           type: integer
           format: int32
+        averageSpeedNneToNe:
+          description: Average wind speed in m/s of all measurements counted in nneToNe bin. Zero if the bin is empty
+          type: number
+          format: float
         neToEne:
           description: NE to ENE, 45 - 67.5 degrees
           type: integer
           format: int32
+        averageSpeedNeToEne:
+          description: Average wind speed in m/s of all measurements counted in neToEne bin. Zero if the bin is empty
+          type: number
+          format: float
         eneToE:
           description: ENE to E, 67.5 - 90 degrees
           type: integer
           format: int32
+        averageSpeedEneToE:
+          description: Average wind speed in m/s of all measurements counted in eneToE bin. Zero if the bin is empty
+          type: number
+          format: float
         eToEse:
           description: E to ESE, 90 - 112.5 degrees
           type: integer
           format: int32
+        averageSpeedEToEse:
+          description: Average wind speed in m/s of all measurements counted in eToEse bin. Zero if the bin is empty
+          type: number
+          format: float
         eseToSe:
           description: ESE to SE, 112.5 - 135 degrees
           type: integer
           format: int32
+        averageSpeedEseToSe:
+          description: Average wind speed in m/s of all measurements counted in eseToSe bin. Zero if the bin is empty
+          type: number
+          format: float
         seToSse:
           description: SE to SSE, 135 - 157.5 degrees
           type: integer
           format: int32
+        averageSpeedSeToSse:
+          description: Average wind speed in m/s of all measurements counted in seToSse bin. Zero if the bin is empty
+          type: number
+          format: float
         sseToS:
           description: SSE to S, 157.5 - 180 degrees
           type: integer
           format: int32
+        averageSpeedSseToS:
+          description: Average wind speed in m/s of all measurements counted in sseToS bin. Zero if the bin is empty
+          type: number
+          format: float
         sToSsw:
           description: S to SSW, 180 - 202.5 degrees
           type: integer
           format: int32
+        averageSpeedSToSsw:
+          description: Average wind speed in m/s of all measurements counted in sToSsw bin. Zero if the bin is empty
+          type: number
+          format: float
         sswToSw:
           description: SSW to SW, 202.5 - 225 degrees
           type: integer
           format: int32
+        averageSpeedSswToSw:
+          description: Average wind speed in m/s of all measurements counted in sswToSw bin. Zero if the bin is empty
+          type: number
+          format: float
         swToWsw:
           description: SW to WSW, 225 - 247.5 degrees
           type: integer
           format: int32
+        averageSpeedSwToWsw:
+          description: Average wind speed in m/s of all measurements counted in swToWsw bin. Zero if the bin is empty
+          type: number
+          format: float
         wswToW:
           description: WSW to W, 247.5 - 270 degrees
           type: integer
           format: int32
+        averageSpeedWswToW:
+          description: Average wind speed in m/s of all measurements counted in wswToW bin. Zero if the bin is empty
+          type: number
+          format: float
         wToWnw:
           description: W to WNW, 270 - 292.5 degrees
           type: integer
           format: int32
+        averageSpeedWToWnw:
+          description: Average wind speed in m/s of all measurements counted in wToWnw bin. Zero if the bin is empty
+          type: number
+          format: float
         wnwToNw:
           description: WNW to NW, 292.5 - 315 degrees
           type: integer
           format: int32
+        averageSpeedWnwToNw:
+          description: Average wind speed in m/s of all measurements counted in wnwToNw bin. Zero if the bin is empty
+          type: number
+          format: float
         nwToNnw:
           description: NW to NNW, 315 - 337.5 degrees
           type: integer
           format: int32
+        averageSpeedNwToNnw:
+          description: Average wind speed in m/s of all measurements counted in nwToNnw bin. Zero if the bin is empty
+          type: number
+          format: float
         nnwToN:
           description: NNW to N, 337.5 - 360 degrees (360 inclusive)
           type: integer
           format: int32
+        averageSpeedNnwToN:
+          description: Average wind speed in m/s of all measurements counted in nnwToN bin. Zero if the bin is empty
+          type: number
+          format: float
     HistogramSpeed:
       description: Histogram of wind speed or wind gusts. Each bin holds a number of measurements with value within the range given in its description, lower bound inclusive and upper bound exclusive
       type: object
